@@ -32,7 +32,8 @@ class FirstScreen extends StatelessWidget {
           children: <Widget>[
             
             Text("Find here what you want"),
-            Text('$name')
+            Text('$name'),
+            Text('$email')
           ],
         ),
         ),
