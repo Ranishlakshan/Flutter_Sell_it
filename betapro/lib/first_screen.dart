@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'login_page.dart';
@@ -19,24 +20,24 @@ class FirstScreen extends StatelessWidget {
             onPressed: (){},
           ),
           IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: (){},
-          )
+            icon: Image.network(imageUrl),
+            onPressed: (){},   
+           )
         ],
       ),
-      body: Center(
-        //color: Colors.blue[100],
-        child: Column(
-          
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            
-            Text("Find here what you want"),
-            Text('$name'),
-            Text('$email')
-          ],
-        ),
-        ),
+      body: StreamBuilder(
+         stream: Firestore.instance.collection('items').snapshots(),
+         builder: (context, snapshot){
+           if(!snapshot.hasData) return Text('Loading data..please wait');
+           return Column(
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: <Widget>[
+               Text(snapshot.data.documents[0]['item_name']),
+               Text(snapshot.data.documents[0]['price'].toString())
+             ],
+           );
+         }, 
+      )
     );
   }
 }
