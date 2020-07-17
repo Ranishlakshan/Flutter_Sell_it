@@ -5,6 +5,7 @@ import 'drawer.dart';
 import 'login_page.dart';
 
 
+
 class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class FirstScreen extends StatelessWidget {
              children: <Widget>[
                Text(snapshot.data.documents[0]['item_name']),
                Text(snapshot.data.documents[0]['price'].toString())
+               
              ],
            );
          }, 
