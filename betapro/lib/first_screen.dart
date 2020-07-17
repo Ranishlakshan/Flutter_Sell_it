@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'drawer.dart';
 import 'login_page.dart';
 
 
@@ -10,10 +11,6 @@ class FirstScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home Page"),
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: (){},
-        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -25,6 +22,7 @@ class FirstScreen extends StatelessWidget {
            )
         ],
       ),
+      drawer: MyDrawer(),
       body: StreamBuilder(
          stream: Firestore.instance.collection('items').snapshots(),
          builder: (context, snapshot){
