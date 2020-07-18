@@ -15,7 +15,9 @@ class FirstScreen extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: (){},
+            onPressed: (){
+              Navigator.pushNamed(context, '/dashboard');
+            },
           ),
           IconButton(
             icon: Image.network(imageUrl),
