@@ -51,7 +51,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   Navigator.of(context).pop();
                   crudObj.addData({
                     'carName': this.carModel,
-                    'price': this.price
+                    'price': this.price,
+                    'searchKey': this.carModel.substring(0, 1).toUpperCase(),
                   }).then((result) {
                     dialogTrigger(context);
                   }).catchError((e) {

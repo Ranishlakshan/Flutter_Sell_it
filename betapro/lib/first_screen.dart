@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'drawer.dart';
-import 'login_page.dart';
+//import 'login_page.dart';
 
 
 
@@ -16,12 +16,20 @@ class FirstScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: (){
-              Navigator.pushNamed(context, '/dashboard');
+              Navigator.pushNamed(context, '/searchitem');
             },
           ),
           IconButton(
-            icon: Image.network(imageUrl),
-            onPressed: (){},   
+            icon: Icon(Icons.tap_and_play),
+            onPressed: (){
+              Navigator.pushNamed(context, '/dashboard');
+            },   
+          ),
+          IconButton(
+            icon: Icon(Icons.add_call),
+            onPressed: (){
+              Navigator.pushNamed(context, '/admobpg');
+            },   
            )
         ],
       ),
