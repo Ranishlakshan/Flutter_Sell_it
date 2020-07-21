@@ -30,6 +30,12 @@ class FirstScreen extends StatelessWidget {
             onPressed: (){
               Navigator.pushNamed(context, '/admobpg');
             },   
+           ),
+           IconButton(
+            icon: Icon(Icons.add_a_photo),
+            onPressed: (){
+              Navigator.pushNamed(context, '/admobdoc');
+            },   
            )
         ],
       ),

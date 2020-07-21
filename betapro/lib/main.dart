@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'admob_pg.dart';
+import 'admobdoc.dart';
 import 'dashboard.dart';
 import 'login_page.dart';
 import 'search.dart';
@@ -10,8 +11,9 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var routeName;
+    //var routeName;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Login',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => DashboardPage(),
         '/searchitem': (context) => SeachAppBarRecipe(),
         '/admobpg': (context) => AdmobPg(),
+        '/admobdoc': (context) => AdmobDoc(),
       },
     );
   }

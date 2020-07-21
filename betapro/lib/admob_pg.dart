@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
-const String testDevice = 'MobileId';
+const String testDevice = '81B9C6CFCD1C2E015237F259DD73E939';
 
 
 class AdmobPg extends StatefulWidget {
@@ -21,7 +21,7 @@ class _AdmobPgState extends State<AdmobPg> {
 
   BannerAd createBannerAd() {
     return BannerAd(
-        adUnitId: BannerAd.testAdUnitId,
+        adUnitId: 'ca-app-pub-4881405240833971/4243131294',
       //Change BannerAd adUnitId with Admob ID
         size: AdSize.banner,
         targetingInfo: targetingInfo,
@@ -32,7 +32,7 @@ class _AdmobPgState extends State<AdmobPg> {
 
   InterstitialAd createInterstitialAd() {
     return InterstitialAd(
-        adUnitId: InterstitialAd.testAdUnitId,
+        adUnitId: 'ca-app-pub-4881405240833971/1425396263',
       //Change Interstitial AdUnitId with Admob ID
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
@@ -42,7 +42,7 @@ class _AdmobPgState extends State<AdmobPg> {
 
   @override
   void initState() {
-    FirebaseAdMob.instance.initialize(appId: BannerAd.testAdUnitId);
+    FirebaseAdMob.instance.initialize(appId: 'ca-app-pub-4881405240833971~4975551049');
     //Change appId With Admob Id
     _bannerAd = createBannerAd()
       ..load()
