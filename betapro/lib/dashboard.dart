@@ -1,21 +1,19 @@
-import 'dart:async';
-
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 import 'services/crud.dart';
 
 class DashboardPage extends StatefulWidget {
+   //static const String routeName = "/second";
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }
 
 class _DashboardPageState extends State<DashboardPage> {
   String carModel;
-  int price;
+  String carColor;
+
+  QuerySnapshot cars;
 
   crudMedthods crudObj = new crudMedthods();
 
@@ -36,9 +34,9 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
                 SizedBox(height: 5.0),
                 TextField(
-                  decoration: InputDecoration(hintText: 'Enter car price'),
+                  decoration: InputDecoration(hintText: 'Enter car color'),
                   onChanged: (value) {
-                    this.price = int.parse(value);
+                    this.carColor = value;
                   },
                 ),
               ],
@@ -51,8 +49,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   Navigator.of(context).pop();
                   crudObj.addData({
                     'carName': this.carModel,
-                    'price': this.price,
-                    'searchKey': this.carModel.substring(0, 1).toUpperCase(),
+                    'color': this.carColor
                   }).then((result) {
                     dialogTrigger(context);
                   }).catchError((e) {
@@ -87,6 +84,16 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   @override
+  void initState() {
+    crudObj.getData().then((results) {
+      setState(() {
+        cars = results;
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: AppBar(
@@ -97,9 +104,36 @@ class _DashboardPageState extends State<DashboardPage> {
               onPressed: () {
                 addDialog(context);
               },
+            ),
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                crudObj.getData().then((results) {
+                  setState(() {
+                    cars = results;
+                  });
+                });         
+              },
             )
           ],
         ),
-        body: Center());
+        body: _carList());
+  }
+
+  Widget _carList() {
+    if (cars != null) {
+      return ListView.builder(
+        itemCount: cars.documents.length,
+        padding: EdgeInsets.all(5.0),
+        itemBuilder: (context, i) {
+          return new ListTile(
+            title: Text(cars.documents[i].data['carName']),
+            subtitle: Text(cars.documents[i].data['color']),
+          );
+        },
+      );
+    } else {
+      return Text('Loading, Please wait..');
+    }
   }
 }

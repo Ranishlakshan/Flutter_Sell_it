@@ -21,4 +21,8 @@ class crudMedthods {
       print('You need to be logged in');
     }
   }
+  
+  getData() async {
+    return await Firestore.instance.collection('testcrud').getDocuments();
+  }
 }
