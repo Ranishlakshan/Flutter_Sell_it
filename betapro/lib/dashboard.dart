@@ -102,7 +102,8 @@ class _DashboardPageState extends State<DashboardPage> {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                addDialog(context);
+                Navigator.pushNamed(context, '/login');
+                //addDialog(context);
               },
             ),
             IconButton(
@@ -126,9 +127,13 @@ class _DashboardPageState extends State<DashboardPage> {
         itemCount: cars.documents.length,
         padding: EdgeInsets.all(5.0),
         itemBuilder: (context, i) {
-          return new ListTile(
-            title: Text(cars.documents[i].data['carName']),
-            subtitle: Text(cars.documents[i].data['color']),
+          return new Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 72.0),
+              title: Text(cars.documents[i].data['carName']),
+              subtitle: Text(cars.documents[i].data['color']),
+              trailing: Icon(Icons.more_vert),
+            ),
           );
         },
       );

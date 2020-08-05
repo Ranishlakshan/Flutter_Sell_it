@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'admob_pg.dart';
 import 'admobdoc.dart';
 import 'dashboard.dart';
+import 'first_screen.dart';
 import 'login_page.dart';
 import 'search.dart';
 
@@ -18,12 +19,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: DashboardPage(),
       routes: {
-        '/dashboard': (context) => DashboardPage(),
+        '/login': (context) => LoginPage(),
         '/searchitem': (context) => SeachAppBarRecipe(),
         '/admobpg': (context) => AdmobPg(),
         '/admobdoc': (context) => AdmobDoc(),
+        '/first_screen': (context) => FirstScreen(),
       },
     );
   }
