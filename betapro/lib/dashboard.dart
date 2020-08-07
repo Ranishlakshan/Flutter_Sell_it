@@ -39,6 +39,8 @@ class _DashboardPageState extends State<DashboardPage> {
                     this.carColor = value;
                   },
                 ),
+                //fields ivarai add images here
+                
               ],
             ),
             actions: <Widget>[

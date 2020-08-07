@@ -5,6 +5,10 @@
          In most cases you can leave this as-is, but you if you want to provide
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="betapro"
@@ -12,6 +16,8 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4881405240833971~4975551049"/>
+
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'aditems.dart';
 import 'admob_pg.dart';
 import 'admobdoc.dart';
 import 'dashboard.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/admobpg': (context) => AdmobPg(),
         '/admobdoc': (context) => AdmobDoc(),
         '/first_screen': (context) => FirstScreen(),
+        '/ad_items': (context) => AdItem(),
       },
     );
   }

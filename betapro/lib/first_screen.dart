@@ -1,3 +1,5 @@
+///NO USAGE AT NOW
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +11,6 @@ import 'services/crud.dart';
 class FirstScreen extends StatelessWidget {
   
   QuerySnapshot cars;
-
-  
-
 
   
   @override
@@ -100,6 +99,8 @@ class MyCustomFormState extends State<MyCustomForm> {
               this.carColor = value;
             },
           ),
+          //end of the text fields
+
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: RaisedButton(
