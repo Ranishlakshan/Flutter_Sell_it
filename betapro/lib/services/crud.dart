@@ -14,6 +14,7 @@ class crudMedthods {
 
   Future<void> addData(carData) async {
     if (isLoggedIn()) {
+      //String documnetID = DateTime.now().millisecondsSinceEpoch.toString();
       Firestore.instance.collection('testcrud').add(carData).catchError((e) {
          print(e);
        });

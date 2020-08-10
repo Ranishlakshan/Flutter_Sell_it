@@ -66,19 +66,24 @@ class _UploadImagesState extends State<UploadImages> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    InkWell(
-                      onTap: loadAssets,
-                      child: ThreeDContainer(
-                      
-                        width: 130,
-                        height: 50,
-                        backgroundColor: MultiPickerApp.navigateButton,
-                        backgroundDarkerColor: MultiPickerApp.background,
-                        child: Center(child: Text("Pick images",style: TextStyle(color: Colors.white),)),
-                      ),
+                    RaisedButton(
+                      child: new Text("add Image"),
+                      onPressed: loadAssets,
                     ),
-                    InkWell(
-                      onTap: (){
+                    //InkWell(
+                    //  onTap: loadAssets,
+                    //  child: ThreeDContainer(
+                    //  
+                    //    width: 130,
+                    //    height: 50,
+                    //    backgroundColor: MultiPickerApp.navigateButton,
+                    //    backgroundDarkerColor: MultiPickerApp.background,
+                    //    child: Center(child: Text("Pick images",style: TextStyle(color: Colors.white),)),
+                    //  ),
+                    //),
+                    RaisedButton(
+                      child: new Text("upload"),
+                      onPressed: (){
                         if(images.length==0){
                           showDialog(context: context,builder: (_){
                             return AlertDialog(
@@ -107,14 +112,45 @@ class _UploadImagesState extends State<UploadImages> {
                           uploadImages();
                         }
                       },
-                      child: ThreeDContainer(
-                        width: 130,
-                        height: 50,
-                        backgroundColor: MultiPickerApp.navigateButton,
-                        backgroundDarkerColor: MultiPickerApp.background,
-                        child: Center(child: Text("Upload Images",style: TextStyle(color: Colors.white),)),
-                      ),
                     ),
+                    //InkWell(
+                    //  onTap: (){
+                    //    if(images.length==0){
+                    //      showDialog(context: context,builder: (_){
+                    //        return AlertDialog(
+                    //          backgroundColor: Theme.of(context).backgroundColor,
+                    //         content: Text("No image selected",style: TextStyle(color: Colors.white)),
+                    //         actions: <Widget>[
+                    //          InkWell(
+                    //            onTap: (){
+                    //              Navigator.pop(context);
+                    //            },
+                    //            child: ThreeDContainer(
+                    //              width: 80,
+                    //              height: 30,
+                    //              backgroundColor: MultiPickerApp.navigateButton,
+                    //              backgroundDarkerColor: MultiPickerApp.background,
+                    //              child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
+                    //            ),
+                    //          )
+                    //         ],
+                    //        );
+                    //      });
+                    //    }
+                    //    else{
+                    //      SnackBar snackbar = SnackBar(content: Text('Please wait, we are uploading'));
+                    //      widget.globalKey.currentState.showSnackBar(snackbar);
+                    //      uploadImages();
+                    //    }
+                    //  },
+                    //  child: ThreeDContainer(
+                    //    width: 130,
+                    //    height: 50,
+                    //    backgroundColor: MultiPickerApp.navigateButton,
+                    //    backgroundDarkerColor: MultiPickerApp.background,
+                    //    child: Center(child: Text("Upload Images",style: TextStyle(color: Colors.white),)),
+                    //  ),
+                    //),
                   ],
                 ),
                 SizedBox(height: 10,),
@@ -129,6 +165,7 @@ class _UploadImagesState extends State<UploadImages> {
     );
   }
   void uploadImages(){
+    
     for ( var imageFile in images) {
       postImage(imageFile).then((downloadUrl) {
         imageUrls.add(downloadUrl.toString());
@@ -215,7 +252,6 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
   crudMedthods crudObj = new crudMedthods();
   String carModel;
-
   String carColor;
 
   @override
@@ -250,6 +286,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: RaisedButton(
               onPressed: () {
+
                 // Validate returns true if the form is valid, or false
                 // otherwise.
                 if (_formKey.currentState.validate()) {
