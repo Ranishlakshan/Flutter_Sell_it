@@ -15,10 +15,13 @@ class UploadImages extends StatefulWidget {
 }
 
 class _UploadImagesState extends State<UploadImages> {
+  var Select_catagory;
   List<Asset> images = List<Asset>();
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
   bool isUploading = false;
+  List<DropdownMenuItem> items = <DropdownMenuItem>[];
+  final databaseReference = Firestore.instance;
 
   @override
   void initState() {
@@ -61,7 +64,67 @@ class _UploadImagesState extends State<UploadImages> {
         Container(
             child: Column(
               children: <Widget>[
-                MyCustomForm(),
+                RaisedButton(
+                  child: new Text("add record"),
+                  onPressed: (){
+                    getData();
+                  },
+                ),
+                
+                //Stream builder///////////////////////////
+                StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance.collection("catagory_names").snapshots(),
+                  builder: (context,snapshot){
+                    //snapshot.data.documents.forEach((f) => print('${f.data}}'));
+                    //print('${snapshot.data.documents[1].data.values}');
+                    if(!snapshot.hasData){
+                      Text("Loading");
+                    }
+                    else{
+                      List<DropdownMenuItem> catagories = [];
+                      //snapshot.documents.forEach((f) => print('${f.data}}'));
+                      for(int i=0;i<snapshot.data.documents.length;i++){
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        
+                        catagories.add(
+                          DropdownMenuItem(
+                            child: Text(
+                                 snap.data.values.toString(),
+                                 //snap.documentID
+                            ),
+                            value: "${snap.documentID}",
+                            
+                          ),
+                        );
+
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(width: 50.0,),
+                          DropdownButton(
+                            items: catagories,
+                            onChanged: (catagoryValue){
+                              final snackBar=SnackBar(
+                                content: Text('Selected Catagory is $catagoryValue'),
+                                
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                              setState(() {
+                                  Select_catagory=catagoryValue;                                                              
+                              });
+                            },
+                          value: Select_catagory,
+                          isExpanded: false,
+                          hint: Text('choose catagory'),  
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                ),
+                //Stream builder END ///////////////////////////
+                //MyCustomForm(),
                 SizedBox(height: 20,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -90,18 +153,24 @@ class _UploadImagesState extends State<UploadImages> {
                               backgroundColor: Theme.of(context).backgroundColor,
                              content: Text("No image selected",style: TextStyle(color: Colors.white)),
                              actions: <Widget>[
-                              InkWell(
-                                onTap: (){
+                              RaisedButton(
+                                onPressed: (){
                                   Navigator.pop(context);
                                 },
-                                child: ThreeDContainer(
-                                  width: 80,
-                                  height: 30,
-                                  backgroundColor: MultiPickerApp.navigateButton,
-                                  backgroundDarkerColor: MultiPickerApp.background,
-                                  child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
-                                ),
+                                child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
                               )
+                              //InkWell(
+                              //  onTap: (){
+                              //    Navigator.pop(context);
+                              //  },
+                              //  child: ThreeDContainer(
+                              //    width: 80,
+                              //    height: 30,
+                              //    backgroundColor: MultiPickerApp.navigateButton,
+                              //    backgroundDarkerColor: MultiPickerApp.background,
+                              //    child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
+                              //  ),
+                              //)
                              ],
                             );
                           });
@@ -165,7 +234,7 @@ class _UploadImagesState extends State<UploadImages> {
     );
   }
   void uploadImages(){
-    
+  
     for ( var imageFile in images) {
       postImage(imageFile).then((downloadUrl) {
         imageUrls.add(downloadUrl.toString());
@@ -232,6 +301,75 @@ class _UploadImagesState extends State<UploadImages> {
     return storageTaskSnapshot.ref.getDownloadURL();
   }
 
+  //////////////////
+  Future getCatagory() async {
+      var firestone = Firestore.instance;
+
+      QuerySnapshot cato = await firestone.collection("catagory_names/Vehicles").getDocuments();
+      for(int i=0;i<cato.documents.length;i++){
+                        DocumentSnapshot snap = cato.documents[i];
+                        items.add(
+                          DropdownMenuItem(
+                            child: Text(
+                                snap.documentID,
+                            ),
+                            value: "${snap.documentID}",
+                          ),
+                        );
+                      }
+
+      return ;
+
+    }
+    ///////////
+    ///
+    ///
+    ///
+    void createRecord() async {
+    await databaseReference.collection("books")
+        .document("1")
+        .setData({
+          'title': 'Mastering Flutter',
+          'description': 'Programming Guide for Dart'
+        });
+
+    DocumentReference ref = await databaseReference.collection("books")
+        .add({
+          'title': 'Flutter in Action',
+          'description': 'Complete Programming Guide to learn Flutter'
+        });
+    print(ref.documentID);
+  }
+
+  void getData() {
+    databaseReference
+        .collection("books")
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) => print('${f.data}}'));
+    });
+  }
+  void updateData() {
+    try {
+      databaseReference
+          .collection('books')
+          .document('1')
+          .updateData({'description': 'Head First Flutter'});
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+  void deleteData() {
+    try {
+      databaseReference
+          .collection('books')
+          .document('1')
+          .delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+    ///
 }
 
 class MyCustomForm extends StatefulWidget {
@@ -301,6 +439,14 @@ class MyCustomFormState extends State<MyCustomForm> {
                     dialogTrigger(context);
                   }).catchError((e) {
                     print(e);
+                  });
+                  String documnetID = DateTime.now().millisecondsSinceEpoch.toString();
+                  Firestore.instance.collection('data').document(documnetID).setData({
+                    'carname' : this.carModel,
+                    'carColor': this.carColor
+                  }).then((_){
+                    SnackBar snackbar = SnackBar(content: Text('Uploaded Successfully'));
+                    Scaffold.of(context).showSnackBar(snackbar); 
                   });    
                 }
               },
