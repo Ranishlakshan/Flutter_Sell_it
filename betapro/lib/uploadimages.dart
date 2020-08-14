@@ -20,6 +20,8 @@ class _UploadImagesState extends State<UploadImages> {
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
   bool isUploading = false;
+  
+  //String condition="";
   List<DropdownMenuItem> items = <DropdownMenuItem>[];
   final databaseReference = Firestore.instance;
 
@@ -61,6 +63,8 @@ class _UploadImagesState extends State<UploadImages> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
+        //
+
         Container(
             child: Column(
               children: <Widget>[
@@ -89,8 +93,8 @@ class _UploadImagesState extends State<UploadImages> {
                         catagories.add(
                           DropdownMenuItem(
                             child: Text(
-                                 snap.data.values.toString(),
-                                 //snap.documentID
+                                 //snap.data.values.toString(),
+                                 snap.documentID
                             ),
                             value: "${snap.documentID}",
                             
@@ -105,12 +109,17 @@ class _UploadImagesState extends State<UploadImages> {
                           DropdownButton(
                             items: catagories,
                             onChanged: (catagoryValue){
+                              ////
+                              //choose();
+
+                              
                               final snackBar=SnackBar(
                                 content: Text('Selected Catagory is $catagoryValue'),
                                 
                               );
                               Scaffold.of(context).showSnackBar(snackBar);
                               setState(() {
+                                  //condition = "A";
                                   Select_catagory=catagoryValue;                                                              
                               });
                             },
@@ -125,6 +134,8 @@ class _UploadImagesState extends State<UploadImages> {
                 ),
                 //Stream builder END ///////////////////////////
                 //MyCustomForm(),
+                //selectform(),
+                //_renderWidget(),
                 SizedBox(height: 20,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -230,9 +241,26 @@ class _UploadImagesState extends State<UploadImages> {
             ),
           ),
           //MyCustomForm(),
+          _widgetForm(),
       ],
     );
   }
+//Widget _
+Widget _widgetForm() {
+          switch (Select_catagory) {
+      case "Animals":
+        return MyCustomForm();
+        break;
+      case "Vehicles":
+        return _vanForm();
+        break;
+      default :
+        return Form(
+          child: Text('data'),
+        );
+    }
+    }
+
   void uploadImages(){
   
     for ( var imageFile in images) {
@@ -257,6 +285,8 @@ class _UploadImagesState extends State<UploadImages> {
     }
 
   }
+
+
   Future<void> loadAssets() async {
     List<Asset> resultList = List<Asset>();
     String error = 'No Error Dectected';
@@ -371,6 +401,29 @@ class _UploadImagesState extends State<UploadImages> {
   }
     ///
 }
+
+Widget _vanForm() {
+    return Form(
+        //key: _formKeyCar,
+        child: Column(children: <Widget>[
+          // Add TextFormFields and RaisedButton here.
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Enter your Van Details',
+              labelText: 'Van',
+            ),
+          ),
+        ]));
+  }
+
 
 class MyCustomForm extends StatefulWidget {
   @override

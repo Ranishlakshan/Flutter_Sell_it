@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'aditem.dart';
 import 'aditems.dart';
+import 'adsave.dart';
 import 'first_screen.dart';
 import 'myhomepage.dart';
 
@@ -50,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return MyHomePage();
+            return AdAdvertisement();
           },
         ),
       );
