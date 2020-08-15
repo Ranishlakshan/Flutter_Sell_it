@@ -61,7 +61,8 @@ class ViewImages extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
-                }))
+                })
+                )
       ],
     );
   }

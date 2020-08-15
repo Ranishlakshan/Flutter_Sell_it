@@ -1,5 +1,10 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
+
+import 'services/utils.dart';
 
 
 class AdAdvertisement extends StatefulWidget {
@@ -8,15 +13,424 @@ class AdAdvertisement extends StatefulWidget {
 }
 
 class _AdAdvertisementState extends State<AdAdvertisement> {
-  var selectedCurrency;
+  var selectedCurrency,selectedSub;
   var value;
+  final databaseReference = Firestore.instance;
+  String now = new DateTime.now().toString();
+  List<Asset> images = List<Asset>();
+  List<NetworkImage> _listOfImages = <NetworkImage>[];
+  List<String> imageUrls = <String>[];
+  List<String> imageLocalLink = <String>[];
+  String _error = 'No Error Dectected';
+  bool isUploading = false;
+
+  final _formKeyCar = GlobalKey<FormState>();
+  final _formKeyVan = GlobalKey<FormState>();
   
   void ValueChanged(currencyValue){
-    if(currencyValue=="Animals"){}
-    else if(currencyValue=="Vehicles"){}
     setState(() {
-          value =currencyValue;
+          selectedCurrency =currencyValue;
         });
+  }
+
+  void ValueSubchange(subcatagory){
+    setState(() {
+          selectedSub=subcatagory;
+        });
+  }
+
+  void createRecord() async {
+    await databaseReference.collection("Advertisements")
+        .document(now)
+        .setData({
+          'title': 'Mastering Flutter',
+          'description': 'Programming Guide for Dart'
+        });
+
+    
+  }
+
+  Widget _widgetForm() {
+    // if (selectedCurrency == "Car") {
+    //   return Form(
+    //       key: _formKeyCar,
+    //       child: Column(children: <Widget>[
+    //         // Add TextFormFields and RaisedButton here.
+    //         TextFormField(
+    //           validator: (value) {
+    //             if (value.isEmpty) {
+    //               return 'Please enter some text';
+    //             }
+    //             return null;
+    //           },
+    //         ),
+    //       ]));
+    // }
+
+    switch (selectedSub) {
+      case "car":
+        return _carForm();
+        break;
+      case "van":
+        return _vanForm();
+        break;
+    }
+  }
+
+  Future<void> loadAssets() async {
+    List<Asset> resultList = List<Asset>();
+    String error = 'No Error Dectected';
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 10,
+        enableCamera: true,
+        selectedAssets: images,
+        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+        materialOptions: MaterialOptions(
+          actionBarColor: "#abcdef",
+          actionBarTitle: "Upload Image",
+          allViewTitle: "All Photos",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#000000",
+        ),
+      );
+      print(resultList.length);
+      print((await resultList[0].getThumbByteData(122, 100)));
+      print((await resultList[0].getByteData()));
+      print((await resultList[0].metadata));
+
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+    setState(() {
+      images = resultList;
+      setImageLink();
+      //_listOfImages = imageUrls.cast<NetworkImage>();
+      _error = error;
+    });
+  }
+  void setImageLink(){
+    for ( var imageFile in images) {
+      postImage(imageFile).then((downloadUrl) {
+        imageLocalLink.add(downloadUrl.toString());
+        //if(imageLocalLink.length==images.length){
+        //  String documnetID = DateTime.now().millisecondsSinceEpoch.toString();
+        //  Firestore.instance.collection('images').document(documnetID).setData({
+        //    'urls':imageUrls
+        //  }).then((_){
+        //    SnackBar snackbar = SnackBar(content: Text('Uploaded Successfully'));
+        //    //widget.globalKey.currentState.showSnackBar(snackbar);
+        //    setState(() {
+        //      images = [];
+        //      imageUrls = [];
+        //    });
+        //  });
+        //}
+      }).catchError((err) {
+        print(err);
+      });
+    }
+  }
+
+  Widget buildGridView() {
+    return GridView.count(
+      crossAxisCount: 3,
+      children: List.generate(images.length, (index) {
+        Asset asset = images[index];
+        print(asset.getByteData(quality: 100));
+        return Padding(
+          padding: EdgeInsets.all(8.0),
+          child: ThreeDContainer(
+            backgroundColor: MultiPickerApp.darker,
+            backgroundDarkerColor: MultiPickerApp.darker,
+            height: 50,
+            width: 50,
+            borderDarkerColor: MultiPickerApp.pauseButton,
+            borderColor: MultiPickerApp.pauseButtonDarker,
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              child: AssetThumb(
+                asset: asset,
+                width: 300,
+                height: 300,
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+
+
+  void uploadImages(){
+  
+    for ( var imageFile in images) {
+      postImage(imageFile).then((downloadUrl) {
+        imageUrls.add(downloadUrl.toString());
+        if(imageUrls.length==images.length){
+          String documnetID = DateTime.now().millisecondsSinceEpoch.toString();
+          Firestore.instance.collection('images').document(documnetID).setData({
+            'urls':imageUrls
+          }).then((_){
+            SnackBar snackbar = SnackBar(content: Text('Uploaded Successfully'));
+            //widget.globalKey.currentState.showSnackBar(snackbar);
+            setState(() {
+              images = [];
+              imageUrls = [];
+            });
+          });
+        }
+      }).catchError((err) {
+        print(err);
+      });
+    }
+
+  }
+
+  Future<dynamic> postImage(Asset imageFile) async {
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
+    StorageUploadTask uploadTask = reference.putData((await imageFile.getByteData()).buffer.asUint8List());
+    StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+    print(storageTaskSnapshot.ref.getDownloadURL());
+    return storageTaskSnapshot.ref.getDownloadURL();
+  }
+
+  Widget _carForm() {
+    return Card(
+      child: Form(
+        
+        key: _formKeyVan,
+        child: Column(children: <Widget>[
+          // Add TextFormFields and RaisedButton here.
+          //buildGridView(),
+          TextFormField(
+             
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Brand';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter your Car Brand',
+              labelText: 'Brand',
+              prefixIcon: Icon(Icons.add_circle) 
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Model';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter your Car Model',
+              labelText: 'Car Model',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Model Year';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter Car Model year',
+              labelText: 'Model Year',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Mileage';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter Mileage',
+              labelText: 'Mileage ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Enter Transmission type';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter Transmission type',
+              labelText: 'Transmission ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Fueltype';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter Fuel type',
+              labelText: 'Fueltype ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Engine capaciy';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter Engine capacity',
+              labelText: 'Engine capacity(cc) ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Description';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter Description here',
+              labelText: 'Description ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please Price';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter Price',
+              labelText: 'Price',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          SizedBox(height: 20.0),
+          RaisedButton(
+            child: new Text("add Image"),
+            onPressed: loadAssets,
+          ),
+          SizedBox(height: 10.0,),
+          //Expanded(
+          //    child: buildGridView(),
+          //),
+          //SizedBox(
+          //  height: 150.0,
+          //  width: 300.0,
+          //  child: Carousel(
+          //    images: imageLocalLink,
+          //  ),
+          //),
+          //Image.asset(imageUrls[0]),
+          //
+          //
+          //
+          
+          //
+          //
+          //
+          RaisedButton(
+              child: new Text("upload"),
+              onPressed: (){
+                if(images.length==0){
+                  showDialog(context: context,builder: (_){
+                    return AlertDialog(
+                      backgroundColor: Theme.of(context).backgroundColor,
+                     content: Text("No image selected",style: TextStyle(color: Colors.white)),
+                     actions: <Widget>[
+                      RaisedButton(
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                        child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
+                      )
+                     ],
+                    );
+                  });
+                }
+                else{
+                  SnackBar snackbar = SnackBar(content: Text('Please wait, we are uploading'));
+                  //widget.globalKey.currentState.showSnackBar(snackbar);
+                  uploadImages();
+                }
+              },
+          ),
+          SizedBox(height: 20.0),
+          RaisedButton(
+              color: Color(0xff11b719),
+              textColor: Colors.white,
+              child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text("Submit", style: TextStyle(fontSize: 24.0)),
+                ],
+              )),
+              onPressed: () {
+                  createRecord();
+              },
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)
+                )
+              ),
+              
+              
+        ]
+        )
+        )
+    );
+  }
+
+  Widget _vanForm() {
+    return Form(
+        key: _formKeyCar,
+        child: Column(children: <Widget>[
+          // Add TextFormFields and RaisedButton here.
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter your Van Model',
+              labelText: 'Model',
+            ),
+          ),
+          
+        ]));
   }
 
   @override
@@ -31,6 +445,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
         body: ListView(
           children: <Widget>[
             Text('Select catagory here'),
+            Text('Select catagory here'),
             SizedBox(height: 40.0),
             StreamBuilder<QuerySnapshot>(
                   stream:
@@ -41,20 +456,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                     else {
                       List<DropdownMenuItem> currencyItems = [];
                       List<DropdownMenuItem> currencySub = [];
-                      //for (int i = 0; i < snapshot.data.documents.length; i++) {
-                      //  DocumentSnapshot snap = snapshot.data.documents[i];
-                      //  for (int j = 0; j < snap.data.length; j++) {
-                      //    currencyItems.add(
-                      //      DropdownMenuItem(
-                      //        child: Text(
-                      //          snap.data['${j + 1}'].toString(),
-                      //          style: TextStyle(color: Color(0xff11b719)),
-                      //        ),
-                      //        value: snap.data['${j + 1}'].toString(),
-                      //      ),
-                      //    );
-                      //  }
-                      //}
+                      
                       for(int i=0;i<snapshot.data.documents.length;i++){
                         DocumentSnapshot snap = snapshot.data.documents[i];
                         
@@ -64,13 +466,29 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                                  //snap.data.values.toString(),
                                  snap.documentID
                             ),
-                            value: "${snap.documentID}",
-                            
+                            value: "${snap.documentID}", 
                           ),
                         );
 
                       }
-                      return Row(
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        if(snap.documentID==selectedCurrency){
+                            for (int j = 0; j < snap.data.length; j++) {
+                          currencySub.add(
+                            DropdownMenuItem(
+                              child: Text(
+                                snap.data['${j + 1}'].toString(),
+                                style: TextStyle(color: Color(0xff11b719)),
+                              ),
+                              value: snap.data['${j + 1}'].toString(),
+                            ),
+                          );
+                        }
+                        }
+                        
+                      }
+                      return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           DropdownButton(
@@ -79,7 +497,17 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                             value: selectedCurrency,
                             isExpanded: false,
                             hint: new Text(
-                              "Choose Currency Type",
+                              "Choose catagory Type",
+                              style: TextStyle(color: Color(0xff11b719)),
+                            ),
+                          ),
+                          DropdownButton(
+                            items: currencySub,
+                            onChanged: (subcatagory) => ValueSubchange(subcatagory), 
+                            value: selectedSub,
+                            isExpanded: false,
+                            hint: new Text(
+                              "Choose sub",
                               style: TextStyle(color: Color(0xff11b719)),
                             ),
                           ),
@@ -88,12 +516,23 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                       
                     }
                   }),
-                  SizedBox(
-                height: 150.0,
-              ),
-              
-
+                  //form start here
+            //Text('Select catagory here'),
+            //Text('Select catagory here'),
+            //Text('Select catagory here'),
+            //Text('Select catagory here'),
+            //Text('Select catagory here'),
+            //Text('Select catagory here'),
+            //Text('Select catagory here'),
+            //Text('Select catagory here'),
+            //Card(
+            //  child: Text("Ranish"),
+            //),
+            //_carForm(),
+            //_vanForm(),
+              _widgetForm(),
             
+              
           ],
         ),
     );

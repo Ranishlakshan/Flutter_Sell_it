@@ -132,10 +132,6 @@ class _UploadImagesState extends State<UploadImages> {
                     }
                   },
                 ),
-                //Stream builder END ///////////////////////////
-                //MyCustomForm(),
-                //selectform(),
-                //_renderWidget(),
                 SizedBox(height: 20,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -144,17 +140,6 @@ class _UploadImagesState extends State<UploadImages> {
                       child: new Text("add Image"),
                       onPressed: loadAssets,
                     ),
-                    //InkWell(
-                    //  onTap: loadAssets,
-                    //  child: ThreeDContainer(
-                    //  
-                    //    width: 130,
-                    //    height: 50,
-                    //    backgroundColor: MultiPickerApp.navigateButton,
-                    //    backgroundDarkerColor: MultiPickerApp.background,
-                    //    child: Center(child: Text("Pick images",style: TextStyle(color: Colors.white),)),
-                    //  ),
-                    //),
                     RaisedButton(
                       child: new Text("upload"),
                       onPressed: (){
@@ -170,18 +155,6 @@ class _UploadImagesState extends State<UploadImages> {
                                 },
                                 child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
                               )
-                              //InkWell(
-                              //  onTap: (){
-                              //    Navigator.pop(context);
-                              //  },
-                              //  child: ThreeDContainer(
-                              //    width: 80,
-                              //    height: 30,
-                              //    backgroundColor: MultiPickerApp.navigateButton,
-                              //    backgroundDarkerColor: MultiPickerApp.background,
-                              //    child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
-                              //  ),
-                              //)
                              ],
                             );
                           });
@@ -193,44 +166,6 @@ class _UploadImagesState extends State<UploadImages> {
                         }
                       },
                     ),
-                    //InkWell(
-                    //  onTap: (){
-                    //    if(images.length==0){
-                    //      showDialog(context: context,builder: (_){
-                    //        return AlertDialog(
-                    //          backgroundColor: Theme.of(context).backgroundColor,
-                    //         content: Text("No image selected",style: TextStyle(color: Colors.white)),
-                    //         actions: <Widget>[
-                    //          InkWell(
-                    //            onTap: (){
-                    //              Navigator.pop(context);
-                    //            },
-                    //            child: ThreeDContainer(
-                    //              width: 80,
-                    //              height: 30,
-                    //              backgroundColor: MultiPickerApp.navigateButton,
-                    //              backgroundDarkerColor: MultiPickerApp.background,
-                    //              child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
-                    //            ),
-                    //          )
-                    //         ],
-                    //        );
-                    //      });
-                    //    }
-                    //    else{
-                    //      SnackBar snackbar = SnackBar(content: Text('Please wait, we are uploading'));
-                    //      widget.globalKey.currentState.showSnackBar(snackbar);
-                    //      uploadImages();
-                    //    }
-                    //  },
-                    //  child: ThreeDContainer(
-                    //    width: 130,
-                    //    height: 50,
-                    //    backgroundColor: MultiPickerApp.navigateButton,
-                    //    backgroundDarkerColor: MultiPickerApp.background,
-                    //    child: Center(child: Text("Upload Images",style: TextStyle(color: Colors.white),)),
-                    //  ),
-                    //),
                   ],
                 ),
                 SizedBox(height: 10,),
