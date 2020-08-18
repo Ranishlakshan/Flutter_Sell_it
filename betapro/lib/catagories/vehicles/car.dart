@@ -1,78 +1,55 @@
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import '../../aditem.dart';
 
-import 'catagories/vehicles/car.dart';
-import 'catagories/vehicles/van.dart';
-
-import 'services/utils.dart';
-
-
-
-class AdAdvertisement extends StatefulWidget {
+class carForm extends StatefulWidget {
   @override
-  _AdAdvertisementState createState() => _AdAdvertisementState();
+  _carFormState createState() => _carFormState();
 }
 
-class _AdAdvertisementState extends State<AdAdvertisement> {
-  var selectedCurrency,selectedSub;
-  var value;
-  final databaseReference = Firestore.instance;
-  String now = new DateTime.now().toString();
-  List<Asset> images = List<Asset>();
-  //List<NetworkImage> _listOfImages = <NetworkImage>[];
-  List<String> imageUrls = <String>[];
-  //List<String> imageLocalLink = <String>[];
-  String _error = 'No Error Dectected';
-  bool isUploading = false;
-  bool carosal = false;
-
-
+class _carFormState extends State<carForm> {
+  
+  //bool carosal;
   final _formKeyCar = GlobalKey<FormState>();
   final _formKeyVan = GlobalKey<FormState>();
-  
-  void ValueChanged(currencyValue){
-    setState(() {
-          selectedCurrency =currencyValue;
-        });
-  }
+  List<Asset> images = List<Asset>();
+  List<String> imageUrls = <String>[];
+  String _error = 'No Error Dectected';
+  bool carosal = false;
 
-  void ValueSubchange(subcatagory){
-    setState(() {
-          selectedSub=subcatagory;
-        });
-  }
+  String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition;
 
-  void createRecord() async {
-    await databaseReference.collection("Advertisements")
-        .document(now)
-        .setData({
-          'title': 'Mastering Flutter',
-          'description': 'Programming Guide for Dart'
-        });
+  Widget _imageShow(){
+    if(carosal==true){
+      return CarouselSlider(
+        items: images
+        .map((e) => AssetThumb(asset:e, width: 300, height: 300,))
+        .toList(),
+        options: CarouselOptions(
+          height: 400,
+          aspectRatio: 16 /9 ,
+          viewportFraction: 0.8,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval: Duration(seconds: 3),
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+          scrollDirection: Axis.horizontal,
 
-    
-  }
-
-  Widget _widgetForm() {
-    switch (selectedSub) {
-      case "car":
-        return carForm();
-        break;
-      case "van":
-        build(context){
-          return vanForm();
-        };
-        //return _vanForm();
-        break;
+        ),  
+      );
+    }
+    else{
+      return Text('not yet selected');
     }
   }
-  //
-  
-  //
+
 
   Future<void> loadAssets() async {
     List<Asset> resultList = List<Asset>();
@@ -115,33 +92,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
       _error = error;
     });
   }
-  Widget _imageShow(){
-    if(carosal==true){
-      return CarouselSlider(
-        items: images
-        .map((e) => AssetThumb(asset:e, width: 300, height: 300,))
-        .toList(),
-        options: CarouselOptions(
-          height: 400,
-          aspectRatio: 16 /9 ,
-          viewportFraction: 0.8,
-          initialPage: 0,
-          enableInfiniteScroll: true,
-          reverse: false,
-          autoPlay: true,
-          autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: Duration(milliseconds: 800),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          enlargeCenterPage: true,
-          scrollDirection: Axis.horizontal,
-
-        ),  
-      );
-    }
-    else{
-      return Text('not yet selected');
-    }
-  }
+ 
 
   void uploadImages(){
   
@@ -178,11 +129,13 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
     return storageTaskSnapshot.ref.getDownloadURL();
   }
 
-  Widget _carForm() {
+
+  @override
+  Widget build(BuildContext context) {
     return Card(
       child: Form(
         
-        key: _formKeyVan,
+        //key: _formKeyVan,
         child: Column(children: <Widget>[
           // Add TextFormFields and RaisedButton here.
           //buildGridView(),
@@ -192,7 +145,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             //  if (value.isEmpty) {
             //    return 'Please enter Brand';
             //  }
-            //  //return null;
+            //  this.carBrand = value;
             //},
             decoration: const InputDecoration(
               hintText: 'Enter your Car Brand',
@@ -206,7 +159,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             //  if (value.isEmpty) {
             //    return 'Please enter Model';
             //  }
-            //  return null;
+            //  this.carModel = value;
             //},
             decoration: const InputDecoration(
               hintText: 'Enter your Car Model',
@@ -220,7 +173,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             //  if (value.isEmpty) {
             //    return 'Please enter Model Year';
             //  }
-            //  return null;
+            //  this.carYear = value;
             //},
             decoration: const InputDecoration(
               hintText: 'Enter Car Model year',
@@ -234,7 +187,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             //  if (value.isEmpty) {
             //    return 'Please enter Mileage';
             //  }
-            //  return null;
+            //  this.carMilleage = value;
             //},
             decoration: const InputDecoration(
               hintText: 'Enter Mileage',
@@ -248,7 +201,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             //  if (value.isEmpty) {
             //    return 'Enter Transmission type';
             //  }
-            //  return null;
+            //  this.carTransmission = value;
             //},
             decoration: const InputDecoration(
               hintText: 'Enter Transmission type',
@@ -262,7 +215,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             //  if (value.isEmpty) {
             //    return 'Please enter Fueltype';
             //  }
-            //  return null;
+            //  this.carFuelType = value;
             //},
             decoration: const InputDecoration(
               hintText: 'Enter Fuel type',
@@ -276,7 +229,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             //  if (value.isEmpty) {
             //    return 'Please enter Engine capaciy';
             //  }
-            //  return null;
+            //  this.carEngineCapacity = value;
             //},
             decoration: const InputDecoration(
               hintText: 'Enter Engine capacity',
@@ -290,7 +243,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             //  if (value.isEmpty) {
             //    return 'Please enter Description';
             //  }
-            //  return null;
+            //  this.carDescription = value;
             //},
             decoration: const InputDecoration(
               hintText: 'Enter Description here',
@@ -299,19 +252,21 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             ),
           ),
           SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please Price';
-            //  }
-            //  return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter Price',
-              labelText: 'Price',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
+          //
+          //TextFormField(
+          //  validator: (value) {
+          //    if (value.isEmpty) {
+          //      return 'Please enter condition';
+          //    }
+          //    this.carPrice = value;
+          //  },
+          //  decoration: const InputDecoration(
+          //    hintText: 'Enter candition here',
+          //    labelText: 'Condition ',
+          //    prefixIcon: Icon(Icons.add_circle)
+          //  ),
+          //),
+          //
           SizedBox(height: 20.0),
           RaisedButton(
             child: new Text("add Image"),
@@ -360,7 +315,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                 ],
               )),
               onPressed: () {
-                  createRecord();
+                  //createRecord();
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)
@@ -371,119 +326,6 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
         ]
         )
         )
-    );
-  }
-
-  //Widget _vanForm() {
-  //  return Form(
-  //      key: _formKeyCar,
-  //      child: Column(children: <Widget>[
-  //        // Add TextFormFields and RaisedButton here.
-  //        TextFormField(
-  //          validator: (value) {
-  //            if (value.isEmpty) {
-  //              return 'Please enter some text';
-  //            }
-  //            return null;
-  //          },
-  //          decoration: const InputDecoration(
-  //            hintText: 'Enter your Van Model',
-  //            labelText: 'Model',
-  //          ),
-  //        ),
-  //        
-  //      ]));
-  //}
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Container(
-            alignment: Alignment.center,
-            child: Text('Advertisement'),
-          ),
-        ),
-        body: ListView(
-          children: <Widget>[
-            Text('Select catagory here'),
-            Text('Select catagory here'),
-            SizedBox(height: 40.0),
-            StreamBuilder<QuerySnapshot>(
-                  stream:
-                      Firestore.instance.collection("catagory_names").snapshots(),
-                      builder: (context, snapshot) {
-                    if (!snapshot.hasData)
-                      const Text("Loading.....");
-                    else {
-                      List<DropdownMenuItem> currencyItems = [];
-                      List<DropdownMenuItem> currencySub = [];
-                      
-                      for(int i=0;i<snapshot.data.documents.length;i++){
-                        DocumentSnapshot snap = snapshot.data.documents[i];
-                        
-                        currencyItems.add(
-                          DropdownMenuItem(
-                            child: Text(
-                                 //snap.data.values.toString(),
-                                 snap.documentID
-                            ),
-                            value: "${snap.documentID}", 
-                          ),
-                        );
-
-                      }
-                      for (int i = 0; i < snapshot.data.documents.length; i++) {
-                        DocumentSnapshot snap = snapshot.data.documents[i];
-                        if(snap.documentID==selectedCurrency){
-                            for (int j = 0; j < snap.data.length; j++) {
-                          currencySub.add(
-                            DropdownMenuItem(
-                              child: Text(
-                                snap.data['${j + 1}'].toString(),
-                                style: TextStyle(color: Color(0xff11b719)),
-                              ),
-                              value: snap.data['${j + 1}'].toString(),
-                            ),
-                          );
-                        }
-                        }
-                        
-                      }
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          DropdownButton(
-                            items: currencyItems,
-                            onChanged: (currencyValue) => ValueChanged(currencyValue), 
-                            value: selectedCurrency,
-                            isExpanded: false,
-                            hint: new Text(
-                              "Choose catagory Type",
-                              style: TextStyle(color: Color(0xff11b719)),
-                            ),
-                          ),
-                          DropdownButton(
-                            items: currencySub,
-                            onChanged: (subcatagory) => ValueSubchange(subcatagory), 
-                            value: selectedSub,
-                            isExpanded: false,
-                            hint: new Text(
-                              "Choose sub",
-                              style: TextStyle(color: Color(0xff11b719)),
-                            ),
-                          ),
-                        ],
-                      );
-                      
-                    }
-                  }),
-                  
-              _widgetForm(),
-            
-              
-          ],
-        ),
     );
   }
 }
