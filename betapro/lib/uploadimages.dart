@@ -29,6 +29,10 @@ class _UploadImagesState extends State<UploadImages> {
   void initState() {
     super.initState();
   }
+  //
+  //
+  //
+  //
 
   Widget buildGridView() {
     return GridView.count(
@@ -224,12 +228,16 @@ Widget _widgetForm() {
 
   Future<void> loadAssets() async {
     List<Asset> resultList = List<Asset>();
+    List<NetworkImage> tempImgNameList = List<NetworkImage>();
     String error = 'No Error Dectected';
     try {
+      //
+
+      //
       resultList = await MultiImagePicker.pickImages(
         maxImages: 10,
         enableCamera: true,
-        selectedAssets: images,
+        selectedAssets:  images ,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           actionBarColor: "#abcdef",

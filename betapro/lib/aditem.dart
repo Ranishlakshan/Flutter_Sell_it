@@ -1,10 +1,12 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'services/utils.dart';
+
 
 
 class AdAdvertisement extends StatefulWidget {
@@ -18,11 +20,13 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
   final databaseReference = Firestore.instance;
   String now = new DateTime.now().toString();
   List<Asset> images = List<Asset>();
-  List<NetworkImage> _listOfImages = <NetworkImage>[];
+  //List<NetworkImage> _listOfImages = <NetworkImage>[];
   List<String> imageUrls = <String>[];
-  List<String> imageLocalLink = <String>[];
+  //List<String> imageLocalLink = <String>[];
   String _error = 'No Error Dectected';
   bool isUploading = false;
+  bool carosal = false;
+
 
   final _formKeyCar = GlobalKey<FormState>();
   final _formKeyVan = GlobalKey<FormState>();
@@ -51,22 +55,6 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
   }
 
   Widget _widgetForm() {
-    // if (selectedCurrency == "Car") {
-    //   return Form(
-    //       key: _formKeyCar,
-    //       child: Column(children: <Widget>[
-    //         // Add TextFormFields and RaisedButton here.
-    //         TextFormField(
-    //           validator: (value) {
-    //             if (value.isEmpty) {
-    //               return 'Please enter some text';
-    //             }
-    //             return null;
-    //           },
-    //         ),
-    //       ]));
-    // }
-
     switch (selectedSub) {
       case "car":
         return _carForm();
@@ -76,6 +64,9 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
         break;
     }
   }
+  //
+  
+  //
 
   Future<void> loadAssets() async {
     List<Asset> resultList = List<Asset>();
@@ -109,63 +100,42 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
     if (!mounted) return;
     setState(() {
       images = resultList;
-      setImageLink();
+      carosal = true;
+      print('<<<<<<<<<<<<<<<<<<<');
+      print(images);
+      
+      
       //_listOfImages = imageUrls.cast<NetworkImage>();
       _error = error;
     });
   }
-  void setImageLink(){
-    for ( var imageFile in images) {
-      postImage(imageFile).then((downloadUrl) {
-        imageLocalLink.add(downloadUrl.toString());
-        //if(imageLocalLink.length==images.length){
-        //  String documnetID = DateTime.now().millisecondsSinceEpoch.toString();
-        //  Firestore.instance.collection('images').document(documnetID).setData({
-        //    'urls':imageUrls
-        //  }).then((_){
-        //    SnackBar snackbar = SnackBar(content: Text('Uploaded Successfully'));
-        //    //widget.globalKey.currentState.showSnackBar(snackbar);
-        //    setState(() {
-        //      images = [];
-        //      imageUrls = [];
-        //    });
-        //  });
-        //}
-      }).catchError((err) {
-        print(err);
-      });
+  Widget _imageShow(){
+    if(carosal==true){
+      return CarouselSlider(
+        items: images
+        .map((e) => AssetThumb(asset:e, width: 300, height: 300,))
+        .toList(),
+        options: CarouselOptions(
+          height: 400,
+          aspectRatio: 16 /9 ,
+          viewportFraction: 0.8,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval: Duration(seconds: 3),
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+          scrollDirection: Axis.horizontal,
+
+        ),  
+      );
+    }
+    else{
+      return Text('not yet selected');
     }
   }
-
-  Widget buildGridView() {
-    return GridView.count(
-      crossAxisCount: 3,
-      children: List.generate(images.length, (index) {
-        Asset asset = images[index];
-        print(asset.getByteData(quality: 100));
-        return Padding(
-          padding: EdgeInsets.all(8.0),
-          child: ThreeDContainer(
-            backgroundColor: MultiPickerApp.darker,
-            backgroundDarkerColor: MultiPickerApp.darker,
-            height: 50,
-            width: 50,
-            borderDarkerColor: MultiPickerApp.pauseButton,
-            borderColor: MultiPickerApp.pauseButtonDarker,
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              child: AssetThumb(
-                asset: asset,
-                width: 300,
-                height: 300,
-              ),
-            ),
-          ),
-        );
-      }),
-    );
-  }
-
 
   void uploadImages(){
   
@@ -182,6 +152,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             setState(() {
               images = [];
               imageUrls = [];
+              carosal =false;
             });
           });
         }
@@ -341,24 +312,8 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             onPressed: loadAssets,
           ),
           SizedBox(height: 10.0,),
-          //Expanded(
-          //    child: buildGridView(),
-          //),
-          //SizedBox(
-          //  height: 150.0,
-          //  width: 300.0,
-          //  child: Carousel(
-          //    images: imageLocalLink,
-          //  ),
-          //),
-          //Image.asset(imageUrls[0]),
-          //
-          //
-          //
+          _imageShow(),
           
-          //
-          //
-          //
           RaisedButton(
               child: new Text("upload"),
               onPressed: (){
@@ -374,6 +329,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                         },
                         child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
                       )
+                      
                      ],
                     );
                   });
@@ -516,20 +472,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                       
                     }
                   }),
-                  //form start here
-            //Text('Select catagory here'),
-            //Text('Select catagory here'),
-            //Text('Select catagory here'),
-            //Text('Select catagory here'),
-            //Text('Select catagory here'),
-            //Text('Select catagory here'),
-            //Text('Select catagory here'),
-            //Text('Select catagory here'),
-            //Card(
-            //  child: Text("Ranish"),
-            //),
-            //_carForm(),
-            //_vanForm(),
+                  
               _widgetForm(),
             
               

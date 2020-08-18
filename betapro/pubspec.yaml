@@ -37,6 +37,7 @@ dependencies:
   multi_image_picker: ^4.7.10
   carousel_pro: ^1.0.0
   firebase_storage: ^3.1.6
+  carousel_slider: ^2.2.1
 
 dev_dependencies:
   flutter_test:
