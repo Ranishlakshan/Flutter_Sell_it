@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
 
-Widget vanForm() {
-    return Form(
-        //key: _formKeyCar,
-        child: Column(children: <Widget>[
-          // Add TextFormFields and RaisedButton here.
-          TextFormField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              hintText: 'Enter your Van Model',
-              labelText: 'Model',
-            ),
-          ),
-          
-        ]));
+class vanForm extends StatefulWidget {
+  @override
+  _vanFormState createState() => _vanFormState();
+}
+
+class _vanFormState extends State<vanForm> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
   }
+}

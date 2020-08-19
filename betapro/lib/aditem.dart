@@ -13,12 +13,15 @@ import 'services/utils.dart';
 
 
 class AdAdvertisement extends StatefulWidget {
+  final GlobalKey<ScaffoldState> globalKey;
+  const AdAdvertisement({Key key, this.globalKey}) : super(key: key);
   @override
   _AdAdvertisementState createState() => _AdAdvertisementState();
 }
 
 class _AdAdvertisementState extends State<AdAdvertisement> {
   var selectedCurrency,selectedSub;
+  var  selectedCurrency2, selectedType;
   var value;
   final databaseReference = Firestore.instance;
   String now = new DateTime.now().toString();
@@ -33,14 +36,16 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
 
   final _formKeyCar = GlobalKey<FormState>();
   final _formKeyVan = GlobalKey<FormState>();
+
+  var catagory_names = Firestore.instance.collection("catagory_names").snapshots();
   
-  void ValueChanged(currencyValue){
+  void ValueChanged(var currencyValue){
     setState(() {
           selectedCurrency =currencyValue;
         });
   }
 
-  void ValueSubchange(subcatagory){
+  void ValueSubchange(var subcatagory){
     setState(() {
           selectedSub=subcatagory;
         });
@@ -58,15 +63,12 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
   }
 
   Widget _widgetForm() {
-    switch (selectedSub) {
+    switch (selectedCurrency2) {
       case "car":
         return carForm();
         break;
-      case "van":
-        build(context){
-          return vanForm();
-        };
-        //return _vanForm();
+      default:
+        return Text(' ');
         break;
     }
   }
@@ -182,7 +184,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
     return Card(
       child: Form(
         
-        key: _formKeyVan,
+        //key: _formKeyVan,
         child: Column(children: <Widget>[
           // Add TextFormFields and RaisedButton here.
           //buildGridView(),
@@ -373,28 +375,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
         )
     );
   }
-
-  //Widget _vanForm() {
-  //  return Form(
-  //      key: _formKeyCar,
-  //      child: Column(children: <Widget>[
-  //        // Add TextFormFields and RaisedButton here.
-  //        TextFormField(
-  //          validator: (value) {
-  //            if (value.isEmpty) {
-  //              return 'Please enter some text';
-  //            }
-  //            return null;
-  //          },
-  //          decoration: const InputDecoration(
-  //            hintText: 'Enter your Van Model',
-  //            labelText: 'Model',
-  //          ),
-  //        ),
-  //        
-  //      ]));
-  //}
-
+  List<DropdownMenuItem> currencyItems2 = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -410,76 +391,104 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             Text('Select catagory here'),
             SizedBox(height: 40.0),
             StreamBuilder<QuerySnapshot>(
-                  stream:
-                      Firestore.instance.collection("catagory_names").snapshots(),
-                      builder: (context, snapshot) {
-                    if (!snapshot.hasData)
-                      const Text("Loading.....");
-                    else {
-                      List<DropdownMenuItem> currencyItems = [];
-                      List<DropdownMenuItem> currencySub = [];
-                      
-                      for(int i=0;i<snapshot.data.documents.length;i++){
-                        DocumentSnapshot snap = snapshot.data.documents[i];
-                        
-                        currencyItems.add(
-                          DropdownMenuItem(
-                            child: Text(
-                                 //snap.data.values.toString(),
-                                 snap.documentID
-                            ),
-                            value: "${snap.documentID}", 
-                          ),
-                        );
-
-                      }
-                      for (int i = 0; i < snapshot.data.documents.length; i++) {
-                        DocumentSnapshot snap = snapshot.data.documents[i];
-                        if(snap.documentID==selectedCurrency){
-                            for (int j = 0; j < snap.data.length; j++) {
-                          currencySub.add(
-                            DropdownMenuItem(
-                              child: Text(
-                                snap.data['${j + 1}'].toString(),
-                                style: TextStyle(color: Color(0xff11b719)),
-                              ),
-                              value: snap.data['${j + 1}'].toString(),
+              stream: catagory_names,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData)
+                  return Text("Loading.....");
+                else {
+                  List<DropdownMenuItem> currencyItems = [];
+                  for (int i = 0; i < snapshot.data.documents.length; i++) {
+                    DocumentSnapshot snap = snapshot.data.documents[i];
+                    currencyItems.add(
+                      DropdownMenuItem(
+                        child: Text(
+                          snap.documentID,
+                          style: TextStyle(color: Color(0xff11b719)),
+                        ),
+                        value: "${snap.documentID}",
+                      ),
+                    );
+                  }
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(width: 20.0),
+                      DropdownButton(
+                        items: currencyItems,
+                        onChanged: (currencyValue) {
+                          setState(() {
+                            selectedCurrency = currencyValue;
+                            //disabledropdown = true;
+                          });
+                          for (int i = 0;
+                              i < snapshot.data.documents.length;
+                              i++) {
+                            DocumentSnapshot snap = snapshot.data.documents[i];
+                            if (snap.documentID == selectedCurrency) {
+                              for (int j = 0; j < snap.data.length; j++) {
+                                currencyItems2.add(
+                                  DropdownMenuItem(
+                                    child: Text(
+                                      snap.data['${j + 1}'].toString(),
+                                      style:
+                                          TextStyle(color: Color(0xff11b719)),
+                                    ),
+                                    value: snap.data['${j + 1}'].toString(),
+                                  ),
+                                );
+                              }
+                            }
+                          }
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Selected Currency value is $currencyValue',
+                              style: TextStyle(color: Color(0xff11b719)),
                             ),
                           );
-                        }
-                        }
-                        
-                      }
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          DropdownButton(
-                            items: currencyItems,
-                            onChanged: (currencyValue) => ValueChanged(currencyValue), 
-                            value: selectedCurrency,
-                            isExpanded: false,
-                            hint: new Text(
-                              "Choose catagory Type",
+                          Scaffold.of(context).showSnackBar(snackBar);
+                        },
+                        value: selectedCurrency,
+                        isExpanded: false,
+                        hint: new Text(
+                          "Choose Category Type",
+                          style: TextStyle(color: Color(0xff11b719)),
+                        ),
+                      ),
+                      DropdownButton(
+                        items: currencyItems2,
+                        onChanged: (currencyValue) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Selected Currency value is $currencyValue',
                               style: TextStyle(color: Color(0xff11b719)),
                             ),
-                          ),
-                          DropdownButton(
-                            items: currencySub,
-                            onChanged: (subcatagory) => ValueSubchange(subcatagory), 
-                            value: selectedSub,
-                            isExpanded: false,
-                            hint: new Text(
-                              "Choose sub",
-                              style: TextStyle(color: Color(0xff11b719)),
-                            ),
-                          ),
-                        ],
-                      );
-                      
-                    }
-                  }),
+                          );
+                          Scaffold.of(context).showSnackBar(snackBar);
+                          setState(() {
+                            selectedCurrency2 = currencyValue;
+                          });
+                        },
+                      ),
+                    ],
+                  );
+                }
+              }),
+          _widgetForm(),
+          Card(
+            child: InkWell(
+              splashColor: Colors.blue.withAlpha(30),
+              onTap: () {
+                print('Card tapped.');
+              },
+              child: Container(
+                width: 300,
+                height: 100,
+                child: Text('A card that can be tapped'),
+              ),
+            ),
+          ),
                   
-              _widgetForm(),
+              //_widgetForm(),
             
               
           ],

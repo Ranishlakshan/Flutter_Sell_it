@@ -238,19 +238,19 @@ class _carFormState extends State<carForm> {
             ),
           ),
           SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Description';
-            //  }
-            //  this.carDescription = value;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter Description here',
-              labelText: 'Description ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
+          //TextFormField(
+          //  //validator: (value) {
+          //  //  if (value.isEmpty) {
+          //  //    return 'Please enter Description';
+          //  //  }
+          //  //  this.carDescription = value;
+          //  //},
+          //  decoration: const InputDecoration(
+          //    hintText: 'Enter Description here',
+          //    labelText: 'Description ',
+          //    prefixIcon: Icon(Icons.add_circle)
+          //  ),
+          //),
           SizedBox(height: 20.0),
           //
           //TextFormField(

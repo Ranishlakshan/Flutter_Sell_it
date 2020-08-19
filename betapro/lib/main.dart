@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'aditem.dart';
 import 'aditems.dart';
 import 'admob_pg.dart';
 import 'admobdoc.dart';
+import 'aliexpressmain.dart';
 import 'dashboard.dart';
 import 'first_screen.dart';
 import 'login_page.dart';
+import 'nima_data_add.dart';
 import 'search.dart';
 
 
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DashboardPage(),
+      home: AliExpressesPg(),
       routes: {
         '/login': (context) => LoginPage(),
         '/searchitem': (context) => SeachAppBarRecipe(),
