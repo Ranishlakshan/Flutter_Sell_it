@@ -6,6 +6,7 @@ class MainListView extends StatelessWidget {
     return Container(
       height: 80.0,
       child: ListView(
+        shrinkWrap : true,
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           Listitmes(
@@ -69,7 +70,7 @@ class Listitmes extends StatelessWidget {
     return Padding(padding: const EdgeInsets.all(2.0),
     child: InkWell(onTap: (){},
     child: Container(
-          width: 100.0,
+          width: 90.0,
           child: ListTile(
         title: Image.asset(
           image_location,

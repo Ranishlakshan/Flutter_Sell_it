@@ -101,8 +101,19 @@ class _carFormState extends State<carForm> {
         imageUrls.add(downloadUrl.toString());
         if(imageUrls.length==images.length){
           String documnetID = DateTime.now().millisecondsSinceEpoch.toString();
-          Firestore.instance.collection('images').document(documnetID).setData({
-            'urls':imageUrls
+          //carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition
+          Firestore.instance.collection('ads').document(documnetID).setData({
+            'urls':imageUrls,
+            'brand':carBrand,
+            'model':carModel,
+            'year':carYear,
+            'price':carPrice,
+            'milleage':carMilleage,
+            'transmission':carTransmission,
+            'FuelType':carFuelType,
+            'EngineCapacity':carEngineCapacity,
+            'condition':carCondition,
+            'description':carDescription,
           }).then((_){
             SnackBar snackbar = SnackBar(content: Text('Uploaded Successfully'));
             //widget.globalKey.currentState.showSnackBar(snackbar);
@@ -135,18 +146,20 @@ class _carFormState extends State<carForm> {
     return Card(
       child: Form(
         
-        //key: _formKeyVan,
+        key: _formKeyCar,
         child: Column(children: <Widget>[
           // Add TextFormFields and RaisedButton here.
           //buildGridView(),
           TextFormField(
-             
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Brand';
-            //  }
-            //  this.carBrand = value;
-            //},
+            onChanged:  (value) {
+                 carBrand=value;         
+                        },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter Brand';
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'Enter your Car Brand',
               labelText: 'Brand',
@@ -155,12 +168,15 @@ class _carFormState extends State<carForm> {
           ),
           SizedBox(height: 20.0),
           TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Model';
-            //  }
-            //  this.carModel = value;
-            //},
+            onChanged:  (value) {
+                 carModel=value;         
+                        },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter Model';
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'Enter your Car Model',
               labelText: 'Car Model',
@@ -169,12 +185,15 @@ class _carFormState extends State<carForm> {
           ),
           SizedBox(height: 20.0),
           TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Model Year';
-            //  }
-            //  this.carYear = value;
-            //},
+            onChanged:  (value) {
+                 carYear=value;         
+                        },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter Model Year';
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'Enter Car Model year',
               labelText: 'Model Year',
@@ -183,12 +202,15 @@ class _carFormState extends State<carForm> {
           ),
           SizedBox(height: 20.0),
           TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Mileage';
-            //  }
-            //  this.carMilleage = value;
-            //},
+            onChanged:  (value) {
+                 carMilleage=value;         
+                        },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter Mileage';
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'Enter Mileage',
               labelText: 'Mileage ',
@@ -197,12 +219,15 @@ class _carFormState extends State<carForm> {
           ),
           SizedBox(height: 20.0),
           TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Enter Transmission type';
-            //  }
-            //  this.carTransmission = value;
-            //},
+            onChanged:  (value) {
+                 carTransmission=value;         
+                        },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Enter Transmission type';
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'Enter Transmission type',
               labelText: 'Transmission ',
@@ -211,12 +236,15 @@ class _carFormState extends State<carForm> {
           ),
           SizedBox(height: 20.0),
           TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Fueltype';
-            //  }
-            //  this.carFuelType = value;
-            //},
+            onChanged:  (value) {
+                 carFuelType=value;         
+                        },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Fueltype';
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'Enter Fuel type',
               labelText: 'Fueltype ',
@@ -225,12 +253,15 @@ class _carFormState extends State<carForm> {
           ),
           SizedBox(height: 20.0),
           TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Engine capaciy';
-            //  }
-            //  this.carEngineCapacity = value;
-            //},
+            onChanged:  (value) {
+                 carEngineCapacity=value;         
+                        },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Engine capaciy';
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'Enter Engine capacity',
               labelText: 'Engine capacity(cc) ',
@@ -238,35 +269,59 @@ class _carFormState extends State<carForm> {
             ),
           ),
           SizedBox(height: 20.0),
-          //TextFormField(
-          //  //validator: (value) {
-          //  //  if (value.isEmpty) {
-          //  //    return 'Please enter Description';
-          //  //  }
-          //  //  this.carDescription = value;
-          //  //},
-          //  decoration: const InputDecoration(
-          //    hintText: 'Enter Description here',
-          //    labelText: 'Description ',
-          //    prefixIcon: Icon(Icons.add_circle)
-          //  ),
-          //),
+          TextFormField(
+            onChanged:  (value) {
+                 carDescription=value;         
+                        },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Description';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter Description here',
+              labelText: 'Description ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
           SizedBox(height: 20.0),
-          //
-          //TextFormField(
-          //  validator: (value) {
-          //    if (value.isEmpty) {
-          //      return 'Please enter condition';
-          //    }
-          //    this.carPrice = value;
-          //  },
-          //  decoration: const InputDecoration(
-          //    hintText: 'Enter candition here',
-          //    labelText: 'Condition ',
-          //    prefixIcon: Icon(Icons.add_circle)
-          //  ),
-          //),
-          //
+          //carCondition
+          TextFormField(
+            onChanged:  (value) {
+                 carCondition=value;         
+                        },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter condition';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter condition here',
+              labelText: 'Condition ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          
+          SizedBox(height: 20.0),
+          TextFormField(
+            onChanged:  (value) {
+                 carPrice=value;         
+                        },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Price';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter Price here',
+              labelText: 'Price ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+          
           SizedBox(height: 20.0),
           RaisedButton(
             child: new Text("add Image"),
@@ -303,6 +358,20 @@ class _carFormState extends State<carForm> {
               },
           ),
           SizedBox(height: 20.0),
+          Card(
+            child: InkWell(
+              splashColor: Colors.blue.withAlpha(30),
+              onTap: () {
+                print('Card tapped.');
+              },
+              child: Container(
+                width: 300,
+                height: 100,
+                child: Text('A card that can be tapped'),
+              ),
+            ),
+          ),
+          SizedBox(height: 20.0),
           RaisedButton(
               color: Color(0xff11b719),
               textColor: Colors.white,
@@ -316,6 +385,28 @@ class _carFormState extends State<carForm> {
               )),
               onPressed: () {
                   //createRecord();
+                  if(images.length==0){
+                  showDialog(context: context,builder: (_){
+                    return AlertDialog(
+                      backgroundColor: Theme.of(context).backgroundColor,
+                     content: Text("No image selected",style: TextStyle(color: Colors.white)),
+                     actions: <Widget>[
+                      RaisedButton(
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                        child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
+                      )
+                      
+                     ],
+                    );
+                  });
+                }
+                else{
+                  SnackBar snackbar = SnackBar(content: Text('Please wait, we are uploading'));
+                  //widget.globalKey.currentState.showSnackBar(snackbar);
+                  uploadImages();
+                }
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)

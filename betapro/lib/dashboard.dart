@@ -124,6 +124,7 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Widget _carList() {
+    initState();
     if (cars != null) {
       return ListView.builder(
         itemCount: cars.documents.length,
