@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'components/listview_Horizontal.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import 'dbmodels/add_card_gridview.dart';
+import 'dbmodels/car_itm_model.dart';
 import 'staggardgridview.dart';
 
 class AliExpressesPg extends StatefulWidget {
@@ -12,6 +15,17 @@ class AliExpressesPg extends StatefulWidget {
 
 class _AliExpressesPgState extends State<AliExpressesPg> {
   
+  String carBand;
+  String carYear;
+  String carImage;
+  String docID;
+  CarModel carObjec = new CarModel("","","","");
+  var car;
+  List<CarModel> _listOfObjects = <CarModel>[];
+
+  
+
+
   final List<String> images = [
     "https://uae.microless.com/cdn/no_image.jpg",
     "https://images-na.ssl-images-amazon.com/images/I/81aF3Ob-2KL._UX679_.jpg",
@@ -24,6 +38,44 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
     "https://media.onthemarket.com/properties/6191869/797156548/composite.jpg",
     "https://media.onthemarket.com/properties/6191840/797152761/composite.jpg",
   ];
+
+  Widget sliverGridWidget(context) {
+     return StaggeredGridView.countBuilder(
+       padding: const EdgeInsets.all(8.0),
+       shrinkWrap: true,
+      primary: false,
+      crossAxisCount: 4,
+      itemCount: _listOfObjects.length, //staticData.length,
+      // itemBuilder: (context, index) {
+      //   return Card(
+      //       elevation: 8.0,
+      //       child: InkWell(
+      //           child: Hero(
+      //             tag: index, // staticData[index].images,
+      //             child: new FadeInImage(
+      //               width: MediaQuery.of(context).size.width,
+      //               image: NetworkImage(
+      //                   "https://images.unsplash.com/photo-1468327768560-75b778cbb551?ixlib=rb-1.2.1&w=1000&q=80"), // NetworkImage(staticData[index].images),
+      //               fit: BoxFit.cover,
+      //               placeholder: AssetImage("assets/images/app_logo.png"),
+      //             ),
+      //           ),
+      //           onTap: () {
+      //             //
+      //           }
+      //           )
+      //           );
+      // },
+      itemBuilder: (BuildContext context, int index) {
+        return AadCardForGrid(_listOfObjects[index]);
+      },
+     staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
+     mainAxisSpacing: 4.0,
+      crossAxisSpacing: 4.0,
+      
+    );
+
+  }
 
   Widget carosalmain(){
     return CarouselSlider(
@@ -61,6 +113,19 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
             )
           );
   }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    carObjec.getData().then((result) {
+      setState(() {
+        car = result;
+      });
+    });
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +146,9 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
           ],
       ),
       body: ListView(
-        shrinkWrap : true,
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        //shrinkWrap : true,
         children: <Widget>[
           carosalmain(),
           SizedBox(height: 20.0,),
@@ -142,8 +209,30 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
           Text("data"),
           Text("data"),
           Text("data"),
-          Container(
-            child: MyAppStagger(),
+          StreamBuilder(
+            stream: car,
+            builder: (context, snapshot)  {
+              if(snapshot.hasData){
+                _listOfObjects = <CarModel>[];
+                
+                 for (int i = 0; i < snapshot.data.documents.length; i++) {
+                  // DocumentSnapshot snap = snapshot.data.documents[i];
+                  
+                  String docID = snapshot.data.documents[i].documentID;
+                  String carBrand =
+                      snapshot.data.documents[i].data['brand'];
+                  String caryear = snapshot.data.documents[i].data['model'];
+                  String carimage =
+                      snapshot.data.documents[i].data['urls'][0];                  
+                  _listOfObjects.add(CarModel(carBrand,caryear,carimage,docID));
+                }
+                return sliverGridWidget(context); 
+              }else{
+                return Text("loading");
+              }
+                 
+                 
+              },
           ),
 
         ],
@@ -151,3 +240,5 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
     );
   }
 }
+
+

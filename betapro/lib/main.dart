@@ -6,6 +6,7 @@ import 'admobdoc.dart';
 import 'aliexpressmain.dart';
 import 'dashboard.dart';
 import 'first_screen.dart';
+import 'itemview.dart';
 import 'login_page.dart';
 import 'nima_data_add.dart';
 import 'search.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/admobdoc': (context) => AdmobDoc(),
         '/first_screen': (context) => FirstScreen(),
         '/ad_items': (context) => AdItem(),
+        //'/itemview' : (context) => ItemView(),
       },
     );
   }
