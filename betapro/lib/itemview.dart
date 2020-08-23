@@ -12,10 +12,22 @@ class ItemView extends StatefulWidget {
   _ItemViewState createState() => _ItemViewState();
 }
 String name123;
+var cars;
 class _ItemViewState extends State<ItemView> {
   @override
   //String docuID = Widget.documentid;
   
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    cars = Firestore.instance
+        .collection('ads')
+        .document('${widget.docID123}')
+        .snapshots();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     //final  Map<String, Object>rcvdData = ModalRoute.of(context).settings.arguments;
     //docID = ${rcvdData['docuID'];}
@@ -139,7 +151,8 @@ class _ItemViewState extends State<ItemView> {
 Widget getItems(){
     return StreamBuilder(
       //1597917013710
-      stream: Firestore.instance.collection('ads').document('1597917013710').snapshots(),
+      //stream: Firestore.instance.collection('ads').document('1597917013710').snapshots(),
+      stream: cars,
       builder: (context, snapshot){
         if (!snapshot.hasData) {
           //snapshot.data.toString();
@@ -176,6 +189,7 @@ Widget getItems(){
         //
         return ListView.builder(
                 shrinkWrap: true,
+                primary: false,
                 itemCount: speclistlen,
                 itemBuilder: (context,index){
                   return Card(
