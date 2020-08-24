@@ -1,5 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'zoomImage.dart';
 
 
 
@@ -13,15 +16,23 @@ class ItemView extends StatefulWidget {
 }
 String name123;
 var cars;
+var cars_img;
 class _ItemViewState extends State<ItemView> {
   @override
   //String docuID = Widget.documentid;
   
+  List<String> _listOfImages = <String>[];
 
   @override
   void initState() {
     // TODO: implement initState
     cars = Firestore.instance
+        .collection('ads')
+        .document('${widget.docID123}')
+        .snapshots();
+    super.initState();
+
+    cars_img = Firestore.instance
         .collection('ads')
         .document('${widget.docID123}')
         .snapshots();
@@ -38,6 +49,53 @@ class _ItemViewState extends State<ItemView> {
       ),
       body: ListView(
         children: <Widget>[
+          StreamBuilder(
+                stream: cars_img,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    _listOfImages = [];
+                    for (int i = 0; i < snapshot.data['urls'].length; i++) {
+                      _listOfImages.add(snapshot.data['urls'][i]);
+                    }
+                  }
+                  return CarouselSlider(
+                      items: _listOfImages.map((e) {
+                        return ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            child: Container(
+                              height: 300.0,
+                              margin: EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: GestureDetector(
+                                  child: Image.network(e, fit: BoxFit.fill),
+                                  onTap: () {
+                                    Navigator.push<Widget>(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ZoomImage(zoomlistOfImages: _listOfImages),
+                                      ),
+                                    );
+                                  }),
+                            ));
+                      }).toList(),
+                      options: CarouselOptions(
+                        height: 400,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 0.8,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                      ));
+                }),
           Text('Nimasha'),
           Text('Nimasha'),
           Text('Nimasha'),
