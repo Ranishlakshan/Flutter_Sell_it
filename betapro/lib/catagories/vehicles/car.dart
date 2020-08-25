@@ -2,6 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mobile_number/mobile_number.dart';
+import 'package:mobile_number/sim_card.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../aditem.dart';
 
@@ -21,6 +24,59 @@ class _carFormState extends State<carForm> {
   bool carosal = false;
 
   String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition;
+
+  //List<SimCard> _simCard = <SimCard>[];
+  //List<String> ranish = <String>[];
+  //@override
+  //void initState() {
+  //  super.initState();
+  //  //fillCards();
+  //  MobileNumber.listenPhonePermission((isPermissionGranted) {
+  //    if (isPermissionGranted) {
+  //      initMobileNumberState();
+  //    } else {
+  //      fillCards();
+  //    }
+  //  });
+  //  fillCards();
+  //  initMobileNumberState();
+  //}
+  //Future<void> initMobileNumberState() async {
+  //  if (!await MobileNumber.hasPhonePermission) {
+  //    await MobileNumber.requestPhonePermission;
+  //    return;
+  //  }
+  //  String mobileNumber = '';
+  //  // Platform messages may fail, so we use a try/catch PlatformException.
+  //  try {
+  //    mobileNumber = await MobileNumber.mobileNumber;
+  //    _simCard = await MobileNumber.getSimCards;
+  //  } on PlatformException catch (e) {
+  //    debugPrint("Failed to get mobile number because of '${e.message}'");
+  //  }
+//
+  //  // If the widget was removed from the tree while the asynchronous platform
+  //  // message was in flight, we want to discard the reply rather than calling
+  //  // setState to update our non-existent appearance.
+  //  if (!mounted) return;
+//
+  //  
+  //}
+  //void fillCards() {
+  //  List<Widget> widgets = _simCard
+  //      .map((SimCard sim) => Text(
+  //          '${sim.number}'))
+  //      .toList();
+  //  ranish = _simCard
+  //      .map((SimCard sim) => (
+  //          '${sim.number}'))
+  //      .toList();
+  //  setState(() {
+  //        ranish=ranish;
+  //      });    
+  //  //return Column(children: widgets);
+  //}
+
 
   Widget _imageShow(){
     if(carosal==true){
@@ -150,6 +206,9 @@ class _carFormState extends State<carForm> {
         child: Column(children: <Widget>[
           // Add TextFormFields and RaisedButton here.
           //buildGridView(),
+          //fillCards(),
+          //Text(ranish.toString()),
+          
           TextFormField(
             onChanged:  (value) {
                  carBrand=value;         
@@ -280,6 +339,7 @@ class _carFormState extends State<carForm> {
               return null;
             },
             decoration: const InputDecoration(
+            
               hintText: 'Enter Description here',
               labelText: 'Description ',
               prefixIcon: Icon(Icons.add_circle)

@@ -133,6 +133,13 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
         title: Text('Find what u want'),
         actions: <Widget>[
             IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.pushNamed(context, '/searchtest');
+                //addDialog(context);
+              },
+            ),
+            IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
                 Navigator.pushNamed(context, '/login');

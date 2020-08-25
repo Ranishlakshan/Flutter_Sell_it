@@ -10,6 +10,7 @@ import 'itemview.dart';
 import 'login_page.dart';
 import 'nima_data_add.dart';
 import 'search.dart';
+import 'searchApp.dart';
 
 
 void main() => runApp(MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/admobdoc': (context) => AdmobDoc(),
         '/first_screen': (context) => FirstScreen(),
         '/ad_items': (context) => AdItem(),
-        //'/itemview' : (context) => ItemView(),
+        '/searchtest' : (context) => SearchHere(),
       },
     );
   }

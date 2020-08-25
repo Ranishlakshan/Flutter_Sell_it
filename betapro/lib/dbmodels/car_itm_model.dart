@@ -50,5 +50,9 @@ String getdocID(){
   return docID;
 }
 
+getSearch(String text) async {
+    return await Firestore.instance.collection('ads').where('brand',isGreaterThanOrEqualTo: text).snapshots();
+  }
+
 
 }
