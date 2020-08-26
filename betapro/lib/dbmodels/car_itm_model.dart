@@ -22,6 +22,7 @@ class CarModel {
 
   getData() async {
     return await Firestore.instance.collection('ads').snapshots();
+    
   }
 
 void setcarBrand(String carBrand){
@@ -51,8 +52,23 @@ String getdocID(){
 }
 
 getSearch(String text) async {
-    return await Firestore.instance.collection('ads').where('brand',isGreaterThanOrEqualTo: text).snapshots();
-  }
+  //var result;
+  //var dbresult =Firestore.instance.collection('ads').snapshots();
+  //for(int i = 0; i < dbresult.data.documents.length; i++){}
+  //for(int i = 0; i < dbresult.data.length; i++){
+
+  
+
+  
+  //String 
+    //Stream<QuerySnapshot> snapshot1 = await Firestore.instance.collection('ads').where(['searchkey','brand'], arrayContains: text ).snapshots();
+    //Stream<QuerySnapshot> snapshot2 = await Firestore.instance.collection('ads').where(['searchkey','brand'], arrayContains: text ).snapshots();
+    //QuerySnapshot snapshot = Observer ;
+    //return await Firestore.instance.collection('ads').where('searchkey', isGreaterThanOrEqualTo: text ).snapshots();
+    //return await Firestore.instance.collection('ads').where('searchkey', isGreaterThanOrEqualTo: text  ).snapshots();
+    //return await Firestore.instance.collection('ads').where("searchkey" ,isGreaterThanOrEqualTo: text ).snapshots();
+    return await Firestore.instance.collection('ads').snapshots();
 
 
+}
 }

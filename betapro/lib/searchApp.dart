@@ -16,7 +16,7 @@ class _SearchHereState extends State<SearchHere> {
   String carYear;
   String carImage;
   String docID;
-  CarModel carObjec123 = new CarModel("","","","");
+  //CarModel carObjec123 = new CarModel("","","","");
   var searchitem;
   List<CarModel> _listOfObjects = <CarModel>[];
 
@@ -83,8 +83,10 @@ class _SearchHereState extends State<SearchHere> {
             hintText: 'search here',
             hintStyle: TextStyle(color: Colors.white)
           ),
+          
           onChanged: (text){
-            searchmethod(text);
+            //searchmethod(text);
+            CarModel carObjec123 = new CarModel("","","","");
             carObjec123.getSearch(text).then((result) {
             setState(() {
             searchitem = result;
@@ -137,13 +139,28 @@ class _SearchHereState extends State<SearchHere> {
               }else{
                 return Text("loading");
               }
+              
                  
                  
               },
           ),
+          ranishtest(),
         ],
       ),
     );
   }              
   void searchmethod(String text) {}
+  Widget ranishtest(){
+    String mainString = "toyota allion 260 2010";
+    String substring = "allion 260";
+
+    bool re =mainString.contains(substring); 
+
+    if(re){
+      return Text('have');
+    }
+    else{
+      return Text('dont have');
+    }
+  }
 }

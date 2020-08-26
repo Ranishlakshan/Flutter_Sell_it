@@ -84,7 +84,7 @@ class _ItemViewState extends State<ItemView> {
                             ));
                       }).toList(),
                       options: CarouselOptions(
-                        height: 400,
+                        height: 300,
                         aspectRatio: 16 / 9,
                         viewportFraction: 0.8,
                         initialPage: 0,

@@ -24,7 +24,7 @@ class _carFormState extends State<carForm> {
   bool carosal = false;
 
   String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition;
-
+  String searchkey;
   //List<SimCard> _simCard = <SimCard>[];
   //List<String> ranish = <String>[];
   //@override
@@ -170,6 +170,7 @@ class _carFormState extends State<carForm> {
             'EngineCapacity':carEngineCapacity,
             'condition':carCondition,
             'description':carDescription,
+            'searchkey':carBrand+" "+carModel+" "+carYear,
           }).then((_){
             SnackBar snackbar = SnackBar(content: Text('Uploaded Successfully'));
             //widget.globalKey.currentState.showSnackBar(snackbar);
