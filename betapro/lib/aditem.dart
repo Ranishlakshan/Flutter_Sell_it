@@ -180,201 +180,6 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
     return storageTaskSnapshot.ref.getDownloadURL();
   }
 
-  Widget _carForm() {
-    return Card(
-      child: Form(
-        
-        //key: _formKeyVan,
-        child: Column(children: <Widget>[
-          // Add TextFormFields and RaisedButton here.
-          //buildGridView(),
-          TextFormField(
-             
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Brand';
-            //  }
-            //  //return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter your Car Brand',
-              labelText: 'Brand',
-              prefixIcon: Icon(Icons.add_circle) 
-            ),
-          ),
-          SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Model';
-            //  }
-            //  return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter your Car Model',
-              labelText: 'Car Model',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Model Year';
-            //  }
-            //  return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter Car Model year',
-              labelText: 'Model Year',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Mileage';
-            //  }
-            //  return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter Mileage',
-              labelText: 'Mileage ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Enter Transmission type';
-            //  }
-            //  return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter Transmission type',
-              labelText: 'Transmission ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Fueltype';
-            //  }
-            //  return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter Fuel type',
-              labelText: 'Fueltype ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Engine capaciy';
-            //  }
-            //  return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter Engine capacity',
-              labelText: 'Engine capacity(cc) ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please enter Description';
-            //  }
-            //  return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter Description here',
-              labelText: 'Description ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          TextFormField(
-            //validator: (value) {
-            //  if (value.isEmpty) {
-            //    return 'Please Price';
-            //  }
-            //  return null;
-            //},
-            decoration: const InputDecoration(
-              hintText: 'Enter Price',
-              labelText: 'Price',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          RaisedButton(
-            child: new Text("add Image"),
-            onPressed: loadAssets,
-          ),
-          SizedBox(height: 10.0,),
-          _imageShow(),
-          
-          RaisedButton(
-              child: new Text("upload"),
-              onPressed: (){
-                if(images.length==0){
-                  showDialog(context: context,builder: (_){
-                    return AlertDialog(
-                      backgroundColor: Theme.of(context).backgroundColor,
-                     content: Text("No image selected",style: TextStyle(color: Colors.white)),
-                     actions: <Widget>[
-                      RaisedButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
-                      )
-                      
-                     ],
-                    );
-                  });
-                }
-                else{
-                  SnackBar snackbar = SnackBar(content: Text('Please wait, we are uploading'));
-                  //widget.globalKey.currentState.showSnackBar(snackbar);
-                  uploadImages();
-                }
-              },
-          ),
-          SizedBox(height: 20.0),
-          RaisedButton(
-              color: Color(0xff11b719),
-              textColor: Colors.white,
-              child: Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("Submit", style: TextStyle(fontSize: 24.0)),
-                ],
-              )),
-              onPressed: () {
-                  createRecord();
-              },
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0)
-                )
-              ),
-              
-              
-        ]
-        )
-        )
-    );
-  }
   List<DropdownMenuItem> currencyItems2 = [];
   @override
   Widget build(BuildContext context) {
@@ -425,6 +230,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                               i++) {
                             DocumentSnapshot snap = snapshot.data.documents[i];
                             if (snap.documentID == selectedCurrency) {
+                              currencyItems2 = [];
                               for (int j = 0; j < snap.data.length; j++) {
                                 currencyItems2.add(
                                   DropdownMenuItem(
@@ -466,6 +272,8 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                           Scaffold.of(context).showSnackBar(snackBar);
                           setState(() {
                             selectedCurrency2 = currencyValue;
+                            currencyItems2 = [];
+                            currencyItems = [];
                           });
                         },
                       ),
