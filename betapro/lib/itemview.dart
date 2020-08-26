@@ -59,18 +59,20 @@ class _ItemViewState extends State<ItemView> {
                     }
                   }
                   return CarouselSlider(
-                      items: _listOfImages.map((e) {
+                      items: _listOfImages.map((e){
                         return ClipRRect(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0)),
                             child: Container(
-                              height: 300.0,
+                              height: 200.0,
                               margin: EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                               ),
                               child: GestureDetector(
-                                  child: Image.network(e, fit: BoxFit.fill),
+                                  //image appear in correct width and height
+                                  //child: Image.network(e, fit: BoxFit.fill),
+                                  child: Image.network(e),
                                   onTap: () {
                                     Navigator.push<Widget>(
                                       context,
