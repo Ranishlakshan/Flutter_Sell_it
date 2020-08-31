@@ -2,14 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class CarModel {
-  String carBrand;
-  String caryear;
+  String value1;
+  String value2;
+  String value3;
+  String value4;
+  //String caryear;
   String carimage;
   String docID;
 
-  CarModel(String carBrand, String caryear, String carimage ,String docID){
-    this.carBrand = carBrand;
-    this.caryear = caryear;
+  CarModel(String value1, String value2,String value3, String value4, String carimage ,String docID){
+    this.value1 = value1;
+    this.value2 = value2;
+    this.value3 = value3;
+    this.value4 = value4;
     this.carimage = carimage;
     this.docID = docID;
   }
@@ -25,28 +30,28 @@ class CarModel {
     
   }
 
-void setcarBrand(String carBrand){
-this.carBrand = carBrand;
-}
-
-void setcarYear(String carYear){
-this.carBrand = carYear;
-}
-
-void setcarImage(String carImage){
-this.carBrand = carBrand;
-}
-
-void setdocID(String docID){
-  this.docID = docID;
-}
-
-String getBrand(){
-  return carBrand;
-}
-String getYear(){
-  return caryear;
-}
+//void setcarBrand(String carBrand){
+//this.carBrand = carBrand;
+//}
+//
+//void setcarYear(String carYear){
+//this.carBrand = carYear;
+//}
+//
+//void setcarImage(String carImage){
+//this.carBrand = carBrand;
+//}
+//
+//void setdocID(String docID){
+//  this.docID = docID;
+//}
+//
+//String getBrand(){
+//  return carBrand;
+//}
+//String getYear(){
+//  return caryear;
+//}
 String getdocID(){
   return docID;
 }

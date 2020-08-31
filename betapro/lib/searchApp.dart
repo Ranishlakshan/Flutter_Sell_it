@@ -15,7 +15,7 @@ class _SearchHereState extends State<SearchHere> {
   String carImage;
   String docID;
 
-  CarModel carObjec = new CarModel("", "", "", "");
+  CarModel carObjec = new CarModel("", "", "", "","","");
 
   List<CarModel> _listOfObjects = <CarModel>[];
 
@@ -85,15 +85,17 @@ class _SearchHereState extends State<SearchHere> {
                 
                   String serchText = snapshot.data.documents[i].data['searchkey'];
 
-                  String carBrand,caryear,carimage,docID;
+                  String value1,value2,value3,value4,carimage,docID;
 
                   if (serchText.contains(searchValue)) {
                     docID = snapshot.data.documents[i].documentID;
-                    carBrand = snapshot.data.documents[i].data['brand'];
-                    caryear = snapshot.data.documents[i].data['model'];
+                    value1 = snapshot.data.documents[i].data['value1'];
+                    value2 = snapshot.data.documents[i].data['value2'];
+                    value3 = snapshot.data.documents[i].data['value3'];
+                    value4 = snapshot.data.documents[i].data['value4'];
                     carimage = snapshot.data.documents[i].data['urls'][0];
 
-                    _listOfObjects.add(CarModel(carBrand, caryear, carimage, docID));
+                    _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
                   }
                 }
                 return sliverGridWidget(context);

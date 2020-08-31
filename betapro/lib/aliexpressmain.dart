@@ -6,6 +6,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'dbmodels/add_card_gridview.dart';
 import 'dbmodels/car_itm_model.dart';
+import 'drawer.dart';
 import 'staggardgridview.dart';
 
 class AliExpressesPg extends StatefulWidget {
@@ -19,7 +20,7 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
   String carYear;
   String carImage;
   String docID;
-  CarModel carObjec = new CarModel("","","","");
+  CarModel carObjec = new CarModel("","","","","","");
   var car;
   List<CarModel> _listOfObjects = <CarModel>[];
 
@@ -142,6 +143,7 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
+                
                 Navigator.pushNamed(context, '/login');
                 //addDialog(context);
               },
@@ -152,6 +154,7 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
             ),
           ],
       ),
+      drawer: MyDrawer(),
       body: ListView(
         shrinkWrap: true,
         physics: ScrollPhysics(),
@@ -226,12 +229,13 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
                   // DocumentSnapshot snap = snapshot.data.documents[i];
                   
                   String docID = snapshot.data.documents[i].documentID;
-                  String carBrand =
-                      snapshot.data.documents[i].data['brand'];
-                  String caryear = snapshot.data.documents[i].data['model'];
+                  String value1 =snapshot.data.documents[i].data['value1'];
+                  String value2 = snapshot.data.documents[i].data['value2'];
+                  String value3 = snapshot.data.documents[i].data['value3'];
+                  String value4 = snapshot.data.documents[i].data['value4'];
                   String carimage =
                       snapshot.data.documents[i].data['urls'][0];                  
-                  _listOfObjects.add(CarModel(carBrand,caryear,carimage,docID));
+                  _listOfObjects.add(CarModel(value1,value2,value3,value4,carimage,docID));
                 }
                 return sliverGridWidget(context); 
               }else{

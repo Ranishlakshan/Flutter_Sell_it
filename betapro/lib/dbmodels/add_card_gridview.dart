@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:progressive_image/progressive_image.dart';
+
 
 import '../itemview.dart';
 import 'car_itm_model.dart';
@@ -18,6 +20,7 @@ class AadCardForGrid extends StatelessWidget {
     //documentid = ad.docID;
     if (ad.carimage != null && ad.carimage != '') {
       return Image.network(ad.carimage);
+      
     } else {
       return Image.network('https://uae.microless.com/cdn/no_image.jpg');
     }
@@ -25,28 +28,28 @@ class AadCardForGrid extends StatelessWidget {
   }
   Widget _buildTitleWidget() {
 
-    if (ad.carBrand != null && ad.carBrand != '') {
-      return Text(ad.carBrand, style: TextStyle(fontWeight: FontWeight.bold),);
+    if (ad.value1 != null && ad.value1 != '') {
+      return Text(ad.value1, style: TextStyle(fontWeight: FontWeight.bold),);
     } else {
       return SizedBox();
     }
   }
 
   Widget _buildPriceWidget() {
-    if (ad.caryear != null && ad.caryear != '') {
-      return Text("\$ ${ad.caryear}");
+    if (ad.value2 != null && ad.value2 != '') {
+      return Text("\$ ${ad.value2}");
     } else {
       return SizedBox();
     }
   }
 
   Widget _buildLocationWidget() {
-    if (ad.caryear != null && ad.caryear != '') {
+    if (ad.value3 != null && ad.value3 != '') {
       return Row(
         children: <Widget>[
           Icon(Icons.location_on),
           SizedBox(width: 4.0,),
-          Expanded(child: Text(ad.caryear))
+          Expanded(child: Text(ad.value3))
         ],
       );
     } else {

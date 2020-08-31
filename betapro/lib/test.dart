@@ -15,7 +15,7 @@ class Ranishl extends StatefulWidget {
 class _RanishlState extends State<Ranishl> {
   String _mobileNumber = '';
   List<SimCard> _simCard = <SimCard>[];
-  List<String> ranish = <String>[];
+
   @override
   void initState() {
     super.initState();
@@ -48,19 +48,17 @@ class _RanishlState extends State<Ranishl> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    
+    setState(() {
+      _mobileNumber = mobileNumber;
+    });
   }
-  String phn;
-  void fillCards() {
+
+  Widget fillCards() {
     List<Widget> widgets = _simCard
         .map((SimCard sim) => Text(
-            '${sim.number}'))
+            'Sim Card Number: (${sim.countryPhonePrefix}) - ${sim.number}\nCarrier Name: ${sim.carrierName}\nCountry Iso: ${sim.countryIso}\nDisplay Name: ${sim.displayName}\nSim Slot Index: ${sim.slotIndex}\n\n'))
         .toList();
-    ranish = _simCard
-        .map((SimCard sim) => (
-            '${sim.number}'))
-        .toList();    
-    //return Column(children: widgets);
+    return Column(children: widgets);
   }
 
   @override
@@ -73,9 +71,8 @@ class _RanishlState extends State<Ranishl> {
         body: Center(
           child: Column(
             children: <Widget>[
-              //Text('Running on: $_mobileNumber\n'),
-              //fillCards(),
-              Text(ranish.toString())
+              Text('Running on: $_mobileNumber\n'),
+              fillCards()
             ],
           ),
         ),

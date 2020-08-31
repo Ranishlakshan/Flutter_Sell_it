@@ -8,6 +8,8 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'catagories/vehicles/car.dart';
 import 'catagories/vehicles/van.dart';
 
+import 'drawer.dart';
+import 'login_page.dart';
 import 'services/utils.dart';
 
 
@@ -190,9 +192,11 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
             child: Text('Advertisement'),
           ),
         ),
+        drawer: MyDrawer(),
         body: ListView(
           children: <Widget>[
             Text('Select catagory here'),
+            //Text("$name"),
             Text('Select catagory here'),
             SizedBox(height: 40.0),
             StreamBuilder<QuerySnapshot>(

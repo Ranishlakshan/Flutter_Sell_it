@@ -7,8 +7,11 @@ import 'package:mobile_number/mobile_number.dart';
 import 'package:mobile_number/sim_card.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../aditem.dart';
+import '../../login_page.dart';
 
 class carForm extends StatefulWidget {
+  final GlobalKey<ScaffoldState> globalKey;
+  const carForm({Key key, this.globalKey}) : super(key: key);
   @override
   _carFormState createState() => _carFormState();
 }
@@ -23,8 +26,45 @@ class _carFormState extends State<carForm> {
   String _error = 'No Error Dectected';
   bool carosal = false;
 
-  String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition;
+  String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition,phonenumbers,location;
   String searchkey;
+
+  
+  String _currentSelectedValue;
+  var _currencies = [
+    "Food",
+    "Transport",
+    "Personal",
+    "Shopping",
+    "Medical",
+    "Rent",
+    "Movie",
+    "Salary"
+  ];
+
+  var _transmissionType = [
+    "Auto",
+    "Manual",
+    "Triptonic",
+  ];
+
+  var _carFuelType = [
+    "Petrol",
+    "Diesel",
+    "Hybrid",
+    "Electric"
+  ];
+
+  var _carCondition = [
+    "Brand new",
+    "Used",
+    "Recondition",
+  ];
+
+  
+
+
+  
   //List<SimCard> _simCard = <SimCard>[];
   //List<String> ranish = <String>[];
   //@override
@@ -102,7 +142,7 @@ class _carFormState extends State<carForm> {
       );
     }
     else{
-      return Text('not yet selected');
+      return Text('Images not yet selected');
     }
   }
 
@@ -148,7 +188,7 @@ class _carFormState extends State<carForm> {
       _error = error;
     });
   }
- 
+  
 
   void uploadImages(){
   
@@ -166,18 +206,28 @@ class _carFormState extends State<carForm> {
             'price':carPrice,
             'milleage':carMilleage,
             'transmission':carTransmission,
-            'FuelType':carFuelType,
-            'EngineCapacity':carEngineCapacity,
+            'fuelType':carFuelType,
+            'engineCapacity':carEngineCapacity,
             'condition':carCondition,
             'description':carDescription,
-            'searchkey':carBrand+" "+carModel+" "+carYear,
+            'phone': phonenumbers,
+            'location': location,
+            'reviewstatus':true,  
+            'searchkey':carBrand+" "+carModel+" "+carYear+"car",
+            'value1':carBrand+" "+carModel+" "+carYear,
+            'value2':carPrice,
+            'value3':location,
+            'value4':DateTime.now().toString(),
+            
+
           }).then((_){
-            SnackBar snackbar = SnackBar(content: Text('Uploaded Successfully'));
-            //widget.globalKey.currentState.showSnackBar(snackbar);
+            SnackBar snackbar = SnackBar(content: Text('Data Uploaded Successfully'));
+            widget.globalKey.currentState.showSnackBar(snackbar);
             setState(() {
               images = [];
               imageUrls = [];
               carosal =false;
+              
             });
           });
         }
@@ -221,11 +271,18 @@ class _carFormState extends State<carForm> {
               return null;
             },
             decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
               hintText: 'Enter your Car Brand',
               labelText: 'Brand',
               prefixIcon: Icon(Icons.add_circle) 
             ),
           ),
+
+
+
+
           SizedBox(height: 20.0),
           TextFormField(
             onChanged:  (value) {
@@ -238,13 +295,20 @@ class _carFormState extends State<carForm> {
               return null;
             },
             decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
               hintText: 'Enter your Car Model',
               labelText: 'Car Model',
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
           SizedBox(height: 20.0),
+          
+          
+          
           TextFormField(
+            keyboardType: TextInputType.number,
             onChanged:  (value) {
                  carYear=value;         
                         },
@@ -255,13 +319,20 @@ class _carFormState extends State<carForm> {
               return null;
             },
             decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
               hintText: 'Enter Car Model year',
               labelText: 'Model Year',
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
           SizedBox(height: 20.0),
+          
+          
+          
           TextFormField(
+            keyboardType: TextInputType.number,
             onChanged:  (value) {
                  carMilleage=value;         
                         },
@@ -272,64 +343,138 @@ class _carFormState extends State<carForm> {
               return null;
             },
             decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
               hintText: 'Enter Mileage',
               labelText: 'Mileage ',
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
           SizedBox(height: 20.0),
-          TextFormField(
-            onChanged:  (value) {
-                 carTransmission=value;         
-                        },
-            validator: (value) {
+          
+          
+          
+          FormField<String>(
+            validator: (String value) {
               if (value.isEmpty) {
-                return 'Enter Transmission type';
+                return 'Please Select Transmission';
               }
               return null;
             },
-            decoration: const InputDecoration(
-              hintText: 'Enter Transmission type',
-              labelText: 'Transmission ',
+          builder: (FormFieldState<String> state) {
+            return InputDecorator(
+              
+              decoration: const InputDecoration(
+              //hintText: 'Enter Transmission Type',
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              //hintText: 'Enter Transmission Type',
+              labelText: 'transmission',
               prefixIcon: Icon(Icons.add_circle)
             ),
-          ),
+                  
+              isEmpty: carTransmission == '',
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  
+                  value: carTransmission,
+                  isDense: true,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      carTransmission = newValue;
+                      state.didChange(newValue);
+                    });
+                  },
+                  items: _transmissionType.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+            );
+          },
+        ),
           SizedBox(height: 20.0),
-          TextFormField(
-            onChanged:  (value) {
-                 carFuelType=value;         
-                        },
-            validator: (value) {
+          
+          
+          
+          FormField<String>(
+            validator: (String value) {
               if (value.isEmpty) {
-                return 'Please enter Fueltype';
+                return 'Please Select Fuel Type';
               }
               return null;
             },
-            decoration: const InputDecoration(
-              hintText: 'Enter Fuel type',
-              labelText: 'Fueltype ',
+          builder: (FormFieldState<String> state) {
+            return InputDecorator(
+              
+              decoration: const InputDecoration(
+              //hintText: 'Enter Transmission Type',
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              hintText: 'Enter Fuel Type',
+              labelText: 'Fuel Type',
               prefixIcon: Icon(Icons.add_circle)
             ),
-          ),
+                  
+              isEmpty: carFuelType == '',
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  
+                  value: carFuelType,
+                  isDense: true,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      carFuelType = newValue;
+                      state.didChange(newValue);
+                    });
+                  },
+                  items: _carFuelType.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+            );
+          },
+        ),
           SizedBox(height: 20.0),
+          
+          
           TextFormField(
+            keyboardType: TextInputType.number,
             onChanged:  (value) {
                  carEngineCapacity=value;         
                         },
             validator: (value) {
               if (value.isEmpty) {
-                return 'Please enter Engine capaciy';
+                return 'Please Enter Engine capaciy';
               }
               return null;
             },
             decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
               hintText: 'Enter Engine capacity',
               labelText: 'Engine capacity(cc) ',
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
           SizedBox(height: 20.0),
+          
+          
           TextFormField(
+            keyboardType: TextInputType.multiline,
+            minLines: 1,
+            maxLines: 15,
             onChanged:  (value) {
                  carDescription=value;         
                         },
@@ -340,7 +485,9 @@ class _carFormState extends State<carForm> {
               return null;
             },
             decoration: const InputDecoration(
-            
+              border: OutlineInputBorder(
+                 borderSide: BorderSide(color: Colors.black)
+               ),
               hintText: 'Enter Description here',
               labelText: 'Description ',
               prefixIcon: Icon(Icons.add_circle)
@@ -348,96 +495,172 @@ class _carFormState extends State<carForm> {
           ),
           SizedBox(height: 20.0),
           //carCondition
-          TextFormField(
-            onChanged:  (value) {
-                 carCondition=value;         
-                        },
-            validator: (value) {
+          
+          
+          
+          FormField<String>(
+            validator: (String value) {
               if (value.isEmpty) {
-                return 'Please enter condition';
+                return 'Please Select Car Condition';
               }
               return null;
             },
-            decoration: const InputDecoration(
-              hintText: 'Enter condition here',
-              labelText: 'Condition ',
+          builder: (FormFieldState<String> state) {
+            return InputDecorator(
+              
+              decoration: const InputDecoration(
+              //hintText: 'Enter Transmission Type',
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              hintText: 'Select car Condition',
+              labelText: 'Condition',
               prefixIcon: Icon(Icons.add_circle)
             ),
-          ),
+                  
+              isEmpty: carCondition == '',
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  
+                  value: carCondition,
+                  isDense: true,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      carCondition = newValue;
+                      state.didChange(newValue);
+                    });
+                  },
+                  items: _carCondition.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+            );
+          },
+        ),
+
+
           
           SizedBox(height: 20.0),
           TextFormField(
+            keyboardType: TextInputType.number,
             onChanged:  (value) {
                  carPrice=value;         
                         },
             validator: (value) {
               if (value.isEmpty) {
-                return 'Please enter Price';
+              return 'Please enter Price';
               }
               return null;
             },
             decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
               hintText: 'Enter Price here',
               labelText: 'Price ',
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
           
+          //SizedBox(height: 20.0),
+          //RaisedButton(
+          //  child: new Text("add Image"),
+          //  onPressed: loadAssets,
+          //),
+          //SizedBox(height: 10.0,),
           SizedBox(height: 20.0),
-          RaisedButton(
-            child: new Text("add Image"),
+          RaisedButton.icon(
+            icon: Icon(Icons.add_a_photo),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              //side: BorderSide(color: Colors.red)
+            ),
+            color: Colors.green,
+            padding: EdgeInsets.all(10.0),
+            label: Text('add photos'),
+            //child: new Text("add Image"),
             onPressed: loadAssets,
           ),
           SizedBox(height: 10.0,),
           _imageShow(),
           
-          RaisedButton(
-              child: new Text("upload"),
-              onPressed: (){
-                if(images.length==0){
-                  showDialog(context: context,builder: (_){
-                    return AlertDialog(
-                      backgroundColor: Theme.of(context).backgroundColor,
-                     content: Text("No image selected",style: TextStyle(color: Colors.white)),
-                     actions: <Widget>[
-                      RaisedButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
-                      )
-                      
-                     ],
-                    );
-                  });
-                }
-                else{
-                  SnackBar snackbar = SnackBar(content: Text('Please wait, we are uploading'));
-                  //widget.globalKey.currentState.showSnackBar(snackbar);
-                  uploadImages();
-                }
-              },
+          SizedBox(height: 20.0),
+          //Text("Posted by $name"),
+          Row(
+             mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundImage: NetworkImage("$imageUrl"),
+              ),
+              SizedBox(width: 30.0,),
+              Text("Posted by $name"),
+              //Text(),
+              
+            ],
           ),
           SizedBox(height: 20.0),
-          Card(
-            child: InkWell(
-              splashColor: Colors.blue.withAlpha(30),
-              onTap: () {
-                print('Card tapped.');
-              },
-              child: Container(
-                width: 300,
-                height: 100,
-                child: Text('A card that can be tapped'),
+          Text('Email -> $email'),
+          SizedBox(height: 20.0),
+          TextFormField(
+            keyboardType: TextInputType.phone,
+            onChanged:  (value) {
+                 phonenumbers = value;         
+                        },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Phone number';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
               ),
+              hintText: 'Enter Phone number here',
+              labelText: 'Phone number ',
+              prefixIcon: Icon(Icons.add_circle)
             ),
           ),
+          SizedBox(height: 20.0,),
+          
+          
+          TextFormField(
+            //keyboardType: TextInputType.number,
+            onChanged:  (value) {
+                 location=value;         
+                        },
+            validator: (value) {
+              if (value.isEmpty) {
+              return 'Please Enter Location';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              hintText: 'Enter Nearest City',
+              labelText: 'Location ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
+
+          
+          
+          ///
+          ///
+          
           SizedBox(height: 20.0),
           RaisedButton(
+
               color: Color(0xff11b719),
               textColor: Colors.white,
               child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -446,7 +669,31 @@ class _carFormState extends State<carForm> {
               )),
               onPressed: () {
                   //createRecord();
-                  if(images.length==0){
+                //  if(!_formKeyCar.currentState.validate()){
+                //    if(images.length==0){
+                //  showDialog(context: context,builder: (_){
+                //    return AlertDialog(
+                //      backgroundColor: Theme.of(context).backgroundColor,
+                //     content: Text("No image selected",style: TextStyle(color: Colors.white)),
+                //     actions: <Widget>[
+                //      RaisedButton(
+                //        onPressed: (){
+                //          Navigator.pop(context);
+                //        },
+                //        child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
+                //      )
+                //      
+                //     ],
+                //    );
+                //  });
+                //}
+                //else{
+                //  SnackBar snackbar = SnackBar(content: Text('Please wait, Uploading details'));
+                //  widget.globalKey.currentState.showSnackBar(snackbar);
+                //  uploadImages();
+                //}
+                //  }
+                 if(images.length==0){
                   showDialog(context: context,builder: (_){
                     return AlertDialog(
                       backgroundColor: Theme.of(context).backgroundColor,
@@ -464,15 +711,18 @@ class _carFormState extends State<carForm> {
                   });
                 }
                 else{
-                  SnackBar snackbar = SnackBar(content: Text('Please wait, we are uploading'));
+                  SnackBar snackbar = SnackBar(content: Text('Please wait, Uploading details'));
                   //widget.globalKey.currentState.showSnackBar(snackbar);
                   uploadImages();
                 }
+                  
               },
               shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0)
+                  borderRadius: new BorderRadius.circular(30.0),
+                  
                 )
               ),
+              SizedBox(height: 20.0),
               
               
         ]
