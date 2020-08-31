@@ -19,8 +19,18 @@ class AadCardForGrid extends StatelessWidget {
   Widget _buildImageWidget() {
     //documentid = ad.docID;
     if (ad.carimage != null && ad.carimage != '') {
-      return Image.network(ad.carimage);
-      
+      //return Image.network(ad.carimage);
+      return Stack(
+        children: <Widget>[
+          Image.network(ad.carimage),
+          //Center(child: Text(ad.value2,textDirection: ,),)
+          Card(
+            child: Text("Rs "+ad.value2),
+            color: Colors.yellow,
+            
+          ),
+        ],
+      );
     } else {
       return Image.network('https://uae.microless.com/cdn/no_image.jpg');
     }
@@ -74,7 +84,7 @@ class AadCardForGrid extends StatelessWidget {
           _buildImageWidget(),
           _buildTitleWidget(),
           _buildPriceWidget(),
-          // _buildLocationWidget(),
+          _buildLocationWidget(),
         ],
       ),
     )

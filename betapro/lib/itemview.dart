@@ -242,7 +242,7 @@ Widget getItems(){
         String next = jsonString.substring(startIndex + start.length, endIndex);
         String imagelinkRemoved = jsonString.replaceAll(next, "");
         String urlremoved = imagelinkRemoved.replaceAll("urls: [], ", "").replaceAll("{", "").replaceAll("}", "");
-        List<String> viewList =[]; 
+     List<String> viewList =[]; 
         List<String> spec_list = urlremoved.split(", ");
         for(int j=0;j<spec_list.length;j++){
           if(!(spec_list[j].contains('value') || spec_list[j].contains('searchkey')  || spec_list[j].contains('reviewstatus')) ){
