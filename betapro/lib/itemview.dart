@@ -182,7 +182,6 @@ class _ItemViewState extends State<ItemView> {
           Text('Nimasha'),
           Text('Nimasha'),
           Text('Nimasha'),
-          Text('Nimasha'),
           getItems(),
           Text('Nimasha'),
           Text('Nimasha'),
@@ -234,6 +233,12 @@ Widget getItems(){
         //return new Text(snapshot.data['brand']);
         //String sss = ddd.
         //
+        //decorated item name and price
+
+
+        //
+        //
+
         String jsonString = dd.data.toString();
         String start = "[";
         String end = "]";
@@ -245,7 +250,25 @@ Widget getItems(){
      List<String> viewList =[]; 
         List<String> spec_list = urlremoved.split(", ");
         for(int j=0;j<spec_list.length;j++){
-          if(!(spec_list[j].contains('value') || spec_list[j].contains('searchkey')  || spec_list[j].contains('reviewstatus')) ){
+          //
+          //_____________add price title 
+          String title = '';
+          String price = '';
+
+          //
+          if( spec_list[j].contains('value1') ){
+              title = spec_list[j];
+          print(title);
+          }
+          else if( spec_list[j].contains('value2') ){
+              price = spec_list[j];
+              print(price);
+          }
+          //_____________add price title END
+          
+          //
+
+          else if(!(spec_list[j].contains('value') || spec_list[j].contains('searchkey')  || spec_list[j].contains('reviewstatus')) ){
             viewList.add(spec_list[j]);
           }
         }
