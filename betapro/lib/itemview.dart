@@ -17,6 +17,10 @@ class ItemView extends StatefulWidget {
 String name123;
 var cars;
 var cars_img;
+
+String title = '';
+String price = '';
+
 class _ItemViewState extends State<ItemView> {
   @override
   //String docuID = Widget.documentid;
@@ -30,12 +34,22 @@ class _ItemViewState extends State<ItemView> {
         .collection('ads')
         .document('${widget.docID123}')
         .snapshots();
+        
     super.initState();
 
     cars_img = Firestore.instance
         .collection('ads')
         .document('${widget.docID123}')
         .snapshots();
+        //title = cars_img.data['value1'];
+        //StreamBuilder(
+        //  stream: cars_img,
+        //  builder: (context, snapshot) {
+        //    if(!snapshot.hasData){
+        //      title = snapshot.data['value1'];
+        //    }            
+        //  },
+        //);
     super.initState();
   }
 
@@ -53,6 +67,8 @@ class _ItemViewState extends State<ItemView> {
                 stream: cars_img,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    //title = snapshot.data['value1'];
+                    //setState(() { title = snapshot.data['value1']; });
                     _listOfImages = [];
                     for (int i = 0; i < snapshot.data['urls'].length; i++) {
                       _listOfImages.add(snapshot.data['urls'][i]);
@@ -99,6 +115,8 @@ class _ItemViewState extends State<ItemView> {
                       ));
                 }),
           Text('Nimasha'),
+          Text(title),
+          getTitle(),
           Text('Nimasha'),
           Text('Nimasha'),
           Text('Nimasha'),
@@ -205,7 +223,44 @@ class _ItemViewState extends State<ItemView> {
     );
   }
 }
+Widget getTitle(){
+    return StreamBuilder(
+      stream: cars,
+      builder: (context, snapshot) {
+         if (!snapshot.hasData) {
+          //snapshot.data.toString();
+          return new Text("Loading");
+        }
+        DocumentSnapshot title1 = snapshot.data;
 
+        String jsonString = title1.data.toString();
+        String tistart = "[";
+        String tiend = "]";
+        final tistartIndex = jsonString.indexOf(tistart);
+        final tiendIndex = jsonString.indexOf(tiend, tistartIndex + tistart.length);
+        String tinext = jsonString.substring(tistartIndex + tistart.length, tiendIndex);
+        String tiimagelinkRemoved = jsonString.replaceAll(tinext, "");
+        String tiurlremoved = tiimagelinkRemoved.replaceAll("urls: [], ", "").replaceAll("{", "").replaceAll("}", "");
+        List<String> tiviewList =[]; 
+        List<String> tispec_list = tiurlremoved.split(", ");
+
+        for(int j=0;j<tispec_list.length;j++){
+          if( tispec_list[j].contains('value1') ){
+              title = tispec_list[j];
+              print(title);
+          }
+          else if( tispec_list[j].contains('value2') ){
+              price = tispec_list[j];
+              print(price);
+          }
+        }
+        return Text(title + price);
+
+
+
+      },
+    );
+}
 
 Widget getItems(){
     return StreamBuilder(
@@ -220,25 +275,12 @@ Widget getItems(){
         DocumentSnapshot dd = snapshot.data; 
 
         //
-
+      
         //
         var userDocument = snapshot.data;
         //String myname = dd.data.toString();
         int len = dd.data.length;
-        //String myname = dd.data.toString();
-        //List<String> list_name = new List(len);
-        //List<String> list = myname.split(", ");
-        //String nochar = myname.replaceAll(new RegExp(r"[^\s\w]"),'');
-        //var ddd = myname.split(', ').map((String text) => Text(text));
-        //return new Text(snapshot.data['brand']);
-        //String sss = ddd.
-        //
-        //decorated item name and price
-
-
-        //
-        //
-
+        
         String jsonString = dd.data.toString();
         String start = "[";
         String end = "]";
@@ -247,31 +289,33 @@ Widget getItems(){
         String next = jsonString.substring(startIndex + start.length, endIndex);
         String imagelinkRemoved = jsonString.replaceAll(next, "");
         String urlremoved = imagelinkRemoved.replaceAll("urls: [], ", "").replaceAll("{", "").replaceAll("}", "");
-     List<String> viewList =[]; 
+        List<String> viewList =[]; 
         List<String> spec_list = urlremoved.split(", ");
+        
         for(int j=0;j<spec_list.length;j++){
           //
           //_____________add price title 
-          String title = '';
-          String price = '';
+          
 
           //
-          if( spec_list[j].contains('value1') ){
-              title = spec_list[j];
-          print(title);
-          }
-          else if( spec_list[j].contains('value2') ){
-              price = spec_list[j];
-              print(price);
-          }
+          //if( spec_list[j].contains('value1') ){
+          //    title = spec_list[j];
+          //    print(title);
+          //}
+          //else if( spec_list[j].contains('value2') ){
+          //    price = spec_list[j];
+          //    print(price);
+          //}
           //_____________add price title END
           
           //
 
-          else if(!(spec_list[j].contains('value') || spec_list[j].contains('searchkey')  || spec_list[j].contains('reviewstatus')) ){
+          if(!(spec_list[j].contains('value') || spec_list[j].contains('searchkey')  || spec_list[j].contains('reviewstatus')) ){
             viewList.add(spec_list[j]);
           }
+          
         }
+        
         int speclistlen = spec_list.length;
         int viewlistlen = viewList.length;
         //
