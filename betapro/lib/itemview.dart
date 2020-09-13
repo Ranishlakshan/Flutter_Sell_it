@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'zoomImage.dart';
 
@@ -20,6 +21,10 @@ var cars_img;
 
 String title = '';
 String price = '';
+String phone = '';
+
+final String number = "123456789";
+final String email = "dancamdev@example.com";
 
 class _ItemViewState extends State<ItemView> {
   @override
@@ -135,12 +140,25 @@ class _ItemViewState extends State<ItemView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Card(
-                child: Text("call"),
+              RaisedButton(
+              child: Text(
+                "call $number",
               ),
-              Card(
-                child: Text("message"),
+              onPressed: () {
+                launch("tel:$number");
+              }
+            ),
+            SizedBox(width: 40.0,),
+            RaisedButton(
+              child: Text(
+                "message $number",
               ),
+              onPressed: () {
+                launch("sms:$number");
+              },
+            ),
+
+
             ],
           ),
           Text(' --- END --- '),
@@ -201,6 +219,12 @@ Widget getTitle(){
               //tiviewList.add(tispec_list[j]);
               //print(price);
           }
+          //else if( tispec_list[j].contains('phone') ){
+          //    String removevalue3 = tispec_list[j].replaceAll("phone:", "");
+          //    phone = removevalue3;
+          //    //tiviewList.add(tispec_list[j]);
+          //    //print(price);
+          //}
 
         }
         //return Text(title + price);
