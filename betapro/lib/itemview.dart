@@ -114,92 +114,11 @@ class _ItemViewState extends State<ItemView> {
                         scrollDirection: Axis.horizontal,
                       ));
                 }),
-          Text('Nimasha'),
-          Text(title),
+          Text(' -------------- '),
+          //Text(title),
           getTitle(),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
+          //getMain(),
+          Text(' -------------- '),
           getItems(),
           Text('Nimasha'),
           Text('Nimasha'),
@@ -212,17 +131,42 @@ class _ItemViewState extends State<ItemView> {
           Text('Nimasha'),
           Text('Nimasha'),
           Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
+          
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Card(
+                child: Text("call"),
+              ),
+              Card(
+                child: Text("message"),
+              ),
+            ],
+          ),
+          Text(' --- END --- '),
+          
         ],
       )
     );
   }
 }
+
+Widget getMain(){
+  return StreamBuilder(
+    stream: cars_img,
+    builder: (context, snapshot1) {
+      if (!snapshot1.hasData) {
+          //snapshot.data.toString();
+          return new Text("Loading");
+        }
+        DocumentSnapshot title1 = snapshot1.data;
+
+        String tijsonString = title1.data.toString();
+        return Text(tijsonString);
+      },
+  );
+}
+
 Widget getTitle(){
     return StreamBuilder(
       stream: cars,
@@ -233,31 +177,69 @@ Widget getTitle(){
         }
         DocumentSnapshot title1 = snapshot.data;
 
-        String jsonString = title1.data.toString();
+        String tijsonString = title1.data.toString();
         String tistart = "[";
         String tiend = "]";
-        final tistartIndex = jsonString.indexOf(tistart);
-        final tiendIndex = jsonString.indexOf(tiend, tistartIndex + tistart.length);
-        String tinext = jsonString.substring(tistartIndex + tistart.length, tiendIndex);
-        String tiimagelinkRemoved = jsonString.replaceAll(tinext, "");
+        final tistartIndex = tijsonString.indexOf(tistart);
+        final tiendIndex = tijsonString.indexOf(tiend, tistartIndex + tistart.length);
+        String tinext = tijsonString.substring(tistartIndex + tistart.length, tiendIndex);
+        String tiimagelinkRemoved = tijsonString.replaceAll(tinext, "");
         String tiurlremoved = tiimagelinkRemoved.replaceAll("urls: [], ", "").replaceAll("{", "").replaceAll("}", "");
         List<String> tiviewList =[]; 
         List<String> tispec_list = tiurlremoved.split(", ");
-
+        
         for(int j=0;j<tispec_list.length;j++){
           if( tispec_list[j].contains('value1') ){
-              title = tispec_list[j];
-              print(title);
+              String removevalue1 = tispec_list[j].replaceAll("value1:", "");
+              title = removevalue1;
+              //tiviewList.add(tispec_list[j]);
+              //print(title);
           }
           else if( tispec_list[j].contains('value2') ){
-              price = tispec_list[j];
-              print(price);
+              String removevalue2 = tispec_list[j].replaceAll("value2:", "");
+              price = removevalue2;
+              //tiviewList.add(tispec_list[j]);
+              //print(price);
           }
+
         }
-        return Text(title + price);
-
-
-
+        //return Text(title + price);
+        return Column(
+          children: <Widget>[
+            Text(title,
+              style: new TextStyle(
+                fontSize: 35.0,
+                color: Colors.blue,
+              )
+              ),
+            Text(price,
+              style: new TextStyle(
+                fontSize: 30.0,
+                color: Colors.cyan[200],
+              ),
+            ),
+          ],
+        );
+        int tiviewlistlen = tiviewList.length;
+        
+        /////
+        //return ListView.builder(
+        //        shrinkWrap: true,
+        //        primary: false,
+        //        itemCount: tiviewlistlen,
+        //        itemBuilder: (context,index){
+        //          return Card(
+        //            //child: Text(spec_list[index])
+        //            child: Column(
+        //              children: <Widget>[
+        //                Text(tiviewList[index]),
+        //                
+        //              ],
+        //            ),
+        //            );
+        //        },            
+        //);
+        /////
       },
     );
 }
@@ -292,23 +274,9 @@ Widget getItems(){
         List<String> viewList =[]; 
         List<String> spec_list = urlremoved.split(", ");
         
-        for(int j=0;j<spec_list.length;j++){
-          //
-          //_____________add price title 
-          
+        
 
-          //
-          //if( spec_list[j].contains('value1') ){
-          //    title = spec_list[j];
-          //    print(title);
-          //}
-          //else if( spec_list[j].contains('value2') ){
-          //    price = spec_list[j];
-          //    print(price);
-          //}
-          //_____________add price title END
-          
-          //
+        for(int j=0;j<spec_list.length;j++){
 
           if(!(spec_list[j].contains('value') || spec_list[j].contains('searchkey')  || spec_list[j].contains('reviewstatus')) ){
             viewList.add(spec_list[j]);
