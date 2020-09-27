@@ -25,6 +25,7 @@ String phone = '';
 
 final String number = "123456789";
 final String email = "dancamdev@example.com";
+String numb;
 
 class _ItemViewState extends State<ItemView> {
   @override
@@ -55,8 +56,11 @@ class _ItemViewState extends State<ItemView> {
         //    }            
         //  },
         //);
+        //getphone();
     super.initState();
   }
+
+  
 
   Widget build(BuildContext context) {
     //final  Map<String, Object>rcvdData = ModalRoute.of(context).settings.arguments;
@@ -137,30 +141,32 @@ class _ItemViewState extends State<ItemView> {
           Text('Nimasha'),
           Text('Nimasha'),
           
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              RaisedButton(
-              child: Text(
-                "call $number",
-              ),
-              onPressed: () {
-                launch("tel:$number");
-              }
-            ),
-            SizedBox(width: 40.0,),
-            RaisedButton(
-              child: Text(
-                "message $number",
-              ),
-              onPressed: () {
-                launch("sms:$number");
-              },
-            ),
+          getRow(),
 
-
-            ],
-          ),
+          //Row(
+          //  mainAxisAlignment: MainAxisAlignment.center,
+          //  children: <Widget>[
+          //    RaisedButton(
+          //    child: Text(
+          //      "call $number",
+          //    ),
+          //    onPressed: () {
+          //      launch("tel:$number");
+          //    }
+          //  ),
+          //  SizedBox(width: 40.0,),
+          //  RaisedButton(
+          //    child: Text(
+          //      "message $number",
+          //    ),
+          //    onPressed: () {
+          //      launch("sms:$number");
+          //    },
+          //  ),
+          //
+          //
+          //  ],
+          //),
           Text(' --- END --- '),
           
         ],
@@ -182,6 +188,72 @@ Widget getMain(){
         String tijsonString = title1.data.toString();
         return Text(tijsonString);
       },
+  );
+}
+
+Widget getRow(){
+  return StreamBuilder(
+    stream: cars,
+    builder: (context, snapshot) {
+         if (!snapshot.hasData) {
+          //snapshot.data.toString();
+          return new Text("Loading");
+        }
+        DocumentSnapshot title2 = snapshot.data;
+
+        String phonetijsonString = title2.data.toString();
+        String tistart = "[";
+        String tiend = "]";
+        final phonetistartIndex = phonetijsonString.indexOf(tistart);
+        final phonetiendIndex = phonetijsonString.indexOf(tiend, phonetistartIndex + tistart.length);
+        String phonetinext = phonetijsonString.substring(phonetistartIndex + tistart.length, phonetiendIndex);
+        String phonetiimagelinkRemoved = phonetijsonString.replaceAll(phonetinext, "");
+        String phonetiurlremoved = phonetiimagelinkRemoved.replaceAll("urls: [], ", "").replaceAll("{", "").replaceAll("}", "");
+        List<String> phonetiviewList =[]; 
+        List<String> phonetispec_list = phonetiurlremoved.split(", ");
+        
+        for(int j=0;j<phonetispec_list.length;j++){
+          if( phonetispec_list[j].contains('phone') ){
+              String phoneremovevalue1 = phonetispec_list[j].replaceAll("phone:", "");
+              //title = phoneremovevalue1;
+              numb = phoneremovevalue1;
+
+              //tiviewList.add(tispec_list[j]);
+              //print(title);
+          }
+        }
+        //return Text(title + price);
+        //return Text(numb);
+        return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+              child: Text(
+                "call $numb",
+              ),
+              onPressed: () {
+                launch("tel:$numb");
+              }
+            ),
+            SizedBox(width: 40.0,),
+            RaisedButton(
+              child: Text(
+                "message $numb",
+              ),
+              onPressed: () {
+                launch("sms:$numb");
+              },
+            ),
+
+
+            ],
+          );
+
+        
+        
+        
+      },
+    
   );
 }
 
@@ -316,15 +388,18 @@ Widget getItems(){
                 primary: false,
                 itemCount: viewlistlen,
                 itemBuilder: (context,index){
-                  return Card(
-                    //child: Text(spec_list[index])
-                    child: Column(
-                      children: <Widget>[
-                        Text(viewList[index]),
-                        
-                      ],
-                    ),
-                    );
+                  //return Card(
+                  //  //child: Text(spec_list[index])
+                  //  child: Column(
+                  //    children: <Widget>[
+                  //      Text(viewList[index]),
+                  //      
+                  //    ],
+                  //  ),
+                  //  );
+                  return ( 
+                    Text("  " + viewList[index])
+                  );
                 },
               
         );
