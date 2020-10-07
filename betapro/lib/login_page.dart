@@ -50,9 +50,18 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {
     signInWithGoogle().whenComplete(() {
       Navigator.of(context).push(
+        //newly added for remove unregistered users
         MaterialPageRoute(
           builder: (context) {
-            return AdAdvertisement();
+            //start new add 
+            if(email != null){
+              return AdAdvertisement();
+            }
+            else{
+              return LoginPage(); 
+            }
+            //-end new add
+            //return AdAdvertisement();
           },
         ),
       );
