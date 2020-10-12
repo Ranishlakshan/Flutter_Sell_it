@@ -217,7 +217,7 @@ class _carFormState extends State<carForm> {
             'value1':carBrand+" "+carModel+" "+carYear,
             'value2':carPrice,
             'value3':location,
-            'value4':DateTime.now().toString(),
+            'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             
 
           }).then((_){

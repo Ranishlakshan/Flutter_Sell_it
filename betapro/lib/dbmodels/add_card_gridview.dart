@@ -47,7 +47,15 @@ class AadCardForGrid extends StatelessWidget {
 
   Widget _buildPriceWidget() {
     if (ad.value2 != null && ad.value2 != '') {
-      return Text("\$ ${ad.value2}");
+      return Text("\Rs ${ad.value2}");
+    } else {
+      return SizedBox();
+    }
+  }
+
+  Widget _buildTimeWidget() {
+    if (ad.value4 != null && ad.value4 != '') {
+      return Text(" ${ad.value4}");
     } else {
       return SizedBox();
     }
@@ -83,8 +91,9 @@ class AadCardForGrid extends StatelessWidget {
         children: <Widget>[
           _buildImageWidget(),
           _buildTitleWidget(),
-          _buildPriceWidget(),
+          //_buildPriceWidget(),
           _buildLocationWidget(),
+          _buildTimeWidget()
         ],
       ),
     )
