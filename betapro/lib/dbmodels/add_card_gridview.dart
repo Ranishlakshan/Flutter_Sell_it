@@ -23,12 +23,15 @@ class AadCardForGrid extends StatelessWidget {
       return Stack(
         children: <Widget>[
           Image.network(ad.carimage),
+          
           //Center(child: Text(ad.value2,textDirection: ,),)
-          Card(
-            child: Text("Rs "+ad.value2),
-            color: Colors.yellow,
-            
-          ),
+          //Card(
+          //  child: Text("Rs "+ad.value2),
+          //  color: Colors.yellow,
+          //  margin: EdgeInsets.all(10),
+          //  
+          //  //shape: CircleBorder(),  
+          //),
         ],
       );
     } else {
@@ -90,10 +93,30 @@ class AadCardForGrid extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _buildImageWidget(),
-          _buildTitleWidget(),
+          //_buildTitleWidget(),
+          //SizedBox(height: 5,),
           //_buildPriceWidget(),
-          _buildLocationWidget(),
-          _buildTimeWidget()
+          //
+          //_buildLocationWidget(),
+          //Container(
+          //  alignment: Alignment.bottomRight,
+          //  child: _buildTimeWidget(),
+          //),
+          SizedBox(height: 5,),  
+          Text('  ${ad.value1}'.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+          SizedBox(height: 5,),
+          Text('  Rs ${ad.value2}'),
+          SizedBox(height: 5,),
+          Row(
+            children: <Widget>[
+              Icon(Icons.location_on, color: Colors.redAccent,size: 18,),
+              Expanded(child: Text(ad.value3))
+            ],
+          ),
+          Container(
+            alignment: Alignment.bottomRight,
+            child: Text(" ${ad.value4}",style: TextStyle(color: Colors.grey),),
+          ),
         ],
       ),
     )
