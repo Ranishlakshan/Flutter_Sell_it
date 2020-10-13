@@ -129,17 +129,19 @@ class _ItemViewState extends State<ItemView> {
           //getMain(),
           Text(' -------------- '),
           getItems(),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
-          Text('Nimasha'),
+          SizedBox(height:35),
+          Text(' --- START --- '),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
+          //Text('Nimasha'),
           
           getRow(),
 
@@ -228,6 +230,8 @@ Widget getRow(){
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               RaisedButton(
+              color: Colors.blueAccent,
+              highlightColor: Colors.lightBlue,
               child: Text(
                 "call $numb",
               ),
@@ -237,6 +241,8 @@ Widget getRow(){
             ),
             SizedBox(width: 40.0,),
             RaisedButton(
+              color: Colors.blueAccent,
+              highlightColor: Colors.lightBlue,
               child: Text(
                 "message $numb",
               ),
@@ -302,17 +308,20 @@ Widget getTitle(){
         //return Text(title + price);
         return Column(
           children: <Widget>[
-            Text(title,
-              style: new TextStyle(
-                fontSize: 35.0,
-                color: Colors.blue,
-              )
-              ),
-            Text(price,
+            Text(title.toUpperCase(),
               style: new TextStyle(
                 fontSize: 30.0,
-                color: Colors.cyan[200],
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              )
               ),
+            Text("Rs ${price}",
+              style: new  TextStyle(fontSize: 26,background: Paint()
+                    ..strokeWidth = 6.0
+                    ..color = Colors.yellow
+                    ..style = PaintingStyle.fill
+                    ..strokeJoin = StrokeJoin.round
+                    )
             ),
           ],
         );
@@ -398,7 +407,8 @@ Widget getItems(){
                   //  ),
                   //  );
                   return ( 
-                    Text("  " + viewList[index])
+                    Text("     " + viewList[index],style: TextStyle(color: Colors.brown,fontSize: 18,),)
+                    
                   );
                 },
               

@@ -25,8 +25,10 @@ class CarModel {
   //  carimage = json['title'];
   //}
 
+
+  // in here value4 means DATE
   getData() async {
-    return await Firestore.instance.collection('ads').snapshots();
+    return await Firestore.instance.collection('ads').orderBy('value4',descending: true).snapshots();
     
   }
 

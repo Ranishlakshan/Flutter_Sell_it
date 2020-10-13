@@ -104,9 +104,30 @@ class AadCardForGrid extends StatelessWidget {
           //),
           SizedBox(height: 5,),  
           Text('  ${ad.value1}'.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-          SizedBox(height: 5,),
-          Text('  Rs ${ad.value2}'),
-          SizedBox(height: 5,),
+          SizedBox(height: 2,),
+          //Text('  Rs ${ad.value2}'),
+          Row(
+            children: <Widget>[
+              SizedBox(width: 5,),
+              Card(
+            child: Text(" Rs "+ad.value2, style:TextStyle(background: Paint()
+                    ..strokeWidth = 6.0
+                    ..color = Colors.yellow
+                    ..style = PaintingStyle.stroke
+                    ..strokeJoin = StrokeJoin.round
+                    ) 
+                  ),
+            //color: Colors.yellow,
+            
+            //margin: EdgeInsets.all(5),
+          ),
+            ],
+          ),
+          //const DecoratedBox(
+          //  decoration: const BoxDecoration(color: Colors.blue,),
+          //  child: const Text('Some text...'),
+          //),
+          SizedBox(height: 2,),
           Row(
             children: <Widget>[
               Icon(Icons.location_on, color: Colors.redAccent,size: 18,),
