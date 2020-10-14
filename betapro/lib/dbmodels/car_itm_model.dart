@@ -28,7 +28,7 @@ class CarModel {
 
   // in here value4 means DATE
   getData() async {
-    return await Firestore.instance.collection('ads').orderBy('value4',descending: true).snapshots();
+    return await Firestore.instance.collection('ads').orderBy('value4',descending: true).where('reviewstatus',isEqualTo: true).snapshots();
     
   }
 
