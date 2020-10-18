@@ -26,6 +26,7 @@ String phone = '';
 final String number = "123456789";
 final String email = "dancamdev@example.com";
 String numb;
+String desc;
 
 class _ItemViewState extends State<ItemView> {
   @override
@@ -223,10 +224,18 @@ Widget getRow(){
               //tiviewList.add(tispec_list[j]);
               //print(title);
           }
+          else if(phonetispec_list[j].contains('description')){
+             desc = phonetispec_list[j].replaceAll("description:", "");
+
+          }
         }
         //return Text(title + price);
         //return Text(numb);
-        return Row(
+        return Column(
+          children: <Widget>[
+            Text(desc,style: TextStyle(fontSize: 18),),
+            SizedBox(height: 20,),
+            Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               RaisedButton(
@@ -253,7 +262,9 @@ Widget getRow(){
 
 
             ],
-          );
+          )
+          ],
+        );
 
         
         
@@ -383,7 +394,7 @@ Widget getItems(){
 
         for(int j=0;j<spec_list.length;j++){
 
-          if(!(spec_list[j].contains('value') || spec_list[j].contains('searchkey')  || spec_list[j].contains('reviewstatus')) ){
+          if(!(spec_list[j].contains('value') || spec_list[j].contains('searchkey')  || spec_list[j].contains('reviewstatus') || spec_list[j].contains('description')) ){
             viewList.add(spec_list[j]);
           }
           
