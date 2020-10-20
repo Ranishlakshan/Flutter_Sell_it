@@ -8,6 +8,7 @@ import 'package:mobile_number/sim_card.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../aditem.dart';
 import '../../login_page.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class carForm extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
@@ -29,6 +30,7 @@ class _carFormState extends State<carForm> {
   String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition,phonenumbers,location;
   String searchkey;
 
+  
   
   String _currentSelectedValue;
   var _currencies = [
@@ -221,6 +223,7 @@ class _carFormState extends State<carForm> {
             
 
           }).then((_){
+            
             SnackBar snackbar = SnackBar(content: Text('Data Uploaded Successfully'));
             widget.globalKey.currentState.showSnackBar(snackbar);
             setState(() {
@@ -250,6 +253,22 @@ class _carFormState extends State<carForm> {
 
   @override
   Widget build(BuildContext context) {
+    final ProgressDialog pr = ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true,);
+    pr.style(
+      message: 'Uploading Data',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      progressWidget: CircularProgressIndicator(),
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      //textDirection: TextDirection.rtl,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+         color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+         color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600)
+    );
     return Card(
       child: Form(
         
@@ -693,6 +712,8 @@ class _carFormState extends State<carForm> {
                 //  uploadImages();
                 //}
                 //  }
+                //pr.show();
+                //showLoaderDialog(context);
                  if(images.length==0){
                   showDialog(context: context,builder: (_){
                     return AlertDialog(
@@ -711,12 +732,22 @@ class _carFormState extends State<carForm> {
                   });
                 }
                 else{
-                  SnackBar snackbar = SnackBar(content: Text('Please wait, Uploading details'));
+                  //await pr.show();
+                  //SnackBar snackbar = SnackBar(content: Text('Please wait, Uploading details'));
                   //widget.globalKey.currentState.showSnackBar(snackbar);
                   uploadImages();
+                  //Navigator.pushNamed(context, "/Uploadpg");
+                  //Navigator.pushNamed(context, "/aliexpresspg");  
+                  Navigator.pushReplacementNamed(context, "/uploadwait");
                 }
-                  
+                //Navigator.of(context).pushNamedAndRemoveUntil('/adadvertisement', (Route<dynamic> route) => false);
+              //Navigator.popUntil(context,ModalRoute.withName('/aliexpresspg'));
+              //Navigator.pop(context,);
+              //Navigator.pushNamed(context, '/login');
+              
               },
+              //Navigator.pushNamed(context, '/searchtest');
+              
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0),
                   
@@ -728,6 +759,21 @@ class _carFormState extends State<carForm> {
         ]
         )
         )
+    );
+  }
+  showLoaderDialog(BuildContext context){
+    AlertDialog alert=AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(margin: EdgeInsets.only(left: 7),child:Text("Loading..." )),
+        ],),
+    );
+    showDialog(barrierDismissible: false,
+      context:context,
+      builder:(BuildContext context){
+        return alert;
+      },
     );
   }
 }

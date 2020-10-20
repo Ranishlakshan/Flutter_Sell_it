@@ -44,6 +44,7 @@ dependencies:
   flutter_search_bar: ^2.1.0
   progressive_image: ^1.0.1
   url_launcher: ^5.5.3
+  progress_dialog: ^1.2.4
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,4 @@
+import 'package:betapro/uploadpg.dart';
 import 'package:flutter/material.dart';
 import 'aditem.dart';
 import 'aditems.dart';
@@ -26,14 +27,19 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: AliExpressesPg(),
+      
       routes: {
+        '/aliexpresspg': (context) => AliExpressesPg(),
         '/login': (context) => LoginPage(),
         '/searchitem': (context) => SeachAppBarRecipe(),
         '/admobpg': (context) => AdmobPg(),
         '/admobdoc': (context) => AdmobDoc(),
         '/first_screen': (context) => FirstScreen(),
-        '/ad_items': (context) => AdItem(),
+        //'/ad_items': (context) => AdItem(),
         '/searchtest' : (context) => SearchHere(),
+        //Uploadpg
+        '/uploadwait' : (context) => Uploadpg(),
+        '/adadvertisement' : (context) => AdAdvertisement(),
       },
     );
   }
