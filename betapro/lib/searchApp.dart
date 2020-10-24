@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'dbmodels/add_card_gridview.dart';
 import 'dbmodels/car_itm_model.dart';
+
+var locationsnap = Firestore.instance.collection("location").snapshots();
 
 class SearchHere extends StatefulWidget {
   @override
@@ -21,6 +24,11 @@ class _SearchHereState extends State<SearchHere> {
 
   var allsearchsnap;
 
+  String district,town,temptown;
+  List<DropdownMenuItem> locationtownsearch = [];
+  String searchtype;
+  String serchlocation;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,6 +42,7 @@ class _SearchHereState extends State<SearchHere> {
 
   String searchValue;
   String pressed;
+  String location;
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +50,14 @@ class _SearchHereState extends State<SearchHere> {
       appBar: AppBar(
         title: TextField(
           decoration: const InputDecoration(
-            hintText: 'Enter your Brand Details',
-            labelText: 'Brand',
+            hintText: 'Search Here',
+            labelText: 'Search',
           ),
           onChanged: (value) {
             searchValue = value;
           },
         ),
+        
         actions: <Widget>[
           FlatButton(
             onPressed: () {
@@ -64,6 +74,179 @@ class _SearchHereState extends State<SearchHere> {
       ),
       body: ListView(
         children: <Widget>[
+
+          TextField(
+          decoration: const InputDecoration(
+            hintText: 'Search Here',
+            labelText: 'Search',
+          ),
+          onChanged: (value) {
+            searchValue = value;
+          },
+        ),
+        SizedBox(height: 20,),
+
+          //TextField(
+          //  decoration: const InputDecoration(
+          //  hintText: 'Enter Location here',
+          //  labelText: 'Add specific location (Optional)',
+          //),
+          //onChanged: (value) {
+          //  location = value;
+          //},
+          //),
+          ////
+          /////
+          ///
+          ///
+          ///
+          
+          Row(
+            
+            children: <Widget>[
+              SizedBox(width: 20,),
+              Expanded(
+                child: RaisedButton(
+                  child: Text('All in SriLanka'),
+                  onPressed:(){
+                    setState(() {
+                      searchtype="SRILANKA";                      
+                    });
+                  },
+
+                ),
+              ),
+              //SizedBox(width: 30,),
+              Expanded(
+                child:Text("OR"),
+              ),
+              SizedBox(width: 20,),
+              Expanded(
+                child: Column(
+                children: <Widget>[
+                  StreamBuilder(
+            stream: locationsnap,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData){
+                return Text("Loading.....");
+              }else{
+                List<DropdownMenuItem> locationlistsearch = [];
+                for (int i = 0; i < snapshot.data.documents.length; i++) {
+                    DocumentSnapshot snap = snapshot.data.documents[i];
+                    locationlistsearch.add(
+                      DropdownMenuItem(
+                        child: Text(
+                          snap.documentID,
+                          style: TextStyle(color: Color(0xff11b719)),
+                        ),
+                      value: "${snap.documentID}",
+                    ),
+                  );
+                }
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(width: 20.0),
+                    DropdownButton(
+                      items: locationlistsearch,
+                      onChanged:(value){
+                        setState(() {
+                          district=value;
+                          searchtype="DISTRICT";
+                        });
+                        for (int i = 0;i < snapshot.data.documents.length;i++){
+                          DocumentSnapshot snap = snapshot.data.documents[i];
+                          if (snap.documentID == district){
+                              locationtownsearch = [];
+                              for (int j = 0; j < snap.data.length; j++) {
+                                locationtownsearch.add(
+                                  DropdownMenuItem(
+                                    child: Text(
+                                      snap.data['${j + 1}'].toString(),
+                                      style:
+                                          TextStyle(color: Color(0xff11b719)),
+                                    ),
+                                    value: snap.data['${j + 1}'].toString(),
+                                  ),
+                                );
+                              }
+                          }
+                        }
+                        final snackBar = SnackBar(
+                            content: Text(
+                              'You Selected $district',
+                              style: TextStyle(color: Color(0xff11b719)),
+                            ),
+                          );
+                          Scaffold.of(context).showSnackBar(snackBar);
+                      },
+                      value: district,
+                      isExpanded: false,
+                      hint: new Text(
+                        "Search District",
+                        style: TextStyle(color: Color(0xff11b719)),
+                      ),
+                    ),
+                    DropdownButton(
+                      items: locationtownsearch,
+                      onChanged: (value){
+                        setState(() {
+                          town = value;
+                                          
+                        });
+                        final snackBar = SnackBar(
+                            content: Text(
+                              'You Selected $town',
+                              style: TextStyle(color: Color(0xff11b719)),
+                            ),
+                          );
+                          Scaffold.of(context).showSnackBar(snackBar);
+                          setState(() {
+                            //widget.locationDetails.settown(locval2);
+                            locationlistsearch = [];
+                            locationtownsearch = [];
+                          });
+                      
+                      },
+                      //icon: Icon(Icons),
+                       
+                      value: town,
+                      isExpanded: false,
+                      hint: new Text(
+                        "Select your City",
+                        style: TextStyle(color: Color(0xff11b719)),
+                      ),
+                    ),
+                  ],
+                );
+              }
+            }
+          ),
+                ],
+              ),
+              ),
+              SizedBox(width: 30,),
+            ],
+          ),
+          //
+          //
+          //
+          //
+          whatuSearch(),
+          //Text('You are going to search in ${town},${district}'),
+          RaisedButton(
+             onPressed: () {
+              setState(() {
+                pressed = "A";
+              });
+            },
+            child: Text(
+              "Search",
+              style: TextStyle(fontSize: 20.0),
+            ),
+          ),
+          
+          SizedBox(height: 30,),
           _getBody(),
         ],
       )
@@ -84,31 +267,76 @@ class _SearchHereState extends State<SearchHere> {
                 for (int i = 0; i < snapshot.data.documents.length; i++) {
                 
                   String serchText = snapshot.data.documents[i].data['searchkey'];
-
+                  serchlocation = snapshot.data.documents[i].data['value3'];
                   String value1,value2,value3,value4,carimage,docID;
+                  
+                  //if (serchText.contains(searchValue)) {
+                  //  docID = snapshot.data.documents[i].documentID;
+                  //  value1 = snapshot.data.documents[i].data['value1'];
+                  //  value2 = snapshot.data.documents[i].data['value2'];
+                  //  value3 = snapshot.data.documents[i].data['value3'];
+                  //  value4 = snapshot.data.documents[i].data['value4'];
+                  //  carimage = snapshot.data.documents[i].data['urls'][0];
+                  //
+                  //  _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
+                  //}
+                  if(searchtype=="SRILANKA"){
+                    if(serchText.contains(searchValue)) {
+                      docID = snapshot.data.documents[i].documentID;
+                      value1 = snapshot.data.documents[i].data['value1'];
+                      value2 = snapshot.data.documents[i].data['value2'];
+                      value3 = snapshot.data.documents[i].data['value3'];
+                      value4 = snapshot.data.documents[i].data['value4'];
+                      carimage = snapshot.data.documents[i].data['urls'][0];
 
-                  if (serchText.contains(searchValue)) {
-                    docID = snapshot.data.documents[i].documentID;
-                    value1 = snapshot.data.documents[i].data['value1'];
-                    value2 = snapshot.data.documents[i].data['value2'];
-                    value3 = snapshot.data.documents[i].data['value3'];
-                    value4 = snapshot.data.documents[i].data['value4'];
-                    carimage = snapshot.data.documents[i].data['urls'][0];
-
-                    _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
+                      _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
+                    }
+                  }
+                  else{
+                    if(serchText.contains(searchValue) && serchlocation.contains(town)) {
+                     docID = snapshot.data.documents[i].documentID;
+                     value1 = snapshot.data.documents[i].data['value1'];
+                     value2 = snapshot.data.documents[i].data['value2'];
+                     value3 = snapshot.data.documents[i].data['value3'];
+                     value4 = snapshot.data.documents[i].data['value4'];
+                     carimage = snapshot.data.documents[i].data['urls'][0];
+                   
+                     _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
+                   }
+                   else{
+                     return Text('no data');
+                   }
                   }
                 }
                 return sliverGridWidget(context);
-              } else {
+              } else {//!snapshot.hasdata
                 return Text("loading");
               }
             },
           );
     }else{
-      return Text('ranish');
+      return Text('Ranish');
     }
     
   }
+
+  Widget whatuSearch(){
+    if(searchtype== "SRILANKA"){
+      return Center(
+        child: Card(
+          child: Text("Search in : All around Sri Lanka", style: TextStyle(fontSize: 16, ),),
+        ),
+      );
+    }
+    else{
+      return Center(
+        child: Card(
+          child: Text("Search in : ${town},${district}"),
+        ),
+      );
+    }
+  }
+
 
   Widget sliverGridWidget(context) {
     return StaggeredGridView.countBuilder(

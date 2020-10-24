@@ -136,7 +136,7 @@ class AadCardForGrid extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.bottomRight,
-            child: Text(" ${ad.value4}",style: TextStyle(color: Colors.grey),),
+            child: Text(" ${ad.value4}  ",style: TextStyle(color: Colors.grey),),
           ),
         ],
       ),

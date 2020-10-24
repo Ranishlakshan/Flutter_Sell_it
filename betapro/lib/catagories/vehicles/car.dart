@@ -1,3 +1,5 @@
+import 'package:betapro/components/locationclass.dart';
+import 'package:betapro/components/locationwidget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -30,6 +32,11 @@ class _carFormState extends State<carForm> {
   String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition,phonenumbers,location;
   String searchkey;
 
+  var location1 = Firestore.instance.collection("location").snapshots();
+  var location1selected,location2selected;
+  List<DropdownMenuItem> locationlist2 = [];
+
+  Locationclass loccz = Locationclass();
   
   
   String _currentSelectedValue;
@@ -63,6 +70,7 @@ class _carFormState extends State<carForm> {
     "Recondition",
   ];
 
+  
   
 
 
@@ -199,6 +207,9 @@ class _carFormState extends State<carForm> {
         imageUrls.add(downloadUrl.toString());
         if(imageUrls.length==images.length){
           String documnetID = DateTime.now().millisecondsSinceEpoch.toString();
+          //List list123 = 
+          String testLocation = '${loccz.getTownname()},${loccz.getdistrictName()}';
+          print(testLocation);
           //carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition
           Firestore.instance.collection('ads').document(documnetID).setData({
             'urls':imageUrls,
@@ -213,13 +224,15 @@ class _carFormState extends State<carForm> {
             'condition':carCondition,
             'description':carDescription,
             'phone': phonenumbers,
-            'location': location,
+            'location': testLocation,
             'reviewstatus':true,  
             'searchkey':carBrand+" "+carModel+" "+carYear+"car",
             'value1':carBrand+" "+carModel+" "+carYear,
             'value2':carPrice,
-            'value3':location,
+            'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
+            //
+            'catagory':"cars",
             
 
           }).then((_){
@@ -672,7 +685,104 @@ class _carFormState extends State<carForm> {
           
           ///
           ///
-          
+          ///
+          LocationAdd(locationDetails: loccz),
+          //StreamBuilder(
+          //stream: location1,
+          //builder:  (context, snapshot) {
+          //    if (!snapshot.hasData){
+          //      return Text("Loading.....");
+          //    }else{
+          //      List<DropdownMenuItem> locationlist1 = [];
+          //      for (int i = 0; i < snapshot.data.documents.length; i++) {
+          //          DocumentSnapshot snap = snapshot.data.documents[i];
+          //          locationlist1.add(
+          //            DropdownMenuItem(
+          //              child: Text(
+          //                snap.documentID,
+          //                style: TextStyle(color: Color(0xff11b719)),
+          //              ),
+          //            value: "${snap.documentID}",
+          //          ),
+          //        );
+          //      }
+          //      return Column(
+          //        mainAxisAlignment: MainAxisAlignment.center,
+          //        children: <Widget>[
+          //          SizedBox(width: 20.0),
+          //          DropdownButton(
+          //            items: locationlist1,
+          //            onChanged: (locval1){
+          //              setState(() {
+          //                location1selected = locval1;                          
+          //              });
+          //              for (int i = 0;i < snapshot.data.documents.length;i++){
+          //                DocumentSnapshot snap = snapshot.data.documents[i];
+          //                if (snap.documentID == location1selected){
+          //                    locationlist2 = [];
+          //                    for (int j = 0; j < snap.data.length; j++) {
+          //                      locationlist2.add(
+          //                        DropdownMenuItem(
+          //                          child: Text(
+          //                            snap.data['${j + 1}'].toString(),
+          //                            style:
+          //                                TextStyle(color: Color(0xff11b719)),
+          //                          ),
+          //                          value: snap.data['${j + 1}'].toString(),
+          //                        ),
+          //                      );
+          //                    }
+          //                }
+          //              }
+          //              final snackBar = SnackBar(
+          //                  content: Text(
+          //                    'You Selected $location1selected',
+          //                    style: TextStyle(color: Color(0xff11b719)),
+          //                  ),
+          //                );
+          //                Scaffold.of(context).showSnackBar(snackBar);
+          //            },
+          //            value: location1selected,
+          //              isExpanded: false,
+          //              hint: new Text(
+          //                "Select your District",
+          //                style: TextStyle(color: Color(0xff11b719)),
+          //              ),
+          //          ),
+          //          DropdownButton(
+          //            items: locationlist2,
+          //            onChanged: (locval2) {
+          //              setState(() {
+          //                location2selected = locval2;                          
+          //              });
+          //                final snackBar = SnackBar(
+          //                  content: Text(
+          //                    'You Selected $locval2',
+          //                    style: TextStyle(color: Color(0xff11b719)),
+          //                  ),
+          //                );
+          //                Scaffold.of(context).showSnackBar(snackBar);
+          //                setState(() {
+          //                  //location2selected = locval2;
+          //                  locationlist1 = [];
+          //                  locationlist2 = [];
+          //                });
+          //              },
+          //              value: location2selected,
+          //              hint: new Text(
+          //                "Select your City",
+          //                style: TextStyle(color: Color(0xff11b719)),
+          //              ),
+          //          ),
+          //        ],
+          //      );
+          //    }
+          //        
+          //  },
+          //),
+
+          //
+          //
           SizedBox(height: 20.0),
           RaisedButton(
 

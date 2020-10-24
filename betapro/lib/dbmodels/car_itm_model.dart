@@ -32,6 +32,11 @@ class CarModel {
     
   }
 
+  //getData(String name1) async {
+  //  return await Firestore.instance.collection('ads').orderBy('value4',descending: true).where('reviewstatus',isEqualTo: true).snapshots();
+  //  
+  //}
+
 //void setcarBrand(String carBrand){
 //this.carBrand = carBrand;
 //}

@@ -41,11 +41,11 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
 
   var catagory_names = Firestore.instance.collection("catagory_names").snapshots();
   
-  void ValueChanged(var currencyValue){
-    setState(() {
-          selectedCurrency =currencyValue;
-        });
-  }
+  //void ValueChanged(var currencyValue){
+  //  setState(() {
+  //        selectedCurrency =currencyValue;
+  //      });
+  //}
 
   void ValueSubchange(var subcatagory){
     setState(() {
@@ -229,9 +229,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                             selectedCurrency = currencyValue;
                             //disabledropdown = true;
                           });
-                          for (int i = 0;
-                              i < snapshot.data.documents.length;
-                              i++) {
+                          for (int i = 0;i < snapshot.data.documents.length;i++) {
                             DocumentSnapshot snap = snapshot.data.documents[i];
                             if (snap.documentID == selectedCurrency) {
                               currencyItems2 = [];

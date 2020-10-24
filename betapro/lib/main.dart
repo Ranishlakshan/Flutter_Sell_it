@@ -5,8 +5,10 @@ import 'aditems.dart';
 import 'admob_pg.dart';
 import 'admobdoc.dart';
 import 'aliexpressmain.dart';
+import 'catagories.dart';
 import 'dashboard.dart';
 import 'first_screen.dart';
+import 'hotdeals.dart';
 import 'itemview.dart';
 import 'login_page.dart';
 import 'nima_data_add.dart';
@@ -37,9 +39,12 @@ class MyApp extends StatelessWidget {
         '/first_screen': (context) => FirstScreen(),
         //'/ad_items': (context) => AdItem(),
         '/searchtest' : (context) => SearchHere(),
-        //Uploadpg
         '/uploadwait' : (context) => Uploadpg(),
         '/adadvertisement' : (context) => AdAdvertisement(),
+        
+        '/catago' : (context) => Catagories(),
+        //HotDeals
+        '/hotdeals' : (context) => HotDeals(),
       },
     );
   }
