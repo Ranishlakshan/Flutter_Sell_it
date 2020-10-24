@@ -281,35 +281,35 @@ class _SearchHereState extends State<SearchHere> {
                   //  _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
                   //}
                   if(searchtype=="SRILANKA"){
-                    if(serchText.contains(searchValue)) {
+                    if (serchText.contains(searchValue)) {
                       docID = snapshot.data.documents[i].documentID;
                       value1 = snapshot.data.documents[i].data['value1'];
                       value2 = snapshot.data.documents[i].data['value2'];
                       value3 = snapshot.data.documents[i].data['value3'];
                       value4 = snapshot.data.documents[i].data['value4'];
                       carimage = snapshot.data.documents[i].data['urls'][0];
-
+                    
                       _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
                     }
                   }
                   else{
-                    if(serchText.contains(searchValue) && serchlocation.contains(town)) {
-                     docID = snapshot.data.documents[i].documentID;
-                     value1 = snapshot.data.documents[i].data['value1'];
-                     value2 = snapshot.data.documents[i].data['value2'];
-                     value3 = snapshot.data.documents[i].data['value3'];
-                     value4 = snapshot.data.documents[i].data['value4'];
-                     carimage = snapshot.data.documents[i].data['urls'][0];
-                   
-                     _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
-                   }
-                   else{
-                     return Text('no data');
-                   }
+                    if(serchText.contains(searchValue) & serchlocation.contains(town)){
+                      docID = snapshot.data.documents[i].documentID;
+                      value1 = snapshot.data.documents[i].data['value1'];
+                      value2 = snapshot.data.documents[i].data['value2'];
+                      value3 = snapshot.data.documents[i].data['value3'];
+                      value4 = snapshot.data.documents[i].data['value4'];
+                      carimage = snapshot.data.documents[i].data['urls'][0];
+                    
+                      _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
+                    }
                   }
+
+                  
                 }
                 return sliverGridWidget(context);
-              } else {//!snapshot.hasdata
+              } 
+              else {//!snapshot.hasdata
                 return Text("loading");
               }
             },
