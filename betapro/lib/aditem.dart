@@ -195,7 +195,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
         drawer: MyDrawer(),
         body: ListView(
           children: <Widget>[
-            Text('Select catagory here'),
+            //Text('Select catagory here'),
             //Text("$name"),
             Text('Select catagory here'),
             SizedBox(height: 40.0),

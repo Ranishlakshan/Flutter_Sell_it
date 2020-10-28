@@ -48,28 +48,16 @@ class _SearchHereState extends State<SearchHere> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          decoration: const InputDecoration(
-            hintText: 'Search Here',
-            labelText: 'Search',
-          ),
-          onChanged: (value) {
-            searchValue = value;
-          },
-        ),
+        title: Text("Search Everything Here"),
         
         actions: <Widget>[
-          FlatButton(
-            onPressed: () {
-              setState(() {
-                pressed = "A";
-              });
-            },
-            child: Text(
-              "Search",
-              style: TextStyle(fontSize: 20.0),
-            ),
-          ),
+          //IconButton(
+          //    icon: Icon(Icons.search),
+          //    onPressed: () {
+          //      Navigator.pushNamed(context, '/searchtest');
+          //      //addDialog(context);
+          //    },
+          //  ),
         ],
       ),
       body: ListView(
@@ -78,10 +66,11 @@ class _SearchHereState extends State<SearchHere> {
           TextField(
           decoration: const InputDecoration(
             hintText: 'Search Here',
-            labelText: 'Search',
+            labelText: 'Search ddd',
           ),
           onChanged: (value) {
             searchValue = value;
+            
           },
         ),
         SizedBox(height: 20,),
@@ -143,18 +132,22 @@ class _SearchHereState extends State<SearchHere> {
                     ),
                   );
                 }
-                return Column(
+                return Column( 
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(width: 20.0),
                     DropdownButton(
                       items: locationlistsearch,
                       onChanged:(value){
+                        //
+                      try{
                         setState(() {
+                          district=null;
+                          town=null;
                           district=value;
                           searchtype="DISTRICT";
                         });
-                        for (int i = 0;i < snapshot.data.documents.length;i++){
+                          for (int i = 0;i < snapshot.data.documents.length;i++){
                           DocumentSnapshot snap = snapshot.data.documents[i];
                           if (snap.documentID == district){
                               locationtownsearch = [];
@@ -179,6 +172,41 @@ class _SearchHereState extends State<SearchHere> {
                             ),
                           );
                           Scaffold.of(context).showSnackBar(snackBar);
+
+                      }
+                      catch(e){
+                        print("error happened");
+                      }  
+                      //  //
+                      //  setState(() {
+                      //    district=value;
+                      //    searchtype="DISTRICT";
+                      //  });
+                      //  for (int i = 0;i < snapshot.data.documents.length;i++){
+                      //    DocumentSnapshot snap = snapshot.data.documents[i];
+                      //    if (snap.documentID == district){
+                      //        locationtownsearch = [];
+                      //        for (int j = 0; j < snap.data.length; j++) {
+                      //          locationtownsearch.add(
+                      //            DropdownMenuItem(
+                      //              child: Text(
+                      //                snap.data['${j + 1}'].toString(),
+                      //                style:
+                      //                    TextStyle(color: Color(0xff11b719)),
+                      //              ),
+                      //              value: snap.data['${j + 1}'].toString(),
+                      //            ),
+                      //          );
+                      //        }
+                      //    }
+                      //  }
+                      //  final snackBar = SnackBar(
+                      //      content: Text(
+                      //        'You Selected $district',
+                      //        style: TextStyle(color: Color(0xff11b719)),
+                      //      ),
+                      //    );
+                      //    Scaffold.of(context).showSnackBar(snackBar);
                       },
                       value: district,
                       isExpanded: false,
@@ -190,22 +218,45 @@ class _SearchHereState extends State<SearchHere> {
                     DropdownButton(
                       items: locationtownsearch,
                       onChanged: (value){
-                        setState(() {
-                          town = value;
-                                          
-                        });
-                        final snackBar = SnackBar(
-                            content: Text(
-                              'You Selected $town',
-                              style: TextStyle(color: Color(0xff11b719)),
-                            ),
-                          );
-                          Scaffold.of(context).showSnackBar(snackBar);
+
+                        try{
                           setState(() {
-                            //widget.locationDetails.settown(locval2);
-                            locationlistsearch = [];
-                            locationtownsearch = [];
+                            town = value;
+
                           });
+                          final snackBar = SnackBar(
+                              content: Text(
+                                'You Selected $town',
+                                style: TextStyle(color: Color(0xff11b719)),
+                              ),
+                            );
+                            Scaffold.of(context).showSnackBar(snackBar);
+                            setState(() {
+                              //widget.locationDetails.settown(locval2);
+                              locationlistsearch = [];
+                              locationtownsearch = [];
+                            });
+                        }
+                        catch(e){
+                          print('error happened 2');
+                        }
+
+                        //setState(() {
+                        //  town = value;
+                        //                  
+                        //});
+                        //final snackBar = SnackBar(
+                        //    content: Text(
+                        //      'You Selected $town',
+                        //      style: TextStyle(color: Color(0xff11b719)),
+                        //    ),
+                        //  );
+                        //  Scaffold.of(context).showSnackBar(snackBar);
+                        //  setState(() {
+                        //    //widget.locationDetails.settown(locval2);
+                        //    locationlistsearch = [];
+                        //    locationtownsearch = [];
+                        //  });
                       
                       },
                       //icon: Icon(Icons),
@@ -237,6 +288,8 @@ class _SearchHereState extends State<SearchHere> {
           RaisedButton(
              onPressed: () {
               setState(() {
+                //remove keyboard from screen
+                FocusScope.of(context).unfocus();
                 pressed = "A";
               });
             },
@@ -315,7 +368,7 @@ class _SearchHereState extends State<SearchHere> {
             },
           );
     }else{
-      return Text('Ranish');
+      return Text(' ');
     }
     
   }

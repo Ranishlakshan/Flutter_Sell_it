@@ -23,8 +23,8 @@ String title = '';
 String price = '';
 String phone = '';
 
-final String number = "123456789";
-final String email = "dancamdev@example.com";
+//final String number = "123456789";
+//final String email = "dancamdev@example.com";
 String numb;
 String desc;
 
