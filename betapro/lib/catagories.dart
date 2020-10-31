@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'dbmodels/add_card_gridview.dart';
 import 'dbmodels/car_itm_model.dart';
+import 'drawer.dart';
 
 var catagory_names = Firestore.instance.collection("catagory_names").snapshots();
 var catagoryMain,catagorySub;
@@ -49,6 +50,7 @@ class _CatagoriesState extends State<Catagories> {
             ),
         ],
       ),
+      drawer: MyDrawer(),
       body: ListView(
         children: <Widget>[
           Text('Ranish'),
