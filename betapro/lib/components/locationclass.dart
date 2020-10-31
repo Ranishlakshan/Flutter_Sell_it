@@ -13,8 +13,7 @@ class Locationclass{
   }
 
   String getdistrictName(){
-    return districtname
-    ;
+    return districtname;
   }
   String getTownname(){
     return townname;
@@ -22,3 +21,7 @@ class Locationclass{
 
 
 }
+
+
+
+//

@@ -10,6 +10,7 @@ import 'dashboard.dart';
 import 'first_screen.dart';
 import 'hotdeals.dart';
 import 'itemview.dart';
+import 'location.dart';
 import 'login_page.dart';
 import 'nima_data_add.dart';
 import 'search.dart';
@@ -45,6 +46,8 @@ class MyApp extends StatelessWidget {
         '/catago' : (context) => Catagories(),
         //HotDeals
         '/hotdeals' : (context) => HotDeals(),
+        //Location
+        '/location' : (context) => Location(),
       },
     );
   }
