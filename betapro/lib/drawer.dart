@@ -85,7 +85,22 @@ class MyDrawer extends StatelessWidget {
               ),
             ),
             Text('           _____________________________________________'),
-            
+            SizedBox(height: 20,),
+            Container(
+              child: InkWell(
+                onTap: (){
+                  Navigator.popAndPushNamed(context, '/login');
+                },
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(width: 30,),
+                    Icon(Icons.input),
+                    SizedBox(width: 20,),
+                    Text("Log In", style: TextStyle(fontSize: 20.0 ),)
+                  ],
+                ),
+              ),
+            ),
             
             
             //ListTile(

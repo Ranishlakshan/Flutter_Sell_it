@@ -9,6 +9,7 @@ import 'dbmodels/car_itm_model.dart';
 import 'drawer.dart';
 import 'staggardgridview.dart';
 
+
 class AliExpressesPg extends StatefulWidget {
   @override
   _AliExpressesPgState createState() => _AliExpressesPgState();
@@ -227,16 +228,21 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
                 _listOfObjects = <CarModel>[];
                 
                  for (int i = 0; i < snapshot.data.documents.length; i++) {
+
+                  //bool status = snapshot.data.documents[i].data['reviewstatus'];
                   // DocumentSnapshot snap = snapshot.data.documents[i];
                   
-                  String docID = snapshot.data.documents[i].documentID;
-                  String value1 =snapshot.data.documents[i].data['value1'];
-                  String value2 = snapshot.data.documents[i].data['value2'];
-                  String value3 = snapshot.data.documents[i].data['value3'];
-                  String value4 = snapshot.data.documents[i].data['value4'];
-                  String carimage =
-                      snapshot.data.documents[i].data['urls'][0];                  
-                  _listOfObjects.add(CarModel(value1,value2,value3,value4,carimage,docID));
+                    String docID = snapshot.data.documents[i].documentID;
+                    String value1 =snapshot.data.documents[i].data['value1'];
+                    String value2 = snapshot.data.documents[i].data['value2'];
+                    String value3 = snapshot.data.documents[i].data['value3'];
+                    String value4 = snapshot.data.documents[i].data['value4'];
+                    String carimage =
+                        snapshot.data.documents[i].data['urls'][0];                  
+                    _listOfObjects.add(CarModel(value1,value2,value3,value4,carimage,docID));
+                  
+                  
+                  
                 }
                 return sliverGridWidget(context); 
               }else{

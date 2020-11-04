@@ -9,7 +9,7 @@ import 'drawer.dart';
 import 'location.dart';
 import 'locationtemp.dart';
 
-var locationsnap = Firestore.instance.collection("location").snapshots();
+var locationsnap = Firestore.instance.collection("search_location").snapshots();
 String ranmal = "I am done";
 //List<DropdownMenuItem> locationlistsearch = [];
 
@@ -172,6 +172,7 @@ class _SearchHereState extends State<SearchHere> {
                             town=null;
                           }
                           else{
+                            pressed="B";
                             district=null;
                             town=null;
                             district=value;
@@ -210,36 +211,7 @@ class _SearchHereState extends State<SearchHere> {
                       catch(e){
                         print("error happened");
                       }  
-                      //  //
-                      //  setState(() {
-                      //    district=value;
-                      //    searchtype="DISTRICT";
-                      //  });
-                      //  for (int i = 0;i < snapshot.data.documents.length;i++){
-                      //    DocumentSnapshot snap = snapshot.data.documents[i];
-                      //    if (snap.documentID == district){
-                      //        locationtownsearch = [];
-                      //        for (int j = 0; j < snap.data.length; j++) {
-                      //          locationtownsearch.add(
-                      //            DropdownMenuItem(
-                      //              child: Text(
-                      //                snap.data['${j + 1}'].toString(),
-                      //                style:
-                      //                    TextStyle(color: Color(0xff11b719)),
-                      //              ),
-                      //              value: snap.data['${j + 1}'].toString(),
-                      //            ),
-                      //          );
-                      //        }
-                      //    }
-                      //  }
-                      //  final snackBar = SnackBar(
-                      //      content: Text(
-                      //        'You Selected $district',
-                      //        style: TextStyle(color: Color(0xff11b719)),
-                      //      ),
-                      //    );
-                      //    Scaffold.of(context).showSnackBar(snackBar);
+                      
                       },
                       value: district,
                       isExpanded: false,
@@ -254,6 +226,7 @@ class _SearchHereState extends State<SearchHere> {
 
                         try{
                           setState(() {
+                            pressed="A";
                             town = value;
 
                           });
@@ -682,7 +655,10 @@ class _SearchHereState extends State<SearchHere> {
                       }
                     }
                     else{
-                      if(serchText.contains(searchValue) & serchlocation.contains(town)){
+                      if(town.contains("All Ads in")){
+                        temptown=town.substring(1 + town.lastIndexOf(' '));
+                        print(temptown);
+                        if(serchText.contains(searchValue) & serchlocation.contains(temptown)){
                         docID = snapshot.data.documents[i].documentID;
                         value1 = snapshot.data.documents[i].data['value1'];
                         value2 = snapshot.data.documents[i].data['value2'];
@@ -691,6 +667,19 @@ class _SearchHereState extends State<SearchHere> {
                         carimage = snapshot.data.documents[i].data['urls'][0];
 
                         _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
+                        }
+                      }
+                      else{
+                        if(serchText.contains(searchValue) & serchlocation.contains(town)){
+                        docID = snapshot.data.documents[i].documentID;
+                        value1 = snapshot.data.documents[i].data['value1'];
+                        value2 = snapshot.data.documents[i].data['value2'];
+                        value3 = snapshot.data.documents[i].data['value3'];
+                        value4 = snapshot.data.documents[i].data['value4'];
+                        carimage = snapshot.data.documents[i].data['urls'][0];
+
+                        _listOfObjects.add(CarModel(value1,value2,value3,value4 , carimage, docID));
+                        }
                       }
                     }
                   }
