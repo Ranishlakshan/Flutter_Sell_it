@@ -660,26 +660,26 @@ class _carFormState extends State<carForm> {
           SizedBox(height: 20.0,),
           
           
-          TextFormField(
-            //keyboardType: TextInputType.number,
-            onChanged:  (value) {
-                 location=value;         
-                        },
-            validator: (value) {
-              if (value.isEmpty) {
-              return 'Please Enter Location';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Nearest City',
-              labelText: 'Location ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
+          //TextFormField(
+          //  //keyboardType: TextInputType.number,
+          //  onChanged:  (value) {
+          //       location=value;         
+          //              },
+          //  validator: (value) {
+          //    if (value.isEmpty) {
+          //    return 'Please Enter Location';
+          //    }
+          //    return null;
+          //  },
+          //  decoration: const InputDecoration(
+          //    border: OutlineInputBorder(
+          //      borderSide: BorderSide(color: Colors.black)
+          //    ),
+          //    hintText: 'Enter Nearest City',
+          //    labelText: 'Location ',
+          //    prefixIcon: Icon(Icons.add_circle)
+          //  ),
+          //),
 
           
           
