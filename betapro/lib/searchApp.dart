@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import 'components/bottomnvbar.dart';
 import 'components/locationSearchClass.dart';
 import 'dbmodels/add_card_gridview.dart';
 import 'dbmodels/car_itm_model.dart';
@@ -10,7 +11,7 @@ import 'location.dart';
 import 'locationtemp.dart';
 
 var locationsnap = Firestore.instance.collection("search_location").snapshots();
-String ranmal = "I am done";
+//String ranmal = "I am done";
 //List<DropdownMenuItem> locationlistsearch = [];
 
 class SearchHere extends StatefulWidget {
@@ -69,42 +70,30 @@ class _SearchHereState extends State<SearchHere> {
   String location;
   String ranish;
 
-  //_navigateAndDisplaySelection(BuildContext context) async {
-  //  // Navigator.push returns a Future that completes after calling
-  //  // Navigator.pop on the Selection Screen.
-  //  final result = await Navigator.push(
-  //    context,
-  //    MaterialPageRoute(builder: (context) => LocationTemp()),
-  //  );
-//
-  //  // After the Selection Screen returns a result, hide any previous snackbars
-  //  // and show the new result.
-  //  Scaffold.of(context)
-  //    ..removeCurrentSnackBar()
-  //    ..showSnackBar(SnackBar(content: Text("$result")));
-  //  //ranish = result;
-  //  //setState(() {
-  //  //  ranish = result;    
-  //  //    });
-  //  print(result);
-//
-  //}
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNvBar(),
       appBar: AppBar(
-        title: Text("Search Everything Here"),
+        backgroundColor: Colors.black,
+        title: Text("Search",style: TextStyle( letterSpacing: 2),),
         
         actions: <Widget>[
-          //IconButton(
-          //    icon: Icon(Icons.search),
-          //    onPressed: () {
-          //      Navigator.pushNamed(context, '/searchtest');
-          //      //addDialog(context);
-          //    },
-          //  ),
-        ],
+            
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                
+                Navigator.pushNamed(context, '/login');
+                //addDialog(context);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.apps),
+              onPressed: () {},
+            ),
+          ],
       ),
       drawer: MyDrawer(),
       body: ListView(
@@ -217,7 +206,8 @@ class _SearchHereState extends State<SearchHere> {
                       isExpanded: false,
                       hint: new Text(
                         "Select Location",
-                        style: TextStyle(color: Color(0xff11b719)),
+                        style: TextStyle(color: Color(0xff11b719),fontSize: 20),
+                        
                       ),
                     ),
                     DropdownButton(
@@ -271,7 +261,7 @@ class _SearchHereState extends State<SearchHere> {
                       isExpanded: false,
                       hint: new Text(
                         "Select City",
-                        style: TextStyle(color: Color(0xff11b719)),
+                        style: TextStyle(color: Color(0xff11b719),fontSize: 20),
                       ),
                     ),
                   ],
@@ -293,6 +283,7 @@ class _SearchHereState extends State<SearchHere> {
 
         //--END- //ADD new location selectdetails here
         TextField(
+          textInputAction: TextInputAction.go,
           decoration: const InputDecoration(
             border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black)
@@ -308,218 +299,6 @@ class _SearchHereState extends State<SearchHere> {
         ),
         SizedBox(height: 20,),
 
-          //TextField(
-          //  decoration: const InputDecoration(
-          //  hintText: 'Enter Location here',
-          //  labelText: 'Add specific location (Optional)',
-          //),
-          //onChanged: (value) {
-          //  location = value;
-          //},
-          //),
-          ////
-          /////
-          ///
-          ///
-          ///
-          
-      //    Row(
-      //      
-      //      children: <Widget>[
-      //        SizedBox(width: 20,),
-      //        Expanded(
-      //          child: RaisedButton(
-      //            child: Text('All in SriLanka'),
-      //            onPressed:(){
-      //              setState(() {
-      //                //searchtype="SRILANKA"; 
-      //                searchtype="SRILANKA";                      
-      //              });
-      //            },
-//
-      //          ),
-      //        ),
-      //        //SizedBox(width: 30,),
-      //        Expanded(
-      //          child:Text("OR"),
-      //        ),
-      //        SizedBox(width: 20,),
-      //        Expanded(
-      //          child: Column(
-      //          children: <Widget>[
-      //            StreamBuilder(
-      //      stream: locationsnap,
-      //      builder: (context, snapshot) {
-      //        if (!snapshot.hasData){
-      //          return Text("Loading.....");
-      //        }else{
-      //          List<DropdownMenuItem> locationlistsearch = [];
-      //          for (int i = 0; i < snapshot.data.documents.length; i++) {
-      //              DocumentSnapshot snap = snapshot.data.documents[i];
-      //              locationlistsearch.add(
-      //                DropdownMenuItem(
-      //                  child: Text(
-      //                    snap.documentID,
-      //                    style: TextStyle(color: Color(0xff11b719)),
-      //                  ),
-      //                value: "${snap.documentID}",
-      //              ),
-      //            );
-      //          }
-      //          return Column( 
-      //            mainAxisAlignment: MainAxisAlignment.center,
-      //            children: <Widget>[
-      //              SizedBox(width: 20.0),
-      //              DropdownButton(
-      //                items: locationlistsearch,
-      //                onChanged:(value){
-      //                  //
-      //                try{
-      //                  setState(() {
-      //                    district=null;
-      //                    town=null;
-      //                    district=value;
-      //                    //searchtype="DISTRICT";
-      //                    searchtype="DISTRICT";
-      //                  });
-      //                    for (int i = 0;i < snapshot.data.documents.length;i++){
-      //                    DocumentSnapshot snap = snapshot.data.documents[i];
-      //                    if (snap.documentID == district){
-      //                        locationtownsearch = [];
-      //                        for (int j = 0; j < snap.data.length; j++) {
-      //                          locationtownsearch.add(
-      //                            DropdownMenuItem(
-      //                              child: Text(
-      //                                snap.data['${j + 1}'].toString(),
-      //                                style:
-      //                                    TextStyle(color: Color(0xff11b719)),
-      //                              ),
-      //                              value: snap.data['${j + 1}'].toString(),
-      //                            ),
-      //                          );
-      //                        }
-      //                    }
-      //                  }
-      //                  final snackBar = SnackBar(
-      //                      content: Text(
-      //                        'You Selected $district',
-      //                        style: TextStyle(color: Color(0xff11b719)),
-      //                      ),
-      //                    );
-      //                    Scaffold.of(context).showSnackBar(snackBar);
-//
-      //                }
-      //                catch(e){
-      //                  print("error happened");
-      //                }  
-      //                //  //
-      //                //  setState(() {
-      //                //    district=value;
-      //                //    searchtype="DISTRICT";
-      //                //  });
-      //                //  for (int i = 0;i < snapshot.data.documents.length;i++){
-      //                //    DocumentSnapshot snap = snapshot.data.documents[i];
-      //                //    if (snap.documentID == district){
-      //                //        locationtownsearch = [];
-      //                //        for (int j = 0; j < snap.data.length; j++) {
-      //                //          locationtownsearch.add(
-      //                //            DropdownMenuItem(
-      //                //              child: Text(
-      //                //                snap.data['${j + 1}'].toString(),
-      //                //                style:
-      //                //                    TextStyle(color: Color(0xff11b719)),
-      //                //              ),
-      //                //              value: snap.data['${j + 1}'].toString(),
-      //                //            ),
-      //                //          );
-      //                //        }
-      //                //    }
-      //                //  }
-      //                //  final snackBar = SnackBar(
-      //                //      content: Text(
-      //                //        'You Selected $district',
-      //                //        style: TextStyle(color: Color(0xff11b719)),
-      //                //      ),
-      //                //    );
-      //                //    Scaffold.of(context).showSnackBar(snackBar);
-      //                },
-      //                value: district,
-      //                isExpanded: false,
-      //                hint: new Text(
-      //                  "Search District",
-      //                  style: TextStyle(color: Color(0xff11b719)),
-      //                ),
-      //              ),
-      //              DropdownButton(
-      //                items: locationtownsearch,
-      //                onChanged: (value){
-//
-      //                  try{
-      //                    setState(() {
-      //                      town = value;
-//
-      //                    });
-      //                    final snackBar = SnackBar(
-      //                        content: Text(
-      //                          'You Selected $town',
-      //                          style: TextStyle(color: Color(0xff11b719)),
-      //                        ),
-      //                      );
-      //                      Scaffold.of(context).showSnackBar(snackBar);
-      //                      setState(() {
-      //                        //widget.locationDetails.settown(locval2);
-      //                        locationlistsearch = [];
-      //                        locationtownsearch = [];
-      //                      });
-      //                  }
-      //                  catch(e){
-      //                    print('error happened 2');
-      //                  }
-//
-      //                  //setState(() {
-      //                  //  town = value;
-      //                  //                  
-      //                  //});
-      //                  //final snackBar = SnackBar(
-      //                  //    content: Text(
-      //                  //      'You Selected $town',
-      //                  //      style: TextStyle(color: Color(0xff11b719)),
-      //                  //    ),
-      //                  //  );
-      //                  //  Scaffold.of(context).showSnackBar(snackBar);
-      //                  //  setState(() {
-      //                  //    //widget.locationDetails.settown(locval2);
-      //                  //    locationlistsearch = [];
-      //                  //    locationtownsearch = [];
-      //                  //  });
-      //                
-      //                },
-      //                //icon: Icon(Icons),
-      //                 
-      //                value: town,
-      //                isExpanded: false,
-      //                hint: new Text(
-      //                  "Select your City",
-      //                  style: TextStyle(color: Color(0xff11b719)),
-      //                ),
-      //              ),
-      //            ],
-      //          );
-      //        }
-      //      }
-      //    ),
-      //          ],
-      //        ),
-      //        ),
-      //        SizedBox(width: 30,),
-      //      ],
-      //    ),
-          //
-          //
-          //
-          //
-          //whatuSearch(),
-          //Text('You are going to search in ${town},${district}'),
           RaisedButton(
              onPressed: () {
               setState(() {
@@ -528,87 +307,25 @@ class _SearchHereState extends State<SearchHere> {
                 pressed = "A";
               });
             },
-            child: Text(
-              "Search",
-              style: TextStyle(fontSize: 20.0),
-            ),
+            color: Color(0xff11b719),
+            
+              textColor: Colors.white,
+              child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text("Search", style: TextStyle(fontSize: 21.0)),
+                ],
+              )
+              ),
+            
           ),
           
-          SizedBox(height: 30,),
+          SizedBox(height: 15,),
 
 
-    //      //----> try new code here
-    //      Container(
-    //        child: Center(
-    //          child: Column(
-    //            children: <Widget>[
-    //              TextField(
-    //                decoration: const InputDecoration(
-    //                  border: OutlineInputBorder(
-    //                    borderSide: BorderSide(color: Colors.black)
-    //                  ),
-    //                  hintText: 'Search Here',
-    //                  labelText: 'Search ',
-    //                  prefixIcon: Icon(Icons.search)
-    //                ),
-    //              ),
-    //              
-//
-    //            ],
-    //          )
-    //        ),
-    //      ),
-    //      SizedBox(height: 10,),
-    //      Container(
-    //        child: Center(
-    //          child: Row(
-    //            children: <Widget>[
-    //              SizedBox(height: 50,),
-    //              InkWell(
-    //                splashColor: Colors.blue,
-    //                onTap: (){
-    //                  print("hello world");
-    //                  //_navigateAndDisplaySelection(context);
-    //                  
-    //                  //print(searchLocation.searchtype);
-    //                  //Navigator.push(context, MaterialPageRoute(
-    //                  //  builder: (context) => LocationTemp(receive:searchLocation),
-    //                  //));
-    //                  //print(widget.receive2.getSearchType());
-    //                  Navigator.push(context, MaterialPageRoute(
-    //                    builder: (context) => Location(receive:searchLocation),
-    //                  ));
-    //                },
-    //                child: Card(
-    //                  child: Row(
-    //                  children: <Widget>[
-    //                    Icon(Icons.location_on),
-    //                    Text("Select location")
-    //                  ],
-    //                ),
-    //                )
-    //              ),
-    //              SizedBox(width: 30,),
-    //              //Text("data"),
-    //              //whatuSearch(),
-    //              
-    //            ],
-    //          ),
-    //      
-    //        ),
-    //      ),
-    //      SizedBox(height: 10,),
-    //      
-//
-//
-    //      SizedBox(height: 30,),        
-    //      Text("ranish lakshan"),
-    //      //Text(ranish),
-    //      
-    //      SizedBox(height: 30,),
-    //      //testLocation(),
-//
-    //      //----->>end try new code
+    
           _getBody(),
         ],
       )

@@ -9,45 +9,32 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class vanForm extends StatefulWidget {
+class landForm extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
-  const vanForm({Key key, this.globalKey}) : super(key: key);
+  const landForm({Key key, this.globalKey}) : super(key: key);
   @override
-  _vanFormState createState() => _vanFormState();
+  _landFormState createState() => _landFormState();
 }
 
-class _vanFormState extends State<vanForm> {
+class _landFormState extends State<landForm> {
   
-  final _formKeyVan = GlobalKey<FormState>();
+  final _formKeyLand = GlobalKey<FormState>();
   List<Asset> images = List<Asset>();
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
   bool carosal = false;
 
-  String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,
-  carDescription,carPrice,carCondition,phonenumbers,location,carColor;
   String searchkey;
+
+  String adname,beds,baths,houseSize,landSize,description,condition,price,phonenumbers;
 
   var location1 = Firestore.instance.collection("location").snapshots();
   var location1selected,location2selected;
   List<DropdownMenuItem> locationlist2 = [];
 
   Locationclass loccz = Locationclass();
-  
-  var _transmissionType = [
-    "Auto",
-    "Manual",
-    "Triptonic",
-  ];
 
-  var _carFuelType = [
-    "Petrol",
-    "Diesel",
-    "Hybrid",
-    "Electric"
-  ];
-
-  var _carCondition = [
+  var _Condition = [
     "Brand new",
     "Used",
     "Recondition",
@@ -139,27 +126,22 @@ class _vanFormState extends State<vanForm> {
           //carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition
           Firestore.instance.collection('ads').document(documnetID).setData({
             'urls':imageUrls,
-            'brand':carBrand,
-            'model':carModel,
-            'year':carYear,
-            'price':carPrice,
-            'milleage':carMilleage,
-            'transmission':carTransmission,
-            'fuelType':carFuelType,
-            'engineCapacity':carEngineCapacity,
-            'condition':carCondition,
-            'color':carColor,
-            'description':carDescription,
+            'title':adname,
+            'beds':beds,
+            'Baths':baths,
+            'price':price,
+            'land size':landSize,
+            'description':description,
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':carBrand+" "+carModel+" "+carYear+"vansVans",
-            'value1':carBrand+" "+carModel+" "+carYear,
-            'value2':carPrice,
+            'searchkey':adname+"propertylandLand",
+            'value1':adname,
+            'value2':price,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"vans,vehicles",
+            'category':"Land,Property",
             
 
           }).then((_){
@@ -212,16 +194,16 @@ class _vanFormState extends State<vanForm> {
     return Card(
       child: Form(
         
-        key: _formKeyVan,
+        key: _formKeyLand,
         child: Column(children: <Widget>[
           
           TextFormField(
             onChanged:  (value) {
-                 carBrand=value;         
+                 adname=value;         
                         },
             validator: (String value) {
               if (value.isEmpty) {
-                return 'Please enter Brand';
+                return 'Please enter title';
               }
               return null;
             },
@@ -229,44 +211,22 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter your Van Brand',
-              labelText: 'Brand',
+              hintText: 'Enter Title for AD',
+              labelText: 'Ad Title',
               prefixIcon: Icon(Icons.add_circle) 
             ),
           ),
 
           SizedBox(height: 20.0),
-          TextFormField(
-            onChanged:  (value) {
-                 carModel=value;         
-                        },
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please enter Model';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter your Van Model',
-              labelText: 'Van Model',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          
-          
           
           TextFormField(
             keyboardType: TextInputType.number,
             onChanged:  (value) {
-                 carYear=value;         
+                 baths=value;         
                         },
             validator: (String value) {
               if (value.isEmpty) {
-                return 'Please enter Model Year';
+                return 'Please enter Size of Land';
               }
               return null;
             },
@@ -274,161 +234,18 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter Van Model year',
-              labelText: 'Model Year',
+              hintText: 'Enter Size of Land',
+              labelText: 'Size of Land(Perches)',
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
           SizedBox(height: 20.0),
-          
-          
-          
-          TextFormField(
-            keyboardType: TextInputType.number,
-            onChanged:  (value) {
-                 carMilleage=value;         
-                        },
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please enter Mileage';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Mileage',
-              labelText: 'Mileage ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          
-          
-          
-          FormField<String>(
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please Select Transmission';
-              }
-              return null;
-            },
-          builder: (FormFieldState<String> state) {
-            return InputDecorator(
-              
-              decoration: const InputDecoration(
-              //hintText: 'Enter Transmission Type',
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              //hintText: 'Enter Transmission Type',
-              labelText: 'transmission',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-                  
-              isEmpty: carTransmission == '',
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  
-                  value: carTransmission,
-                  isDense: true,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      carTransmission = newValue;
-                      state.didChange(newValue);
-                    });
-                  },
-                  items: _transmissionType.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            );
-          },
-        ),
-          SizedBox(height: 20.0),
-          
-          
-          
-          FormField<String>(
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please Select Fuel Type';
-              }
-              return null;
-            },
-          builder: (FormFieldState<String> state) {
-            return InputDecorator(
-              
-              decoration: const InputDecoration(
-              //hintText: 'Enter Transmission Type',
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Fuel Type',
-              labelText: 'Fuel Type',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-                  
-              isEmpty: carFuelType == '',
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  
-                  value: carFuelType,
-                  isDense: true,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      carFuelType = newValue;
-                      state.didChange(newValue);
-                    });
-                  },
-                  items: _carFuelType.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            );
-          },
-        ),
-          SizedBox(height: 20.0),
-          
-          
-          TextFormField(
-            keyboardType: TextInputType.number,
-            onChanged:  (value) {
-                 carEngineCapacity=value;         
-                        },
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please Enter Engine capaciy';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Engine capacity',
-              labelText: 'Engine capacity(cc) ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          
-          
           TextFormField(
             keyboardType: TextInputType.multiline,
             minLines: 1,
             maxLines: 15,
             onChanged:  (value) {
-                 carDescription=value;         
+                 description=value;         
                         },
             validator: (value) {
               if (value.isEmpty) {
@@ -445,81 +262,13 @@ class _vanFormState extends State<vanForm> {
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
-          SizedBox(height: 20.0),
-          //carCondition
           
-          
-          
-          FormField<String>(
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please Select Car Condition';
-              }
-              return null;
-            },
-          builder: (FormFieldState<String> state) {
-            return InputDecorator(
-              
-              decoration: const InputDecoration(
-              //hintText: 'Enter Transmission Type',
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Select car Condition',
-              labelText: 'Condition',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-                  
-              isEmpty: carCondition == '',
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  
-                  value: carCondition,
-                  isDense: true,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      carCondition = newValue;
-                      state.didChange(newValue);
-                    });
-                  },
-                  items: _carCondition.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            );
-          },
-        ),
-        SizedBox(height: 20.0),
-        TextFormField(
-            keyboardType: TextInputType.text,
-            onChanged:  (value) {
-                 carColor=value;         
-                        },
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please enter Color';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Color',
-              labelText: 'Color ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
                
           SizedBox(height: 20.0),
           TextFormField(
             keyboardType: TextInputType.number,
             onChanged:  (value) {
-                 carPrice=value;         
+                 price=value;         
                         },
             validator: (value) {
               if (value.isEmpty) {

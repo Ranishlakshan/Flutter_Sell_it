@@ -5,9 +5,29 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
+import 'catagories/industry/industrytools.dart';
+import 'catagories/industry/officeequipment.dart';
+import 'catagories/industry/solarGenerators.dart';
+import 'catagories/property/apartments.dart';
+import 'catagories/property/commercialproperty.dart';
+import 'catagories/property/holydayShortTerm.dart';
+import 'catagories/property/houses.dart';
+import 'catagories/property/land.dart';
+import 'catagories/property/roomsanex.dart';
+import 'catagories/vehicles/autoparts.dart';
+import 'catagories/vehicles/autoservises.dart';
+import 'catagories/vehicles/bicycle.dart';
+import 'catagories/vehicles/bike.dart';
+import 'catagories/vehicles/boat.dart';
+import 'catagories/vehicles/bus.dart';
 import 'catagories/vehicles/car.dart';
+import 'catagories/vehicles/lorry.dart';
+import 'catagories/vehicles/rentAcar.dart';
+import 'catagories/vehicles/threeWheels.dart';
+import 'catagories/vehicles/tractors.dart';
 import 'catagories/vehicles/van.dart';
 
+import 'components/bottomnvbar.dart';
 import 'drawer.dart';
 import 'login_page.dart';
 import 'services/utils.dart';
@@ -66,9 +86,74 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
 
   Widget _widgetForm() {
     switch (selectedCurrency2) {
-      case "car":
+      //vehicles---------------------------------
+      case "Cars":
         return carForm();
         break;
+      case "Vans":
+        return vanForm();
+        break;  
+      case "Buses":
+        return busForm();
+        break;  
+      case "Lorries":
+        return lorryForm();
+        break;  
+      case "Three Wheels":
+        return threewheelForm();
+        break;  
+      case "Motorbikes and Scooters":
+        return bikeForm();
+        break;  
+      case "Boats and Water Transport":
+        return boatForm();
+        break;  
+      case "Heavy Machinery & Tractors":
+        return tractorsForm();
+        break;
+      case "Bicycles":
+        return bicycleForm();
+        break;
+      case "Auto Parts & Accessories":
+        return autopartsForm();
+        break;
+      case "Auto Services":
+        return autoServiceForm();
+        break;
+      case "Rent A Car":
+        return rentACarForm();
+        break;
+      //Property--------------------------
+      case "Houses":
+        return houseForm();
+        break;  
+      case "Lands":
+        return landForm();
+        break;
+      case "Apartments":
+        return apartmentsForm();
+        break; 
+      case "Commercial Property":
+        return commercialPropertyForm();
+        break;
+      case "Rooms & Annexes":
+        return roomanexForm();
+        break;
+      case "Holiday & Short-Term Rental":
+        return holidatShortTermForm();
+        break; 
+      //Industry tools and machines---------------------------
+      case "Industry Tools Machinary":
+        return industryToolForm();
+        break;
+      case "Office Equipment, Supplies & Stationery":
+        return officetoolsForm();
+        break;
+      //solarForm
+      case "Solar and Generators":
+        return solarForm();
+        break;
+
       default:
         return Text(' ');
         break;
@@ -186,19 +271,30 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNvBar(),
         appBar: AppBar(
-          title: Container(
-            alignment: Alignment.center,
-            child: Text('Advertisement'),
-          ),
+          backgroundColor: Colors.black,
+          title: Text('Post Advertisement',style: TextStyle(letterSpacing: 2),),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                
+                Navigator.pushNamed(context, '/login');
+                //addDialog(context);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.apps),
+              onPressed: () {},
+            ),
+          ],
         ),
         drawer: MyDrawer(),
         body: ListView(
           children: <Widget>[
-            //Text('Select catagory here'),
-            //Text("$name"),
-            Text('Select catagory here'),
-            SizedBox(height: 40.0),
+            
+            SizedBox(height: 10.0),
             StreamBuilder<QuerySnapshot>(
               stream: catagory_names,
               builder: (context, snapshot) {
@@ -221,7 +317,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: 20.0),
+                      //SizedBox(width: 20.0),
                       DropdownButton(
                         items: currencyItems,
                         onChanged: (currencyValue) {
@@ -258,8 +354,8 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                         value: selectedCurrency,
                         isExpanded: false,
                         hint: new Text(
-                          "Choose Category Type",
-                          style: TextStyle(color: Color(0xff11b719)),
+                          "Choose Category for Ad",
+                          style: TextStyle(color: Color(0xff11b719),letterSpacing: 2),
                         ),
                       ),
                       DropdownButton(
@@ -278,6 +374,10 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                             currencyItems = [];
                           });
                         },
+                        hint: new Text(
+                          "Choose Sub Category for Ad",
+                          style: TextStyle(color: Color(0xff11b719),letterSpacing: 1),
+                        ),
                       ),
                     ],
                   );

@@ -3,14 +3,24 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 class MyDrawer extends StatelessWidget {
+  
+  String name123 = "$name";
+  String email123 = '$email';
+  String photourl = "$imageUrl";
+  
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+    return Drawer( 
+            
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                  color: Colors.black,
+              ),
               accountName: Text("$name"),
+              //accountName: name123.contains(null) ? Text("data") : Text(name123),
               accountEmail: Text("$email"),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage("$imageUrl"),

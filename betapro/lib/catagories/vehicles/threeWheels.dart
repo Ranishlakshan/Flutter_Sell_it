@@ -9,16 +9,16 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class vanForm extends StatefulWidget {
+class threewheelForm extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
-  const vanForm({Key key, this.globalKey}) : super(key: key);
+  const threewheelForm({Key key, this.globalKey}) : super(key: key);
   @override
-  _vanFormState createState() => _vanFormState();
+  _threewheelFormState createState() => _threewheelFormState();
 }
 
-class _vanFormState extends State<vanForm> {
+class _threewheelFormState extends State<threewheelForm> {
   
-  final _formKeyVan = GlobalKey<FormState>();
+  final _formKeyThreeWheel = GlobalKey<FormState>();
   List<Asset> images = List<Asset>();
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
@@ -144,22 +144,20 @@ class _vanFormState extends State<vanForm> {
             'year':carYear,
             'price':carPrice,
             'milleage':carMilleage,
-            'transmission':carTransmission,
-            'fuelType':carFuelType,
             'engineCapacity':carEngineCapacity,
             'condition':carCondition,
-            'color':carColor,
             'description':carDescription,
             'phone': phonenumbers,
+            'color':carColor,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':carBrand+" "+carModel+" "+carYear+"vansVans",
+            'searchkey':carBrand+" "+carModel+" "+carYear+"threewheelThreeWheel",
             'value1':carBrand+" "+carModel+" "+carYear,
             'value2':carPrice,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"vans,vehicles",
+            'category':"three wheel,vehicles",
             
 
           }).then((_){
@@ -212,7 +210,7 @@ class _vanFormState extends State<vanForm> {
     return Card(
       child: Form(
         
-        key: _formKeyVan,
+        key: _formKeyThreeWheel,
         child: Column(children: <Widget>[
           
           TextFormField(
@@ -229,7 +227,7 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter your Van Brand',
+              hintText: 'Enter Brand',
               labelText: 'Brand',
               prefixIcon: Icon(Icons.add_circle) 
             ),
@@ -250,8 +248,8 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter your Van Model',
-              labelText: 'Van Model',
+              hintText: 'Enter Model',
+              labelText: 'Model',
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
@@ -274,7 +272,7 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter Van Model year',
+              hintText: 'Enter Model year',
               labelText: 'Model Year',
               prefixIcon: Icon(Icons.add_circle)
             ),
@@ -304,101 +302,6 @@ class _vanFormState extends State<vanForm> {
             ),
           ),
           SizedBox(height: 20.0),
-          
-          
-          
-          FormField<String>(
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please Select Transmission';
-              }
-              return null;
-            },
-          builder: (FormFieldState<String> state) {
-            return InputDecorator(
-              
-              decoration: const InputDecoration(
-              //hintText: 'Enter Transmission Type',
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              //hintText: 'Enter Transmission Type',
-              labelText: 'transmission',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-                  
-              isEmpty: carTransmission == '',
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  
-                  value: carTransmission,
-                  isDense: true,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      carTransmission = newValue;
-                      state.didChange(newValue);
-                    });
-                  },
-                  items: _transmissionType.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            );
-          },
-        ),
-          SizedBox(height: 20.0),
-          
-          
-          
-          FormField<String>(
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please Select Fuel Type';
-              }
-              return null;
-            },
-          builder: (FormFieldState<String> state) {
-            return InputDecorator(
-              
-              decoration: const InputDecoration(
-              //hintText: 'Enter Transmission Type',
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Fuel Type',
-              labelText: 'Fuel Type',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-                  
-              isEmpty: carFuelType == '',
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  
-                  value: carFuelType,
-                  isDense: true,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      carFuelType = newValue;
-                      state.didChange(newValue);
-                    });
-                  },
-                  items: _carFuelType.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            );
-          },
-        ),
-          SizedBox(height: 20.0),
-          
           
           TextFormField(
             keyboardType: TextInputType.number,
@@ -453,7 +356,7 @@ class _vanFormState extends State<vanForm> {
           FormField<String>(
             validator: (String value) {
               if (value.isEmpty) {
-                return 'Please Select Car Condition';
+                return 'Select Condition';
               }
               return null;
             },
@@ -465,7 +368,7 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Select car Condition',
+              hintText: 'Select Condition',
               labelText: 'Condition',
               prefixIcon: Icon(Icons.add_circle)
             ),
@@ -493,6 +396,7 @@ class _vanFormState extends State<vanForm> {
             );
           },
         ),
+
         SizedBox(height: 20.0),
         TextFormField(
             keyboardType: TextInputType.text,
@@ -514,6 +418,7 @@ class _vanFormState extends State<vanForm> {
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
+        
                
           SizedBox(height: 20.0),
           TextFormField(

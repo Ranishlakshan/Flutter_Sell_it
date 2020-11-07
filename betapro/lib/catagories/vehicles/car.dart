@@ -29,7 +29,9 @@ class _carFormState extends State<carForm> {
   String _error = 'No Error Dectected';
   bool carosal = false;
 
-  String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition,phonenumbers,location;
+  String carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,
+  carEngineCapacity,carDescription,carPrice,carCondition,
+  phonenumbers,location,carBodytype;
   String searchkey;
 
   var location1 = Firestore.instance.collection("location").snapshots();
@@ -225,14 +227,14 @@ class _carFormState extends State<carForm> {
             'description':carDescription,
             'phone': phonenumbers,
             'location': testLocation,
-            'reviewstatus':"false",  
-            'searchkey':carBrand+" "+carModel+" "+carYear+"car",
+            'reviewstatus':false,  
+            'searchkey':carBrand+" "+carModel+" "+carYear+"carsCars",
             'value1':carBrand+" "+carModel+" "+carYear,
             'value2':carPrice,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'catagory':"cars",
+            'category':"cars,vehicles",
             
 
           }).then((_){
@@ -795,7 +797,8 @@ class _carFormState extends State<carForm> {
                 children: <Widget>[
                   Text("Submit", style: TextStyle(fontSize: 24.0)),
                 ],
-              )),
+              )
+              ),
               onPressed: () {
                   //createRecord();
                 //  if(!_formKeyCar.currentState.validate()){

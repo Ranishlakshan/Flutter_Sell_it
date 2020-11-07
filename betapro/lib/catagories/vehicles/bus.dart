@@ -9,16 +9,16 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class vanForm extends StatefulWidget {
+class busForm extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
-  const vanForm({Key key, this.globalKey}) : super(key: key);
+  const busForm({Key key, this.globalKey}) : super(key: key);
   @override
-  _vanFormState createState() => _vanFormState();
+  _busFormState createState() => _busFormState();
 }
 
-class _vanFormState extends State<vanForm> {
+class _busFormState extends State<busForm> {
   
-  final _formKeyVan = GlobalKey<FormState>();
+  final _formKeyBus = GlobalKey<FormState>();
   List<Asset> images = List<Asset>();
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
@@ -148,18 +148,17 @@ class _vanFormState extends State<vanForm> {
             'fuelType':carFuelType,
             'engineCapacity':carEngineCapacity,
             'condition':carCondition,
-            'color':carColor,
             'description':carDescription,
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':carBrand+" "+carModel+" "+carYear+"vansVans",
+            'searchkey':carBrand+" "+carModel+" "+carYear+"busesBuses",
             'value1':carBrand+" "+carModel+" "+carYear,
             'value2':carPrice,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"vans,vehicles",
+            'category':"buses,vehicles",
             
 
           }).then((_){
@@ -212,7 +211,7 @@ class _vanFormState extends State<vanForm> {
     return Card(
       child: Form(
         
-        key: _formKeyVan,
+        key: _formKeyBus,
         child: Column(children: <Widget>[
           
           TextFormField(
@@ -229,7 +228,7 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter your Van Brand',
+              hintText: 'Enter Brand',
               labelText: 'Brand',
               prefixIcon: Icon(Icons.add_circle) 
             ),
@@ -250,8 +249,8 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter your Van Model',
-              labelText: 'Van Model',
+              hintText: 'Enter Model',
+              labelText: 'Model',
               prefixIcon: Icon(Icons.add_circle)
             ),
           ),
@@ -274,7 +273,7 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter Van Model year',
+              hintText: 'Enter Model year',
               labelText: 'Model Year',
               prefixIcon: Icon(Icons.add_circle)
             ),
@@ -493,27 +492,7 @@ class _vanFormState extends State<vanForm> {
             );
           },
         ),
-        SizedBox(height: 20.0),
-        TextFormField(
-            keyboardType: TextInputType.text,
-            onChanged:  (value) {
-                 carColor=value;         
-                        },
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please enter Color';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Color',
-              labelText: 'Color ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
+        
                
           SizedBox(height: 20.0),
           TextFormField(

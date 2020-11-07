@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import 'components/bottomnvbar.dart';
 import 'dbmodels/add_card_gridview.dart';
 import 'dbmodels/car_itm_model.dart';
 import 'drawer.dart';
@@ -38,22 +39,29 @@ class _CatagoriesState extends State<Catagories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNvBar(),
       appBar: AppBar(
-        title: Text("Catagories"),
+        title: Text("Catagories",style: TextStyle(letterSpacing: 2),),
+        backgroundColor: Colors.black,
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.search),
+            
+            IconButton(
+              icon: Icon(Icons.add),
               onPressed: () {
-                Navigator.pushNamed(context, '/searchtest');
+                
+                Navigator.pushNamed(context, '/login');
                 //addDialog(context);
               },
             ),
-        ],
+            IconButton(
+              icon: Icon(Icons.apps),
+              onPressed: () {},
+            ),
+          ],
       ),
       drawer: MyDrawer(),
       body: ListView(
         children: <Widget>[
-          Text('Ranish'),
           StreamBuilder(
             stream: catagory_names,
             builder:  (context, snapshot) {
@@ -114,12 +122,12 @@ class _CatagoriesState extends State<Catagories> {
                         
                         isExpanded: false,
                         hint: new Text(
-                          "Select Catagory Here",
-                          style: TextStyle(color: Color(0xff11b719)),
+                          "Select Catagory",
+                          style: TextStyle(color: Color(0xff11b719),letterSpacing: 2),
                         ),  
                       ),
                       DropdownButton(
-                        hint: Text("Select Sub Catagory Here"),
+                        hint: Text("Select Sub Catagory",style: TextStyle(letterSpacing: 2),),
                         items: catagoryNamesSub,
                         onChanged: (value) {
                           final snackBar = SnackBar(

@@ -24,6 +24,20 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    if(email!=null){
+      print("NO EMAIL");
+    }
+    else{
+      print("I HAVE EMAIL");
+    }
+    super.initState();
+
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

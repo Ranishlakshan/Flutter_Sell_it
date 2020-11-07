@@ -9,16 +9,16 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class vanForm extends StatefulWidget {
+class rentACarForm extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
-  const vanForm({Key key, this.globalKey}) : super(key: key);
+  const rentACarForm({Key key, this.globalKey}) : super(key: key);
   @override
-  _vanFormState createState() => _vanFormState();
+  _rentACarFormState createState() => _rentACarFormState();
 }
 
-class _vanFormState extends State<vanForm> {
+class _rentACarFormState extends State<rentACarForm> {
   
-  final _formKeyVan = GlobalKey<FormState>();
+  final _formKeyRentACar = GlobalKey<FormState>();
   List<Asset> images = List<Asset>();
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
@@ -143,23 +143,19 @@ class _vanFormState extends State<vanForm> {
             'model':carModel,
             'year':carYear,
             'price':carPrice,
-            'milleage':carMilleage,
             'transmission':carTransmission,
             'fuelType':carFuelType,
-            'engineCapacity':carEngineCapacity,
-            'condition':carCondition,
-            'color':carColor,
             'description':carDescription,
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':carBrand+" "+carModel+" "+carYear+"vansVans",
+            'searchkey':carBrand+" "+carModel+" "+carYear+"rentcar",
             'value1':carBrand+" "+carModel+" "+carYear,
             'value2':carPrice,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"vans,vehicles",
+            'category':"RentACar,vehicles",
             
 
           }).then((_){
@@ -212,7 +208,7 @@ class _vanFormState extends State<vanForm> {
     return Card(
       child: Form(
         
-        key: _formKeyVan,
+        key: _formKeyRentACar,
         child: Column(children: <Widget>[
           
           TextFormField(
@@ -229,7 +225,7 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter your Van Brand',
+              hintText: 'Enter Brand',
               labelText: 'Brand',
               prefixIcon: Icon(Icons.add_circle) 
             ),
@@ -250,7 +246,7 @@ class _vanFormState extends State<vanForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter your Van Model',
+              hintText: 'Enter Model',
               labelText: 'Van Model',
               prefixIcon: Icon(Icons.add_circle)
             ),
@@ -280,31 +276,6 @@ class _vanFormState extends State<vanForm> {
             ),
           ),
           SizedBox(height: 20.0),
-          
-          
-          
-          TextFormField(
-            keyboardType: TextInputType.number,
-            onChanged:  (value) {
-                 carMilleage=value;         
-                        },
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please enter Mileage';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Mileage',
-              labelText: 'Mileage ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          
           
           
           FormField<String>(
@@ -399,30 +370,6 @@ class _vanFormState extends State<vanForm> {
         ),
           SizedBox(height: 20.0),
           
-          
-          TextFormField(
-            keyboardType: TextInputType.number,
-            onChanged:  (value) {
-                 carEngineCapacity=value;         
-                        },
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please Enter Engine capaciy';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Engine capacity',
-              labelText: 'Engine capacity(cc) ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          SizedBox(height: 20.0),
-          
-          
           TextFormField(
             keyboardType: TextInputType.multiline,
             minLines: 1,
@@ -446,76 +393,8 @@ class _vanFormState extends State<vanForm> {
             ),
           ),
           SizedBox(height: 20.0),
-          //carCondition
-          
-          
-          
-          FormField<String>(
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please Select Car Condition';
-              }
-              return null;
-            },
-          builder: (FormFieldState<String> state) {
-            return InputDecorator(
-              
-              decoration: const InputDecoration(
-              //hintText: 'Enter Transmission Type',
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Select car Condition',
-              labelText: 'Condition',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-                  
-              isEmpty: carCondition == '',
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  
-                  value: carCondition,
-                  isDense: true,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      carCondition = newValue;
-                      state.didChange(newValue);
-                    });
-                  },
-                  items: _carCondition.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            );
-          },
-        ),
-        SizedBox(height: 20.0),
-        TextFormField(
-            keyboardType: TextInputType.text,
-            onChanged:  (value) {
-                 carColor=value;         
-                        },
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please enter Color';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Color',
-              labelText: 'Color ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-               
-          SizedBox(height: 20.0),
+
+
           TextFormField(
             keyboardType: TextInputType.number,
             onChanged:  (value) {
