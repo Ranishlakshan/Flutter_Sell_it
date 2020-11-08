@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'components/bottomnvbar.dart';
 import 'dbmodels/add_card_gridview.dart';
+import 'dbmodels/addhotdeals.dart';
 import 'dbmodels/car_itm_model.dart';
 import 'drawer.dart';
 
@@ -39,7 +40,7 @@ class _HotDealsState extends State<HotDeals> {
       itemCount: hotdealobjectlist.length, //staticData.length,
       
       itemBuilder: (BuildContext context, int index) {
-        return AadCardForGrid(hotdealobjectlist[index]);
+        return hotAadCardForGrid(hotdealobjectlist[index]);
       },
      staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
      mainAxisSpacing: 4.0,

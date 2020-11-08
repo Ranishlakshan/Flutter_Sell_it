@@ -7,13 +7,13 @@ import 'zoomImage.dart';
 
 
 
-class ItemView extends StatefulWidget {
+class ItemViewhot extends StatefulWidget {
   final String docID123;
 
-  const ItemView({ this.docID123}) ;
+  const ItemViewhot({ this.docID123}) ;
 
   @override
-  _ItemViewState createState() => _ItemViewState();
+  _ItemViewhotState createState() => _ItemViewhotState();
 }
 String name123;
 var cars;
@@ -28,7 +28,7 @@ String phone = '';
 String numb;
 String desc;
 
-class _ItemViewState extends State<ItemView> {
+class _ItemViewhotState extends State<ItemViewhot> {
   @override
   //String docuID = Widget.documentid;
   
@@ -38,14 +38,14 @@ class _ItemViewState extends State<ItemView> {
   void initState() {
     // TODO: implement initState
     cars = Firestore.instance
-        .collection('ads')
+        .collection('hotdeals')
         .document('${widget.docID123}')
         .snapshots();
         
     super.initState();
 
     cars_img = Firestore.instance
-        .collection('ads')
+        .collection('hotdeals')
         .document('${widget.docID123}')
         .snapshots();
         //title = cars_img.data['value1'];
@@ -69,8 +69,7 @@ class _ItemViewState extends State<ItemView> {
     //String name123  = rcvdData[0];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Item Data',style: TextStyle(letterSpacing: 2),),
-        backgroundColor: Colors.black,
+        title: Text('Item Data'),
       ),
       body: ListView(
         children: <Widget>[

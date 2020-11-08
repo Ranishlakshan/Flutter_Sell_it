@@ -5,9 +5,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
+import 'catagories/agriculture/agri.dart';
+import 'catagories/animals/animals.dart';
 import 'catagories/electronics/electronic.dart';
 import 'catagories/electronics/electronicsaccessories.dart';
 import 'catagories/essentials/essentials.dart';
+import 'catagories/fashion/fashion.dart';
 import 'catagories/hobby,sports,kids/hobbysportskids.dart';
 import 'catagories/homeandgarden/homeandgarden.dart';
 import 'catagories/industry/industrytools.dart';
@@ -21,6 +24,7 @@ import 'catagories/property/holydayShortTerm.dart';
 import 'catagories/property/houses.dart';
 import 'catagories/property/land.dart';
 import 'catagories/property/roomsanex.dart';
+import 'catagories/services/services.dart';
 import 'catagories/vehicles/autoparts.dart';
 import 'catagories/vehicles/autoservises.dart';
 import 'catagories/vehicles/bicycle.dart';
@@ -295,8 +299,68 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
       case "Other Items":
         return homeAndGardenForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
-       
-
+      //  Animals ----------------------------------
+      case "Dogs and Other Pets":
+        return animalsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Pet Food":
+        return animalsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Animal Accessories":
+        return animalsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Farm Animals":
+        return animalsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Veterinaery Services":
+        return animalsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break; 
+        //Fashion -----------------
+      case "Bags and Luggages":
+        return fashionForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Clothing":
+        return fashionForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Shoes and Footware":
+        return fashionForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Jewellery":
+        return fashionForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Watches":
+        return fashionForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Sunglasses and Opticians":
+        return fashionForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Other Fashion Accessories":
+        return fashionForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Beauty Products":
+        return fashionForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+        //Services ----------------------------
+      case "Trade Services":
+        return servicesForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Events & Entertainment":
+        return servicesForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Health & Wellbeing":
+        return servicesForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Travel & Tourisum":
+        return servicesForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;  
+      //Agriculture ------------------------------
+      case "Crop, Seed & Plants":
+        return agriForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Farming Tools & Machinery":
+        return agriForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break; 
+      //default
       default:
         return Text(' ');
         break;
