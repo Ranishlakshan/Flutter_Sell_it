@@ -5,9 +5,16 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
+import 'catagories/electronics/electronic.dart';
+import 'catagories/electronics/electronicsaccessories.dart';
+import 'catagories/essentials/essentials.dart';
+import 'catagories/hobby,sports,kids/hobbysportskids.dart';
+import 'catagories/homeandgarden/homeandgarden.dart';
 import 'catagories/industry/industrytools.dart';
 import 'catagories/industry/officeequipment.dart';
+import 'catagories/industry/other.dart';
 import 'catagories/industry/solarGenerators.dart';
+import 'catagories/jobs/jobs.dart';
 import 'catagories/property/apartments.dart';
 import 'catagories/property/commercialproperty.dart';
 import 'catagories/property/holydayShortTerm.dart';
@@ -151,8 +158,144 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
         break;
       //solarForm
       case "Solar and Generators":
-        return solarForm();
+        return solarForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
+      case "Other Business  Services":
+        return otherBusinessForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Row Materials Wholesale Items":
+        return otherBusinessForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Health Care":
+        return otherBusinessForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Licesnces /permits":
+        return otherBusinessForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      //Hobby,Sports,Kids--------------------------
+      case "Musical Instruments":
+        return hobbySportsKidsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Sports & Fitness":
+        return hobbySportsKidsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Art & Collectibles":
+        return hobbySportsKidsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Children's Items":
+        return hobbySportsKidsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Other Hobby, Sport & Kids Items":
+        return hobbySportsKidsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Music, Books & Movies":
+        return hobbySportsKidsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      //Essentials -------------------------------
+      case "Healthcare":
+        return essentialsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Grocery":
+        return essentialsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Fruits & Vegetables":
+        return essentialsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Baby Products":
+        return essentialsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Other Essentials":
+        return essentialsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Household":
+        return essentialsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Meat & Seafood":
+        return essentialsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Gas":
+        return essentialsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+        //Jobs ---------------------------------
+      case "Banking and Financials":
+        return jobsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Logistics and Transport":
+        return jobsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Hotel and Travel":
+        return jobsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Education":
+        return jobsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Sales and Distribution":
+        return jobsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Constructions":
+        return jobsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Electronics":
+        return jobsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Automobiles":
+        return jobsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;  
+
+      //Electronics -------------------------------------
+      case "Cell Phones and Smart Phones":
+        return electronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Cameras and Camcorders":
+        return electronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Computer,Laptops and Tabs":
+        return electronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Computer Accessories":
+        return otherElectronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Air Condition and Elecrical Fittings":
+        return otherElectronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Audio and Mp3":
+        return otherElectronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Electronic Home Appliance":
+        return otherElectronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Mobile Phone Accessories":
+        return otherElectronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Video Games and Consoles":
+        return otherElectronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Other Electronics":
+        return otherElectronicsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break; 
+      //home And Garden --------------------------------------
+      case "Furniture":
+        return homeAndGardenForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Bathroom and Sanitary Ware":
+        return homeAndGardenForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Kitchen Items":
+        return homeAndGardenForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Garden":
+        return homeAndGardenForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Building Matireal and Tool":
+        return homeAndGardenForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Home Decorations":
+        return homeAndGardenForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+      case "Other Items":
+        return homeAndGardenForm(cat1:selectedCurrency,cat2:selectedCurrency2);
+        break;
+       
 
       default:
         return Text(' ');
@@ -345,7 +488,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                           }
                           final snackBar = SnackBar(
                             content: Text(
-                              'Selected Currency value is $currencyValue',
+                              'Selected Category is $currencyValue',
                               style: TextStyle(color: Color(0xff11b719)),
                             ),
                           );
@@ -363,7 +506,7 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
                         onChanged: (currencyValue) {
                           final snackBar = SnackBar(
                             content: Text(
-                              'Selected Currency value is $currencyValue',
+                              'Selected  Sub Category is $currencyValue',
                               style: TextStyle(color: Color(0xff11b719)),
                             ),
                           );

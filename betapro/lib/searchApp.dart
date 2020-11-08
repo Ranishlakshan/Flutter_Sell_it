@@ -293,7 +293,8 @@ class _SearchHereState extends State<SearchHere> {
             prefixIcon: Icon(Icons.search)
           ),
           onChanged: (value) {
-            searchValue = value;
+            searchValue = value.toLowerCase();
+            
 
           },
         ),
@@ -349,7 +350,7 @@ class _SearchHereState extends State<SearchHere> {
                   String serchText = snapshot.data.documents[i].data['searchkey'];
                   serchlocation = snapshot.data.documents[i].data['value3'];
                   String value1,value2,value3,value4,carimage,docID;
-                  
+                  serchText = serchText.toLowerCase();
                   //
                   //
                   //TRY NEW CODE FROM HERE

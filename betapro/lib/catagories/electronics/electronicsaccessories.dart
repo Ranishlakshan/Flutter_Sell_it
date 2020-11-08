@@ -9,20 +9,20 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class solarForm extends StatefulWidget {
+class otherElectronicsForm extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
   final String cat1,cat2;
 
-  const solarForm({ this.cat1,this.cat2, this.globalKey}) ;
+  const otherElectronicsForm({ this.cat1,this.cat2, this.globalKey}) ;
 
-  //const solarForm({Key key, this.globalKey}) : super(key: key);
+  //const otherElectronicsForm({Key key, this.globalKey}) : super(key: key);
   @override
-  _solarFormState createState() => _solarFormState();
+  _otherElectronicsFormState createState() => _otherElectronicsFormState();
 }
 
-class _solarFormState extends State<solarForm> {
+class _otherElectronicsFormState extends State<otherElectronicsForm> {
   
-  final _formKeySolar = GlobalKey<FormState>();
+  final _formKeyOtherElectronics = GlobalKey<FormState>();
   List<Asset> images = List<Asset>();
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
@@ -30,7 +30,7 @@ class _solarFormState extends State<solarForm> {
 
   String searchkey;
 
-  String phonenumbers,itemname,price,condition,description;
+  String phonenumbers,itemname,price,condition,description,itemtype,itembrand,itemmodel,itemedition;
 
   var location1 = Firestore.instance.collection("location").snapshots();
   var location1selected,location2selected;
@@ -39,7 +39,7 @@ class _solarFormState extends State<solarForm> {
   Locationclass loccz = Locationclass();
   
 
-  var _carCondition = [
+  var _condition = [
     "Brand new",
     "Used",
     "Recondition",
@@ -128,17 +128,18 @@ class _solarFormState extends State<solarForm> {
           //List list123 = 
           String testLocation = '${loccz.getTownname()},${loccz.getdistrictName()}';
           print(testLocation);
-          //carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition
+          //carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,condition
           Firestore.instance.collection('ads').document(documnetID).setData({
             'urls':imageUrls,
-            'Item Name':itemname,
+            'Item':itemname,
+            'Type':itemtype,
             'price':price,
-            'condition':condition,
             'description':description,
+            'Condition':condition,
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':itemname+"Solarpanel,Solar Panel,Generators",
+            'searchkey':itemname+","+itemtype+","+widget.cat1+","+widget.cat2,
             'value1':itemname,
             'value2':price,
             'value3':testLocation,
@@ -197,8 +198,10 @@ class _solarFormState extends State<solarForm> {
     return Card(
       child: Form(
         
-        key: _formKeySolar,
+        key: _formKeyOtherElectronics,
         child: Column(children: <Widget>[
+          Text(widget.cat2,style: TextStyle(letterSpacing: 2),),
+          SizedBox(height: 20.0),
           
           TextFormField(
             onChanged:  (value) {
@@ -223,36 +226,31 @@ class _solarFormState extends State<solarForm> {
           SizedBox(height: 20.0),
           
           TextFormField(
-            keyboardType: TextInputType.multiline,
-            minLines: 1,
-            maxLines: 15,
             onChanged:  (value) {
-                 description=value;         
+              //print(widget.cat1+","+widget.cat2);
+                 itemtype=value;         
                         },
-            validator: (value) {
+            validator: (String value) {
               if (value.isEmpty) {
-                return 'Please enter Description';
+                return 'Please enter Item Type';
               }
               return null;
             },
             decoration: const InputDecoration(
               border: OutlineInputBorder(
-                 borderSide: BorderSide(color: Colors.black)
-               ),
-              hintText: 'Enter Description here',
-              labelText: 'Description ',
-              prefixIcon: Icon(Icons.add_circle)
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              hintText: 'Enter Item Type',
+              labelText: 'Item Type',
+              prefixIcon: Icon(Icons.add_circle) 
             ),
           ),
+          
           SizedBox(height: 20.0),
-          //carCondition
-          
-          
-          
           FormField<String>(
             validator: (String value) {
               if (value.isEmpty) {
-                return 'Please Select Car Condition';
+                return 'Please Select Condition';
               }
               return null;
             },
@@ -281,7 +279,7 @@ class _solarFormState extends State<solarForm> {
                       state.didChange(newValue);
                     });
                   },
-                  items: _carCondition.map((String value) {
+                  items: _condition.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -292,8 +290,33 @@ class _solarFormState extends State<solarForm> {
             );
           },
         ),
-               
+        SizedBox(height: 20.0),
+          
+          TextFormField(
+            keyboardType: TextInputType.multiline,
+            minLines: 1,
+            maxLines: 15,
+            onChanged:  (value) {
+                 description=value;         
+                        },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter Description';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                 borderSide: BorderSide(color: Colors.black)
+               ),
+              hintText: 'Enter Description here',
+              labelText: 'Description ',
+              prefixIcon: Icon(Icons.add_circle)
+            ),
+          ),
           SizedBox(height: 20.0),
+          //condition
+          
           TextFormField(
             keyboardType: TextInputType.number,
             onChanged:  (value) {

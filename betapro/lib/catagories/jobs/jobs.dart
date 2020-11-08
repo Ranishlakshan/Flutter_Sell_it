@@ -9,20 +9,20 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class solarForm extends StatefulWidget {
+class jobsForm extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
   final String cat1,cat2;
 
-  const solarForm({ this.cat1,this.cat2, this.globalKey}) ;
+  const jobsForm({ this.cat1,this.cat2, this.globalKey}) ;
 
-  //const solarForm({Key key, this.globalKey}) : super(key: key);
+  //const jobsForm({Key key, this.globalKey}) : super(key: key);
   @override
-  _solarFormState createState() => _solarFormState();
+  _jobsFormState createState() => _jobsFormState();
 }
 
-class _solarFormState extends State<solarForm> {
+class _jobsFormState extends State<jobsForm> {
   
-  final _formKeySolar = GlobalKey<FormState>();
+  final _formKeyJobs = GlobalKey<FormState>();
   List<Asset> images = List<Asset>();
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
@@ -30,7 +30,8 @@ class _solarFormState extends State<solarForm> {
 
   String searchkey;
 
-  String phonenumbers,itemname,price,condition,description;
+  String phonenumbers,itemname,price,condition,description,adtype;
+  String jobtitle,companyname,qualifications,yrofexperience,worktype,salary;
 
   var location1 = Firestore.instance.collection("location").snapshots();
   var location1selected,location2selected;
@@ -39,7 +40,7 @@ class _solarFormState extends State<solarForm> {
   Locationclass loccz = Locationclass();
   
 
-  var _carCondition = [
+  var _condition = [
     "Brand new",
     "Used",
     "Recondition",
@@ -128,19 +129,22 @@ class _solarFormState extends State<solarForm> {
           //List list123 = 
           String testLocation = '${loccz.getTownname()},${loccz.getdistrictName()}';
           print(testLocation);
-          //carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,carCondition
+          //carBrand,carModel,carYear,carMilleage,carTransmission,carFuelType,carEngineCapacity,carDescription,carPrice,condition
           Firestore.instance.collection('ads').document(documnetID).setData({
             'urls':imageUrls,
-            'Item Name':itemname,
-            'price':price,
-            'condition':condition,
+            'Job title':jobtitle,
+            'salary':salary,
+            'company name':companyname,
+            'Qualification':qualifications,
+            'Experience':yrofexperience,
+            'Work type':worktype,
             'description':description,
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':itemname+"Solarpanel,Solar Panel,Generators",
-            'value1':itemname,
-            'value2':price,
+            'searchkey':jobtitle+"jobs"+widget.cat2+","+widget.cat1,//+","+widget.cat2+","+widget.cat1,
+            'value1':jobtitle,
+            'value2':salary,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
@@ -197,17 +201,19 @@ class _solarFormState extends State<solarForm> {
     return Card(
       child: Form(
         
-        key: _formKeySolar,
+        key: _formKeyJobs,
         child: Column(children: <Widget>[
+          Text(widget.cat2,style: TextStyle(letterSpacing: 2),),
+          SizedBox(height: 20.0),
           
           TextFormField(
             onChanged:  (value) {
               //print(widget.cat1+","+widget.cat2);
-                 itemname=value;         
+                 jobtitle=value;         
                         },
             validator: (String value) {
               if (value.isEmpty) {
-                return 'Please enter Item Name';
+                return 'Please enter Job Title';
               }
               return null;
             },
@@ -215,12 +221,119 @@ class _solarFormState extends State<solarForm> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'Enter Item Name',
-              labelText: 'Item Name',
+              hintText: 'Enter Job Title',
+              labelText: 'Job Title',
               prefixIcon: Icon(Icons.add_circle) 
             ),
           ),
           SizedBox(height: 20.0),
+          TextFormField(
+            onChanged:  (value) {
+              //print(widget.cat1+","+widget.cat2);
+                 companyname=value;         
+                        },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter Company name';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              hintText: 'Enter Company name',
+              labelText: 'Company name',
+              prefixIcon: Icon(Icons.add_circle) 
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            onChanged:  (value) {
+              //print(widget.cat1+","+widget.cat2);
+                 qualifications=value;         
+                        },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter Qualifications';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              hintText: 'Enter qualifications',
+              labelText: 'minimum Qualifications',
+              prefixIcon: Icon(Icons.add_circle) 
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            onChanged:  (value) {
+              //print(widget.cat1+","+widget.cat2);
+                 yrofexperience=value;         
+                        },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter required Experience';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              hintText: 'Enter required Experience',
+              labelText: 'minimum required Experience',
+              prefixIcon: Icon(Icons.add_circle) 
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            onChanged:  (value) {
+              //print(widget.cat1+","+widget.cat2);
+                 worktype=value;         
+                        },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter Work Type';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              hintText: 'Part time / Full time',
+              labelText: 'minimum Work Type',
+              prefixIcon: Icon(Icons.add_circle) 
+            ),
+          ),
+          SizedBox(height: 20.0),
+          TextFormField(
+            onChanged:  (value) {
+              //print(widget.cat1+","+widget.cat2);
+                 salary=value;         
+                        },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please enter Salary';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black)
+              ),
+              hintText: 'Salary',
+              labelText: 'Salary',
+              prefixIcon: Icon(Icons.add_circle) 
+            ),
+          ),
+          SizedBox(height: 20.0),
+
+
           
           TextFormField(
             keyboardType: TextInputType.multiline,
@@ -245,82 +358,8 @@ class _solarFormState extends State<solarForm> {
             ),
           ),
           SizedBox(height: 20.0),
-          //carCondition
+          //condition
           
-          
-          
-          FormField<String>(
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Please Select Car Condition';
-              }
-              return null;
-            },
-          builder: (FormFieldState<String> state) {
-            return InputDecorator(
-              
-              decoration: const InputDecoration(
-              //hintText: 'Enter Transmission Type',
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Select Condition',
-              labelText: 'Condition',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-                  
-              isEmpty: condition == '',
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  
-                  value: condition,
-                  isDense: true,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      condition = newValue;
-                      state.didChange(newValue);
-                    });
-                  },
-                  items: _carCondition.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            );
-          },
-        ),
-               
-          SizedBox(height: 20.0),
-          TextFormField(
-            keyboardType: TextInputType.number,
-            onChanged:  (value) {
-                 price=value;         
-                        },
-            validator: (value) {
-              if (value.isEmpty) {
-              return 'Please enter Price';
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              hintText: 'Enter Price here',
-              labelText: 'Price ',
-              prefixIcon: Icon(Icons.add_circle)
-            ),
-          ),
-          
-          //SizedBox(height: 20.0),
-          //RaisedButton(
-          //  child: new Text("add Image"),
-          //  onPressed: loadAssets,
-          //),
-          //SizedBox(height: 10.0,),
           SizedBox(height: 20.0),
           RaisedButton.icon(
             icon: Icon(Icons.add_a_photo),

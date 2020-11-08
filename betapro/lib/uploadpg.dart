@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'components/bottomnvbar.dart';
+
 class Uploadpg extends StatefulWidget {
   @override
   _UploadpgState createState() => _UploadpgState();
@@ -9,6 +11,7 @@ class _UploadpgState extends State<Uploadpg> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNvBar(),
       appBar: AppBar(
         title: Text("Uploading Stuff",style: TextStyle( letterSpacing: 2),),
       ),
