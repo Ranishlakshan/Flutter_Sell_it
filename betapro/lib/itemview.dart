@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'components/bottomnvbar.dart';
 import 'zoomImage.dart';
 
 
@@ -68,6 +69,8 @@ class _ItemViewState extends State<ItemView> {
     //docID = ${rcvdData['docuID'];}
     //String name123  = rcvdData[0];
     return Scaffold(
+      bottomNavigationBar: BottomNvBar(),
+      
       appBar: AppBar(
         title: Text('Item Data',style: TextStyle(letterSpacing: 2),),
         backgroundColor: Colors.black,
@@ -125,53 +128,22 @@ class _ItemViewState extends State<ItemView> {
                         scrollDirection: Axis.horizontal,
                       ));
                 }),
-          Text(' -------------- '),
+          //Text(' -------------- '),
           //Text(title),
           getTitle(),
           //getMain(),
-          Text(' -------------- '),
+          Text(''),
+          
           getItems(),
-          SizedBox(height:35),
-          Text(' --- START --- '),
-          //Text('Nimasha'),
-          //Text('Nimasha'),
-          //Text('Nimasha'),
-          //Text('Nimasha'),
-          //Text('Nimasha'),
-          //Text('Nimasha'),
-          //Text('Nimasha'),
-          //Text('Nimasha'),
-          //Text('Nimasha'),
-          //Text('Nimasha'),
+          SizedBox(height:15),
+          //Text('              ___________________________________________   '),
           //Text('Nimasha'),
           
           getRow(),
 
-          //Row(
-          //  mainAxisAlignment: MainAxisAlignment.center,
-          //  children: <Widget>[
-          //    RaisedButton(
-          //    child: Text(
-          //      "call $number",
-          //    ),
-          //    onPressed: () {
-          //      launch("tel:$number");
-          //    }
-          //  ),
-          //  SizedBox(width: 40.0,),
-          //  RaisedButton(
-          //    child: Text(
-          //      "message $number",
-          //    ),
-          //    onPressed: () {
-          //      launch("sms:$number");
-          //    },
-          //  ),
-          //
-          //
-          //  ],
-          //),
-          Text(' --- END --- '),
+          
+          //Text(' --- END --- '),
+          
           
         ],
       )
@@ -243,21 +215,49 @@ Widget getRow(){
               color: Colors.blueAccent,
               highlightColor: Colors.lightBlue,
               child: Text(
-                "call $numb",
+                //"call $numb",
+                "Make a Call",
               ),
               onPressed: () {
                 launch("tel:$numb");
               }
             ),
-            SizedBox(width: 40.0,),
+            SizedBox(width: 20.0,),
             RaisedButton(
               color: Colors.blueAccent,
               highlightColor: Colors.lightBlue,
               child: Text(
-                "message $numb",
+                //"message $numb",
+                "Make a SMS",
               ),
               onPressed: () {
                 launch("sms:$numb");
+              },
+            ),
+            SizedBox(width: 20.0,),
+            RaisedButton(
+              color: Colors.green,
+              child: Text("WhatsApp"),
+              onPressed: () async {
+                print(numb.length);
+                String whatsapp;
+                if(numb[0]=="+" ){
+                  //+947118869 5 0
+                  //01234567891011
+                  whatsapp=numb;
+
+                }
+                else if(numb.length==11){
+                  var sub = numb.substring(numb.length - 9);
+                  print("---------------");
+                  whatsapp = "+94"+sub;
+                  print(sub);
+                  print("final : "+whatsapp);
+                }
+
+
+              var whatsappUrl ="whatsapp://send?phone=$whatsapp";
+              await canLaunch(whatsappUrl)? launch(whatsappUrl):print("open whatsapp app link or do a snackbar with notification that there is no whatsapp installed");
               },
             ),
 

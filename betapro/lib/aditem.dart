@@ -1,4 +1,3 @@
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -40,8 +39,6 @@ import 'catagories/vehicles/van.dart';
 
 import 'components/bottomnvbar.dart';
 import 'drawer.dart';
-import 'login_page.dart';
-import 'services/utils.dart';
 
 
 
@@ -71,18 +68,6 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
   final _formKeyVan = GlobalKey<FormState>();
 
   var catagory_names = Firestore.instance.collection("catagory_names").snapshots();
-  
-  //void ValueChanged(var currencyValue){
-  //  setState(() {
-  //        selectedCurrency =currencyValue;
-  //      });
-  //}
-
-  void ValueSubchange(var subcatagory){
-    setState(() {
-          selectedSub=subcatagory;
-        });
-  }
 
   void createRecord() async {
     await databaseReference.collection("Advertisements")
@@ -396,9 +381,6 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
       error = e.toString();
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
     setState(() {
       images = resultList;

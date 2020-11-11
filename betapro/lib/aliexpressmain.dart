@@ -8,7 +8,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dbmodels/add_card_gridview.dart';
 import 'dbmodels/car_itm_model.dart';
 import 'drawer.dart';
-import 'staggardgridview.dart';
+import 'login_page.dart';
 
 
 class AliExpressesPg extends StatefulWidget {
@@ -50,26 +50,7 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
       primary: false,
       crossAxisCount: 4,
       itemCount: _listOfObjects.length, //staticData.length,
-      // itemBuilder: (context, index) {
-      //   return Card(
-      //       elevation: 8.0,
-      //       child: InkWell(
-      //           child: Hero(
-      //             tag: index, // staticData[index].images,
-      //             child: new FadeInImage(
-      //               width: MediaQuery.of(context).size.width,
-      //               image: NetworkImage(
-      //                   "https://images.unsplash.com/photo-1468327768560-75b778cbb551?ixlib=rb-1.2.1&w=1000&q=80"), // NetworkImage(staticData[index].images),
-      //               fit: BoxFit.cover,
-      //               placeholder: AssetImage("assets/images/app_logo.png"),
-      //             ),
-      //           ),
-      //           onTap: () {
-      //             //
-      //           }
-      //           )
-      //           );
-      // },
+      
       itemBuilder: (BuildContext context, int index) {
         return AadCardForGrid(_listOfObjects[index]);
       },
@@ -85,12 +66,16 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
 
   @override
   void initState() {
+
     // TODO: implement initState
     carObjec.getData().then((result) {
       setState(() {
         car = result;
       });
     });
+    print("---------------------------Email is $email");
+    //signInWithGoogle();
+    
     super.initState();
 
     //print();
@@ -145,8 +130,6 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
                 stream: carosal_img,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    //title = snapshot.data['value1'];
-                    //setState(() { title = snapshot.data['value1']; });
                     _listOfImages = [];
                     for (int i = 0; i < snapshot.data['urls'].length; i++) {
                       _listOfImages.add(snapshot.data['urls'][i]);
@@ -207,9 +190,6 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
                 
                  for (int i = 0; i < snapshot.data.documents.length; i++) {
 
-                  //bool status = snapshot.data.documents[i].data['reviewstatus'];
-                  // DocumentSnapshot snap = snapshot.data.documents[i];
-                  
                     String docID = snapshot.data.documents[i].documentID;
                     String value1 =snapshot.data.documents[i].data['value1'];
                     String value2 = snapshot.data.documents[i].data['value2'];
@@ -218,8 +198,6 @@ class _AliExpressesPgState extends State<AliExpressesPg> {
                     String carimage =
                         snapshot.data.documents[i].data['urls'][0];                  
                     _listOfObjects.add(CarModel(value1,value2,value3,value4,carimage,docID));
-                  
-                  
                   
                 }
                 return sliverGridWidget(context); 

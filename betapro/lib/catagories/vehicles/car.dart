@@ -5,8 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile_number/mobile_number.dart';
-import 'package:mobile_number/sim_card.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../aditem.dart';
 import '../../login_page.dart';

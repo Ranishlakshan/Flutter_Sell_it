@@ -64,12 +64,10 @@ class _ItemViewhotState extends State<ItemViewhot> {
   
 
   Widget build(BuildContext context) {
-    //final  Map<String, Object>rcvdData = ModalRoute.of(context).settings.arguments;
-    //docID = ${rcvdData['docuID'];}
-    //String name123  = rcvdData[0];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Item Data'),
+        title: Text('Item Data',style: TextStyle(letterSpacing: 2),),
+        backgroundColor: Colors.black,
       ),
       body: ListView(
         children: <Widget>[
@@ -217,7 +215,7 @@ Widget getRow(){
         
         for(int j=0;j<phonetispec_list.length;j++){
           if( phonetispec_list[j].contains('phone') ){
-              String phoneremovevalue1 = phonetispec_list[j].replaceAll("phone:", "");
+              String phoneremovevalue1 = phonetispec_list[j].replaceAll("phone: ", "");
               //title = phoneremovevalue1;
               numb = phoneremovevalue1;
 
@@ -248,7 +246,7 @@ Widget getRow(){
                 launch("tel:$numb");
               }
             ),
-            SizedBox(width: 40.0,),
+            SizedBox(width: 20.0,),
             RaisedButton(
               color: Colors.blueAccent,
               highlightColor: Colors.lightBlue,
@@ -257,6 +255,32 @@ Widget getRow(){
               ),
               onPressed: () {
                 launch("sms:$numb");
+              },
+            ),
+            SizedBox(width: 20.0,),
+            RaisedButton(
+              color: Colors.green,
+              child: Text("WhatsApp"),
+              onPressed: () async {
+                print(numb.length);
+                String whatsapp;
+                if(numb[0]=="+" ){
+                  //+947118869 5 0
+                  //01234567891011
+                  whatsapp=numb;
+
+                }
+                else if(numb.length==10){
+                  var sub = numb.substring(numb.length - 9);
+                  print("---------------");
+                  whatsapp = "+94"+sub;
+                  print(sub);
+                  print("final : "+whatsapp);
+                }
+
+
+              var whatsappUrl ="whatsapp://send?phone=$whatsapp";
+              await canLaunch(whatsappUrl)? launch(whatsappUrl):print("open whatsapp app link or do a snackbar with notification that there is no whatsapp installed");
               },
             ),
 

@@ -30,9 +30,6 @@ class _LocationState extends State<Location> {
   @override
   void initState() {
     // TODO: implement initState
-    //searchLocation.setSearchType("SRILANKA");
-     //ddd = searchLocation.getSearchTownname();
-     //ttt = searchLocation.getSearchdistrictName();
     carObjec.getData().then((result) {
       setState(() {
         allsearchsnap = result;
@@ -96,12 +93,7 @@ class _LocationState extends State<Location> {
                         //
                       try{
                         setState(() {
-                          //lsc.setSearchdistrict(null);
-                          //lsc.setSearchtown(null);
                           widget.receive.setSearchdistrict(value);
-                          //district=null;
-                          //town=null;
-                          //district=value;
                           widget.receive.setSearchType("DISTRICT");
                           //searchtype="DISTRICT";
                         });
@@ -135,36 +127,7 @@ class _LocationState extends State<Location> {
                       catch(e){
                         print("error happened");
                       }  
-                      //  //
-                      //  setState(() {
-                      //    district=value;
-                      //    searchtype="DISTRICT";
-                      //  });
-                      //  for (int i = 0;i < snapshot.data.documents.length;i++){
-                      //    DocumentSnapshot snap = snapshot.data.documents[i];
-                      //    if (snap.documentID == district){
-                      //        locationtownsearch = [];
-                      //        for (int j = 0; j < snap.data.length; j++) {
-                      //          locationtownsearch.add(
-                      //            DropdownMenuItem(
-                      //              child: Text(
-                      //                snap.data['${j + 1}'].toString(),
-                      //                style:
-                      //                    TextStyle(color: Color(0xff11b719)),
-                      //              ),
-                      //              value: snap.data['${j + 1}'].toString(),
-                      //            ),
-                      //          );
-                      //        }
-                      //    }
-                      //  }
-                      //  final snackBar = SnackBar(
-                      //      content: Text(
-                      //        'You Selected $district',
-                      //        style: TextStyle(color: Color(0xff11b719)),
-                      //      ),
-                      //    );
-                      //    Scaffold.of(context).showSnackBar(snackBar);
+                      
                       },
                       value: widget.receive.getSearchdistrictName(),
                       isExpanded: false,
@@ -200,26 +163,9 @@ class _LocationState extends State<Location> {
                           print('error happened 2');
                         }
 
-                        //setState(() {
-                        //  town = value;
-                        //                  
-                        //});
-                        //final snackBar = SnackBar(
-                        //    content: Text(
-                        //      'You Selected $town',
-                        //      style: TextStyle(color: Color(0xff11b719)),
-                        //    ),
-                        //  );
-                        //  Scaffold.of(context).showSnackBar(snackBar);
-                        //  setState(() {
-                        //    //widget.locationDetails.settown(locval2);
-                        //    locationlistsearch = [];
-                        //    locationtownsearch = [];
-                        //  });
+                        
                       print(widget.receive.searchdistrict+","+widget.receive.getSearchTownname()+","+widget.receive.getSearchType());  
-                      //Navigator.pop(context,MaterialPageRoute(
-                      //  builder: (context) => SearchHere(receive2:widget.receive ),
-                      //));
+                      
                       },
                       //icon: Icon(Icons),
                        

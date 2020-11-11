@@ -5,11 +5,9 @@ import 'admob_pg.dart';
 import 'admobdoc.dart';
 import 'aliexpressmain.dart';
 import 'catagories.dart';
-import 'first_screen.dart';
 import 'hotdeals.dart';
 import 'location.dart';
 import 'login_page.dart';
-import 'search.dart';
 import 'searchApp.dart';
 
 
@@ -29,12 +27,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/aliexpresspg': (context) => AliExpressesPg(),
         '/login': (context) => LoginPage(),
-        '/searchitem': (context) => SeachAppBarRecipe(),
         '/admobpg': (context) => AdmobPg(),
         '/admobdoc': (context) => AdmobDoc(),
-        '/first_screen': (context) => FirstScreen(),
         '/searchtest' : (context) => SearchHere(),
-        '/uploadwait' : (context) => Uploadpg(),
+        '/  uploadwait' : (context) => Uploadpg(),
         '/adadvertisement' : (context) => AdAdvertisement(),
         '/catago' : (context) => Catagories(),
         '/hotdeals' : (context) => HotDeals(),

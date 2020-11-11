@@ -19,9 +19,10 @@ class MyDrawer extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.black,
               ),
-              accountName: Text("$name"),
+              //accountName: Text("$name"),
+              accountName: "$name".contains("null") ? Text("User Not Signed IN"):Text("$name"),
               //accountName: name123.contains(null) ? Text("data") : Text(name123),
-              accountEmail: Text("$email"),
+              accountEmail: "$email".contains("null") ? Text(" "):Text("$email"),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage("$imageUrl"),
               ),

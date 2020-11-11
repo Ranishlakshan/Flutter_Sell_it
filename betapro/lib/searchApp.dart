@@ -8,7 +8,6 @@ import 'dbmodels/add_card_gridview.dart';
 import 'dbmodels/car_itm_model.dart';
 import 'drawer.dart';
 import 'location.dart';
-import 'locationtemp.dart';
 
 var locationsnap = Firestore.instance.collection("search_location").snapshots();
 //String ranmal = "I am done";
