@@ -441,7 +441,9 @@ class _tractorsFormState extends State<tractorsForm> {
               )
               ),
               onPressed: () {
-                 if(images.length==0){
+                String loccc = '${loccz.getdistrictName()}';
+
+                 if(images.length==0 || !_formKeyTractors.currentState.validate() || loccc=='null' ){
                   showDialog(context: context,builder: (_){
                     return AlertDialog(
                       backgroundColor: Theme.of(context).backgroundColor,

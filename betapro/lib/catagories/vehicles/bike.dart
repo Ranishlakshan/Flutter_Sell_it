@@ -507,7 +507,8 @@ class _bikeFormState extends State<bikeForm> {
               )
               ),
               onPressed: () {
-                 if(images.length==0){
+                String loccc = '${loccz.getdistrictName()}';
+                 if(images.length==0 || !_formKeyBike.currentState.validate() || loccc=='null' ){
                   showDialog(context: context,builder: (_){
                     return AlertDialog(
                       backgroundColor: Theme.of(context).backgroundColor,

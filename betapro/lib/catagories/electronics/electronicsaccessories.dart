@@ -159,6 +159,7 @@ class _otherElectronicsFormState extends State<otherElectronicsForm> {
               
             });
           });
+          //Navigator.pushReplacementNamed(context, "/uploadwait");
         }
       }).catchError((err) {
         print(err);
@@ -425,7 +426,8 @@ class _otherElectronicsFormState extends State<otherElectronicsForm> {
               )
               ),
               onPressed: () {
-                 if(images.length==0){
+                String loccc = '${loccz.getdistrictName()}';
+                 if(images.length==0 || !_formKeyOtherElectronics.currentState.validate() || loccc=='null'){
                   showDialog(context: context,builder: (_){
                     return AlertDialog(
                       backgroundColor: Theme.of(context).backgroundColor,

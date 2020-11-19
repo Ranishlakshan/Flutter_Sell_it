@@ -111,6 +111,7 @@ class _LocationAddState extends State<LocationAdd> {
                             locationlist2 = [];
                           });
                         },
+                        
                         value: widget.locationDetails.getTownname(),
                         hint: new Text(
                           "Select your City",

@@ -141,7 +141,7 @@ class _electronicsFormState extends State<electronicsForm> {
             'location': testLocation,
             'reviewstatus':false,  
             'searchkey':itembrand+","+itemmodel+","+itemedition+","+widget.cat1+","+widget.cat2+"laptops,tablet,machines,computers,androi,apple,smartphones,Phones",
-            'value1':itembrand+itemmodel+itemedition,
+            'value1':itembrand+" "+itemmodel+" "+itemedition,
             'value2':price,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
@@ -160,6 +160,7 @@ class _electronicsFormState extends State<electronicsForm> {
               
             });
           });
+          //Navigator.pushReplacementNamed(context, "/uploadwait");
         }
       }).catchError((err) {
         print(err);
@@ -447,7 +448,8 @@ class _electronicsFormState extends State<electronicsForm> {
               )
               ),
               onPressed: () {
-                 if(images.length==0){
+                String loccc = '${loccz.getdistrictName()}';
+                 if(images.length==0 || !_formKeyElectronics.currentState.validate() || loccc=='null'){
                   showDialog(context: context,builder: (_){
                     return AlertDialog(
                       backgroundColor: Theme.of(context).backgroundColor,
@@ -468,6 +470,7 @@ class _electronicsFormState extends State<electronicsForm> {
                   uploadImages();
                   Navigator.pushReplacementNamed(context, "/uploadwait");
                 }
+                //Navigator.pushReplacementNamed(context, "/uploadwait");
               
               },
               

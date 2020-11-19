@@ -176,7 +176,7 @@ class _CatagoriesState extends State<Catagories> {
 
             for (int i = 0; i < snapshot.data.documents.length; i++){
 
-              String dbCatagory = snapshot.data.documents[i].data['catagory'];
+              String dbCatagory = snapshot.data.documents[i].data['category'];
               String value1,value2,value3,value4,carimage,docID;
 
               if (dbCatagory.contains(catagorySub)) {

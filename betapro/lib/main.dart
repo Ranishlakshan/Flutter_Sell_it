@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/admobpg': (context) => AdmobPg(),
         '/admobdoc': (context) => AdmobDoc(),
         '/searchtest' : (context) => SearchHere(),
-        '/  uploadwait' : (context) => Uploadpg(),
+        '/uploadwait' : (context) => Uploadpg(),
         '/adadvertisement' : (context) => AdAdvertisement(),
         '/catago' : (context) => Catagories(),
         '/hotdeals' : (context) => HotDeals(),

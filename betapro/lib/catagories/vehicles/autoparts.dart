@@ -417,7 +417,8 @@ class _autopartsFormState extends State<autopartsForm> {
               )
               ),
               onPressed: () {
-                 if(images.length==0){
+                String loccc = '${loccz.getdistrictName()}';
+                 if(images.length==0  || !_formKeyAutoparts.currentState.validate() || loccc=='null'  ){
                   showDialog(context: context,builder: (_){
                     return AlertDialog(
                       backgroundColor: Theme.of(context).backgroundColor,

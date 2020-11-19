@@ -825,11 +825,13 @@ class _carFormState extends State<carForm> {
                 //  }
                 //pr.show();
                 //showLoaderDialog(context);
-                 if(images.length==0){
+                String loccc = '${loccz.getdistrictName()}';
+                print("LOCATION : "+loccc);
+                 if(images.length==0 || !_formKeyCar.currentState.validate() || loccc=='null'  ){
                   showDialog(context: context,builder: (_){
                     return AlertDialog(
                       backgroundColor: Theme.of(context).backgroundColor,
-                     content: Text("No image selected",style: TextStyle(color: Colors.white)),
+                     content: Text("No image selected or Some fields empty.Else please check location",style: TextStyle(color: Colors.white)),
                      actions: <Widget>[
                       RaisedButton(
                         onPressed: (){
