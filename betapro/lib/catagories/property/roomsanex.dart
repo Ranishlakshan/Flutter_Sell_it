@@ -10,8 +10,13 @@ import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class roomanexForm extends StatefulWidget {
+  //final GlobalKey<ScaffoldState> globalKey;
   final GlobalKey<ScaffoldState> globalKey;
-  const roomanexForm({Key key, this.globalKey}) : super(key: key);
+  final String cat1,cat2;
+
+  const roomanexForm({ this.cat1,this.cat2, this.globalKey}) ;
+
+  //const roomanexForm({Key key, this.globalKey}) : super(key: key);
   @override
   _roomanexFormState createState() => _roomanexFormState();
 }
@@ -139,13 +144,13 @@ class _roomanexFormState extends State<roomanexForm> {
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':adname+"propertyroomRoomAnnexanex",
+            'searchkey':adname+","+widget.cat1+","+widget.cat2,
             'value1':adname,
             'value2':price,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"roomandAnex,Property",
+            'category':widget.cat2+","+widget.cat1,
             
 
           }).then((_){

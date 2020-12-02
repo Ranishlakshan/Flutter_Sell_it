@@ -337,7 +337,8 @@ class _SearchHereState extends State<SearchHere> {
 
 
   Widget _getBody(){
-    if(pressed == "A"){
+    
+    if(pressed == "A" && searchValue!=null){
       return StreamBuilder(
             stream: allsearchsnap,
             builder: (context, snapshot) {

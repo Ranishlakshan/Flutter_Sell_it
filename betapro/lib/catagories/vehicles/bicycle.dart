@@ -10,8 +10,12 @@ import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class bicycleForm extends StatefulWidget {
+  //final GlobalKey<ScaffoldState> globalKey;
   final GlobalKey<ScaffoldState> globalKey;
-  const bicycleForm({Key key, this.globalKey}) : super(key: key);
+  final String cat1,cat2;
+
+  const bicycleForm({ this.cat1,this.cat2, this.globalKey}) ;
+  //const bicycleForm({Key key, this.globalKey}) : super(key: key);
   @override
   _bicycleFormState createState() => _bicycleFormState();
 }
@@ -135,13 +139,13 @@ class _bicycleFormState extends State<bicycleForm> {
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':carBrand+" "+carType+"Bicyclebicycle",
+            'searchkey':carBrand+" "+carType+","+widget.cat1+","+widget.cat2,
             'value1':carBrand+" "+carType+" ",
             'value2':carPrice,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"Bicycle,vehicles",
+            'category':widget.cat2+","+widget.cat1,
             
 
           }).then((_){

@@ -11,7 +11,12 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 class commercialPropertyForm extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
-  const commercialPropertyForm({Key key, this.globalKey}) : super(key: key);
+  final String cat1,cat2;
+
+  const commercialPropertyForm({ this.cat1,this.cat2, this.globalKey}) ;
+
+  
+  //const commercialPropertyForm({Key key, this.globalKey}) : super(key: key);
   @override
   _commercialPropertyFormState createState() => _commercialPropertyFormState();
 }
@@ -133,13 +138,13 @@ class _commercialPropertyFormState extends State<commercialPropertyForm> {
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':adname+"propertyCommercialcommercial",
+            'searchkey':adname+","+widget.cat1+","+widget.cat2,
             'value1':adname,
             'value2':price,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"CommercialProperty,Property",
+            'category':widget.cat2+","+widget.cat1,
             
 
           }).then((_){

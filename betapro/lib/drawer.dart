@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'login_page.dart';
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
+  @override
+  _MyDrawerState createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
   
   String name123 = "$name";
   String email123 = '$email';
   String photourl = "$imageUrl";
+  String signinORnot=" ";
+
+  
+  
   
   @override
   Widget build(BuildContext context) {
@@ -131,4 +140,5 @@ class MyDrawer extends StatelessWidget {
         ),
       );
   }
+
 }

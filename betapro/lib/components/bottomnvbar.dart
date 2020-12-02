@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../login_page.dart';
+
 class BottomNvBar extends StatefulWidget {
   @override
   _BottomNvBarState createState() => _BottomNvBarState();
@@ -7,6 +9,21 @@ class BottomNvBar extends StatefulWidget {
 
 class _BottomNvBarState extends State<BottomNvBar> {
   int selectedindex=6;
+  String loginORnot="";
+
+  void initState() {
+    // TODO: implement initState
+    if(email!=null){
+      print("NO EMAIL");
+      loginORnot="NO EMAIL";
+    }
+    else{
+      print("I HAVE EMAIL"+ '$email');
+      loginORnot="I HAVE EMAIL";
+    }
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +45,7 @@ class _BottomNvBarState extends State<BottomNvBar> {
               selectedindex=index;              
             });
             Navigator.popAndPushNamed(context, route);
+            
           },
           child: Container(
           height: 50,

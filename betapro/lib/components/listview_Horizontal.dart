@@ -5,7 +5,7 @@ class MainListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80.0,
+      height: 70.0,
       child: ListView(
         shrinkWrap : true,
         scrollDirection: Axis.horizontal,
@@ -14,7 +14,9 @@ class MainListView extends StatelessWidget {
           InkWell(
             child: Column(
                children: <Widget>[
-                Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
+                Icon(Icons.category, size: 40,),
+                SizedBox(height: 8,),
+                //Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
                 Text('Catagories')
                  
                ],
@@ -23,11 +25,13 @@ class MainListView extends StatelessWidget {
               Navigator.pushNamed(context, "/catago");
             },
           ),
-          SizedBox(width: 15,),
+          SizedBox(width: 25,),
           InkWell(
             child: Column(
                children: <Widget>[
-                Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
+                 Icon(Icons.favorite, size: 40,color: Colors.red,),
+                SizedBox(height: 8,),
+                //Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
                 Text('Hot Deals')
                  
                ],
@@ -36,97 +40,83 @@ class MainListView extends StatelessWidget {
               Navigator.pushNamed(context, "/hotdeals");
             },
           ),
-          SizedBox(width: 15,),
+          SizedBox(width: 25,),
           InkWell(
             child: Column(
                children: <Widget>[
-                Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
-                Text('Catagories')
+                Icon(Icons.local_taxi, size: 40,),
+                SizedBox(height: 8,),
+                //Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
+                Text('Vehicles')
                  
                ],
             ),
             onTap: (){
-              Navigator.pushNamed(context, "/catago");
+              Navigator.pushNamed(context, "/specialvehicles");
             },
           ),
-          SizedBox(width: 15,),
+          SizedBox(width: 25,),
           InkWell(
             child: Column(
                children: <Widget>[
-                Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
-                Text('Catagories')
+                Icon(Icons.computer, size: 40,),
+                SizedBox(height: 8,),
+                //Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
+                Text('Electronics')
                  
                ],
             ),
             onTap: (){
-              Navigator.pushNamed(context, "/catago");
+              Navigator.pushNamed(context, "/specialElectronics");
             },
           ),
-          SizedBox(width: 15,),
+          SizedBox(width: 25,),
           InkWell(
             child: Column(
                children: <Widget>[
-                Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
-                Text('Catagories')
+                Icon(Icons.place, size: 40,),
+                SizedBox(height: 8,),
+                //Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
+                Text('Property')
                  
                ],
             ),
             onTap: (){
-              Navigator.pushNamed(context, "/catago");
+              Navigator.pushNamed(context, "/specialHomes");
             },
           ),
-          SizedBox(width: 15,),
+          SizedBox(width: 25,),
           InkWell(
             child: Column(
                children: <Widget>[
-                Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
-                Text('Catagories')
+                 Icon(Icons.shop, size: 40,),
+                SizedBox(height: 8,),
+                //Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
+                Text('Fashion')
                  
                ],
             ),
             onTap: (){
-              Navigator.pushNamed(context, "/catago");
+              Navigator.pushNamed(context, "/specialFashion");
             },
           ),
-          SizedBox(width: 15,),
+          SizedBox(width: 25,),
           InkWell(
             child: Column(
                children: <Widget>[
-                Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
-                Text('Catagories')
+                Icon(Icons.more, size: 40,),
+                SizedBox(height: 8,),
+                //Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
+                Text('Essentials')
                  
                ],
             ),
             onTap: (){
-              Navigator.pushNamed(context, "/catago");
+              Navigator.pushNamed(context, "/specialEssentials");
             },
           ),
-          SizedBox(width: 15,),
-          InkWell(
-            child: Column(
-               children: <Widget>[
-                Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
-                Text('Catagories')
-                 
-               ],
-            ),
-            onTap: (){
-              Navigator.pushNamed(context, "/catago");
-            },
-          ),
-          SizedBox(width: 15,),
-          InkWell(
-            child: Column(
-               children: <Widget>[
-                Image(image: AssetImage('images/listview/catagory.png'),fit: BoxFit.cover,height: 50,width: 50,),
-                Text('Catagories')
-                 
-               ],
-            ),
-            onTap: (){
-              Navigator.pushNamed(context, "/catago");
-            },
-          ),
+           SizedBox(width: 15,),
+          
 
           
           //InkWell(

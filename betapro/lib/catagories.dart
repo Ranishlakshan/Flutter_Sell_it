@@ -92,6 +92,7 @@ class _CatagoriesState extends State<Catagories> {
                           setState(() {
                             catagoryMain=value;                            
                           });
+                          print(catagoryMain);
                           for (int i = 0;i < snapshot.data.documents.length;i++) {
                             DocumentSnapshot snap = snapshot.data.documents[i];
                             if (snap.documentID == catagoryMain) {
@@ -143,6 +144,7 @@ class _CatagoriesState extends State<Catagories> {
                             catagorynamesMain = [];
                             catagoryNamesSub= [];
                           });
+                          print(catagorySub);
                         },
                       ),
                       _showCatagory(),

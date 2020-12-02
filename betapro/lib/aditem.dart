@@ -84,66 +84,66 @@ class _AdAdvertisementState extends State<AdAdvertisement> {
     switch (selectedCurrency2) {
       //vehicles---------------------------------
       case "Cars":
-        return carForm();
+        return carForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       case "Vans":
-        return vanForm();
+        return vanForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;  
       case "Buses":
-        return busForm();
+        return busForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;  
       case "Lorries":
-        return lorryForm();
+        return lorryForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;  
       case "Three Wheels":
-        return threewheelForm();
+        return threewheelForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;  
       case "Motorbikes and Scooters":
-        return bikeForm();
+        return bikeForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;  
       case "Boats and Water Transport":
-        return boatForm();
+        return boatForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;  
       case "Heavy Machinery & Tractors":
-        return tractorsForm();
+        return tractorsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       case "Bicycles":
-        return bicycleForm();
+        return bicycleForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       case "Auto Parts & Accessories":
-        return autopartsForm();
+        return autopartsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       case "Auto Services":
-        return autoServiceForm();
+        return autoServiceForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       case "Rent A Car":
-        return rentACarForm();
+        return rentACarForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       //Property--------------------------
       case "Houses":
-        return houseForm();
+        return houseForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;  
       case "Lands":
-        return landForm();
+        return landForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       case "Apartments":
-        return apartmentsForm();
+        return apartmentsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break; 
       case "Commercial Property":
-        return commercialPropertyForm();
+        return commercialPropertyForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       case "Rooms & Annexes":
-        return roomanexForm();
+        return roomanexForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       case "Holiday & Short-Term Rental":
-        return holidatShortTermForm();
+        return holidatShortTermForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break; 
       //Industry tools and machines---------------------------
       case "Industry Tools Machinary":
-        return industryToolForm();
+        return industryToolForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       case "Office Equipment, Supplies & Stationery":
-        return officetoolsForm();
+        return officetoolsForm(cat1:selectedCurrency,cat2:selectedCurrency2);
         break;
       //solarForm
       case "Solar and Generators":

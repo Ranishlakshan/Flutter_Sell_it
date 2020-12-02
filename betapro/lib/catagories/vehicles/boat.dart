@@ -10,8 +10,12 @@ import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class boatForm extends StatefulWidget {
+  //final GlobalKey<ScaffoldState> globalKey;
   final GlobalKey<ScaffoldState> globalKey;
-  const boatForm({Key key, this.globalKey}) : super(key: key);
+  final String cat1,cat2;
+
+  const boatForm({ this.cat1,this.cat2, this.globalKey}) ;
+  //const boatForm({Key key, this.globalKey}) : super(key: key);
   @override
   _boatFormState createState() => _boatFormState();
 }
@@ -147,13 +151,13 @@ class _boatFormState extends State<boatForm> {
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':carBrand+" "+carModel+" "+"Boatwatertransports",
+            'searchkey':carBrand+" "+carModel+" "+","+widget.cat1+","+widget.cat2,
             'value1':carBrand+" "+carModel+" ",
             'value2':carPrice,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"boats and Water Transport,vehicles",
+            'category':widget.cat2+","+widget.cat1,
             
 
           }).then((_){

@@ -10,8 +10,12 @@ import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class autopartsForm extends StatefulWidget {
+  //final GlobalKey<ScaffoldState> globalKey;
   final GlobalKey<ScaffoldState> globalKey;
-  const autopartsForm({Key key, this.globalKey}) : super(key: key);
+  final String cat1,cat2;
+
+  const autopartsForm({ this.cat1,this.cat2, this.globalKey}) ;
+  //const autopartsForm({Key key, this.globalKey}) : super(key: key);
   @override
   _autopartsFormState createState() => _autopartsFormState();
 }
@@ -135,13 +139,13 @@ class _autopartsFormState extends State<autopartsForm> {
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':carName+" "+carType+"Autoparts Auto Parts",
+            'searchkey':carName+" "+carType+","+widget.cat1+","+widget.cat2,
             'value1':carName+" "+carType+" ",
             'value2':carPrice,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"Autoparts,vehicles",
+            'category':widget.cat2+","+widget.cat1,
             
 
           }).then((_){

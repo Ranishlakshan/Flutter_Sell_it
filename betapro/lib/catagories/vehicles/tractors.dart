@@ -10,8 +10,12 @@ import '../../login_page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class tractorsForm extends StatefulWidget {
+  //final GlobalKey<ScaffoldState> globalKey;
   final GlobalKey<ScaffoldState> globalKey;
-  const tractorsForm({Key key, this.globalKey}) : super(key: key);
+  final String cat1,cat2;
+
+  const tractorsForm({ this.cat1,this.cat2, this.globalKey}) ;
+  //const tractorsForm({Key key, this.globalKey}) : super(key: key);
   @override
   _tractorsFormState createState() => _tractorsFormState();
 }
@@ -136,13 +140,13 @@ class _tractorsFormState extends State<tractorsForm> {
             'phone': phonenumbers,
             'location': testLocation,
             'reviewstatus':false,  
-            'searchkey':carName+" "+carBrand+" "+carType+"Tracors Heavy Machinery & Tractors",
+            'searchkey':carName+" "+carBrand+" "+carType+","+widget.cat1+","+widget.cat2,
             'value1':carName+" "+carBrand+" "+carType+" ",
             'value2':carPrice,
             'value3':testLocation,
             'value4':DateTime.now().toString().substring(0, DateTime.now().toString().length - 10 ),
             //
-            'category':"Heavy Machinery & Tractors,vehicles",
+            'category':widget.cat2+","+widget.cat1,
             
 
           }).then((_){

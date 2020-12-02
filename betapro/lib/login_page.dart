@@ -25,10 +25,11 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     // TODO: implement initState
     if(email!=null){
+
       print("NO EMAIL");
     }
     else{
-      print("I HAVE EMAIL");
+      print("I HAVE EMAIL"+ '$email');
     }
     super.initState();
 
@@ -38,13 +39,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+
+        color: Colors.black,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlutterLogo(size: 150),
+              //FlutterLogo(size: 150),
+              //Image(image: AssetImage('images/listview/catagory.png'),
+              //Image(image: AssetImage('images/listview/canada.jpg'),fit: BoxFit.cover,height: 50,width: 50,),
+              Image(image: AssetImage('images/mainimage.png'),fit: BoxFit.cover,height: 250,width: 250,),
               SizedBox(height: 50),
               _signInButton(),
             ],
